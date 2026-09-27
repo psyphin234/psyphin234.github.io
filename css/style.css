@@ -116,13 +116,6 @@ img {
   mask-composite: intersect;
 }
 
-.intro {
-  max-width: 560px;
-  margin: 8px auto 0;
-  color: var(--text-muted);
-  font-size: 1.15rem;
-}
-
 /* Sections */
 
 .section {
@@ -241,30 +234,6 @@ img {
 
 .empty {
   color: var(--text-muted);
-}
-
-/* About */
-
-#about p {
-  max-width: 640px;
-  color: var(--text-muted);
-}
-
-.skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 20px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.skills li {
-  padding: 6px 14px;
-  color: var(--metal-light);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
 }
 
 /* Footer */

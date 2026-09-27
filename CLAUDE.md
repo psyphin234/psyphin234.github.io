@@ -7,7 +7,7 @@ Plain static HTML/CSS/JS. **No build step, no framework, no bundler.** Whatever 
 ## Structure
 
 ```
-index.html              Page markup: hero, Projects, About & Skills, footer
+index.html              Page markup: hero logo, Projects, footer
 projects.js             THE project list (window.PROJECTS). Edit this to add/change projects.
 js/main.js              Renders project cards from window.PROJECTS; sets footer year
 css/style.css           All styles. Colours are CSS variables at the top of the file.
@@ -38,8 +38,7 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
 
 ## Editing content
 
-- **Intro line:** `<p class="intro">` in `index.html` (marked with a comment).
-- **About & Skills:** the `#about` section in `index.html`. Placeholder bio + `<ul class="skills">` chips; add/remove `<li>`s.
+- The page is intentionally just the logo + Projects. To add a new section (e.g. About/Skills), copy the `<section class="section">` pattern in `index.html` - the `.section` styles and `h2` treatment apply automatically - and add a matching link in the header `<nav>`.
 - **Colours/fonts:** CSS variables in `:root` at the top of `css/style.css`. `--accent` is the circuit blue from the logo. `--bg` is deliberately almost pure black to match the logo image's background so the logo blends in. If you change `--bg`, the hero logo's edges will show.
 
 ## Conventions
