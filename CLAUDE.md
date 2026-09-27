@@ -32,7 +32,7 @@ Add **one line** to the array in `projects.js`:
 
 - `title`, `description`, `url` are required; `cta` (button text, default "Open") and `tags` are optional.
 - Order in the array = order on the page.
-- A project's URL lives **only** in `projects.js`. To move a project (e.g. SA Fuel Price Preview moving to `https://fuel.psyphin.co.za`), change its `url` there. Nothing else to update.
+- A project's URL lives **only** in `projects.js`. To move a project to a new address, change its `url` there. Nothing else on this site needs updating.
 
 Cards are built by `js/main.js` with `textContent`, so project text is never interpreted as HTML.
 
@@ -47,7 +47,7 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
 - The only absolute URLs are the Open Graph tags in `<head>` (these need the full `https://psyphin.co.za/...`).
 - Mobile-first check: layout must fit at 390px wide with no horizontal scroll.
 - Fonts come from Google Fonts (Rajdhani for headings, Inter for body) with system-font fallbacks.
-- Visitor stats: GoatCounter (cookie-free, no consent banner needed), with the script tag just before `</body>` in `index.html`. The dashboard is https://psyphin.goatcounter.com/ and is shared with the fuel site; pages are told apart by path (`/` = landing page, `/sa-fuel-price-preview/` = fuel site). Don't add it to the PCB site.
+- Visitor stats: GoatCounter (cookie-free, no consent banner needed), with the script tag just before `</body>` in `index.html`. The dashboard is https://psyphin.goatcounter.com/ and is shared with the fuel site; pages are told apart by path. `/` is the landing page; fuel-site paths are prefixed with its host (`fuel.psyphin.co.za/`), and its visits before 2026-09-27 are under `/sa-fuel-price-preview/`. Don't add it to the PCB site.
 
 ## Changing the logo
 
@@ -67,8 +67,10 @@ Push to `main`. GitHub Pages redeploys automatically (usually within a minute or
 - Records for the site:
   - `@` A → `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
   - `www` CNAME → `psyphin234.github.io.`
+  - `fuel` CNAME → `psyphin234.github.io` (the SA Fuel Price Preview site; see below)
   - `_github-pages-challenge-psyphin234` TXT → the verification code shown at https://github.com/settings/pages. Removing and re-adding the domain there generates a **new** code, and the TXT value must then be updated.
-- Mail records (MX, `mail`, `webmail`, `cpanel`, SPF, DMARC, autodiscover) still point at Afrihost. Don't touch them when editing web records. A `*` wildcard A record also points at Afrihost; a specific record such as `fuel` overrides it.
+- Mail records (MX, `mail`, `webmail`, `cpanel`, SPF, DMARC, autodiscover) still point at Afrihost. Don't touch them when editing web records. A `*` wildcard A record also points at Afrihost, so any subdomain *without* its own record shows Afrihost's parking page with a certificate for someone else's domain ("not secure"). A specific record such as `fuel` overrides it.
+- Afrihost's DNS form wants the **full** hostname, for example `fuel.psyphin.co.za` rather than just `fuel`; it rejects names shorter than 5 characters.
 - Enforce HTTPS is on. GitHub issues and renews the Let's Encrypt certificate for `psyphin.co.za` and `www.psyphin.co.za` automatically. If a certificate is ever stuck, go to repo Settings → Pages, clear the Custom domain, save, re-enter `psyphin.co.za` and save again.
 - Check status: `gh api repos/psyphin234/psyphin234.github.io/pages` and `.../pages/health`.
 
@@ -89,11 +91,8 @@ Because this is the `psyphin234.github.io` **user site** with a custom domain, *
 
 ### SA Fuel Price Preview
 
-- Lives at **https://psyphin.co.za/sa-fuel-price-preview/** (repo `psyphin234/sa-fuel-price-preview`, local clone `E:\Claude_projects\BFP_Website`, which has its own CLAUDE.md). **Do fuel-project work from that folder, not this one.**
+- Lives at **https://fuel.psyphin.co.za/**. It has its own custom domain (a `docs/CNAME` file in its repo, plus the Afrihost `fuel` CNAME), so it no longer inherits psyphin.co.za. The older `psyphin.co.za/sa-fuel-price-preview/` and `psyphin234.github.io/sa-fuel-price-preview/` addresses 301-redirect to it.
+- Repo `psyphin234/sa-fuel-price-preview`, local clone `E:\Claude_projects\BFP_Website`, which has its own CLAUDE.md. **Do fuel-project work from that folder, not this one.**
 - Its header has a "← psyphin.co.za" back link to https://psyphin.co.za/.
 - That repo is auto-committed and pushed hourly at about :18 by a scheduled Python task. Read its CLAUDE.md before touching it, and never kill `python.exe` processes by image name.
-- To move it to `fuel.psyphin.co.za` later:
-  1. Add Afrihost `fuel` CNAME → `psyphin234.github.io.`
-  2. Set the custom domain in that repo's Settings → Pages.
-  3. Update the `url` in `projects.js` here.
-  4. Update the absolute back-link URL and README in that repo if needed.
+- The same pattern works for any future project subdomain: add an Afrihost CNAME `<name>.psyphin.co.za` → `psyphin234.github.io`, set the custom domain in that repo's Settings → Pages (then `git pull` the `CNAME` file GitHub commits), turn on Enforce HTTPS once the certificate is issued, and update `projects.js` here.

@@ -6,5 +6,5 @@
 //   cta         - button label (optional, defaults to "Open")
 //   tags        - short labels shown on the card (optional)
 window.PROJECTS = [
-  { title: "SA Fuel Price Preview", description: "Fuel price predictions for South Africa, so you know what's coming at the pump before the official announcement.", url: "https://psyphin.co.za/sa-fuel-price-preview/", cta: "View predictions", tags: ["Data", "South Africa"] },
+  { title: "SA Fuel Price Preview", description: "Fuel price predictions for South Africa, so you know what's coming at the pump before the official announcement.", url: "https://fuel.psyphin.co.za/", cta: "View predictions", tags: ["Data", "South Africa"] },
 ];
