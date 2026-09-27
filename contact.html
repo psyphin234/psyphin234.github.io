@@ -55,10 +55,12 @@
       <div class="contact-card">
         <!-- Edit this line if you want different wording -->
         <p>Questions, ideas or feedback about any of the projects? Send an email:</p>
-        <a class="contact-email" href="mailto:info@psyphin.co.za">info@psyphin.co.za</a>
+        <!-- The address is assembled by js/main.js from data-user + data-domain, so it never
+             appears as a plain "name@domain" in the HTML for spam bots to harvest. -->
+        <a class="contact-email" data-user="info" data-domain="psyphin.co.za" data-email="text">info [at] psyphin.co.za</a>
         <div class="contact-actions">
-          <a class="button button--plain" href="mailto:info@psyphin.co.za">Send an email</a>
-          <button class="button button--plain button--secondary" type="button" data-copy="info@psyphin.co.za">Copy address</button>
+          <a class="button button--plain" data-user="info" data-domain="psyphin.co.za">Send an email</a>
+          <button class="button button--plain button--secondary" type="button" data-user="info" data-domain="psyphin.co.za">Copy address</button>
         </div>
       </div>
     </section>

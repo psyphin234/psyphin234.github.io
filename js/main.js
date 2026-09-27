@@ -39,6 +39,16 @@
     grid.appendChild(card);
   });
 
+  // Anti-scraping email: elements with data-user + data-domain get the real address at runtime.
+  // Links become mailto: links, data-email="text" also shows the address, and buttons become
+  // copy buttons (data-copy). The HTML itself never contains a plain name@domain.
+  document.querySelectorAll("[data-user][data-domain]").forEach(function (node) {
+    var address = node.getAttribute("data-user") + "@" + node.getAttribute("data-domain");
+    if (node.tagName === "A") node.href = "mailto:" + address;
+    if (node.tagName === "BUTTON") node.setAttribute("data-copy", address);
+    if (node.getAttribute("data-email") === "text") node.textContent = address;
+  });
+
   // <button data-copy="text">: copies the text and briefly confirms on the button itself.
   document.querySelectorAll("[data-copy]").forEach(function (button) {
     var label = button.textContent;

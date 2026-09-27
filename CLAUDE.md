@@ -41,7 +41,7 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
 
 - The home page is intentionally just the logo + Projects. To add a new section (e.g. About/Skills), copy the `<section class="section">` pattern in `index.html` - the `.section` styles and `h2` treatment apply automatically - and add a matching link in the header `<nav>`.
 - **New pages:** copy `contact.html` as the template (head, header, compact logo, footer, scripts). Every page's header `<nav>` must list the same links, with `aria-current="page"` on the current one, and every page loads `js/main.js` and the GoatCounter tag.
-- **Contact email:** `info@psyphin.co.za` appears three times in `contact.html` (two `mailto:` links and the copy button's `data-copy`). Mail for any `@psyphin.co.za` address is forwarded to Gmail by ImprovMX (catch-all) and sent from Gmail via Brevo SMTP.
+- **Contact email:** to hide it from spam bots, `contact.html` never contains a plain `info@psyphin.co.za`. Elements carry `data-user="info" data-domain="psyphin.co.za"` (three places), and `js/main.js` builds the address at runtime: `mailto:` on links, the visible text where `data-email="text"`, and `data-copy` on the button. To change the address, edit `data-user` in all three. Don't write a plain address anywhere in the HTML.
 - **Colours/fonts:** CSS variables in `:root` at the top of `css/style.css`. `--accent` is the circuit blue from the logo. `--bg` is deliberately almost pure black to match the logo image's background so the logo blends in. If you change `--bg`, the hero logo's edges will show.
 
 ## Conventions
@@ -99,3 +99,27 @@ Because this is the `psyphin234.github.io` **user site** with a custom domain, *
 - Its header has a "← psyphin.co.za" back link to https://psyphin.co.za/.
 - That repo is auto-committed and pushed hourly at about :18 by a scheduled Python task. Read its CLAUDE.md before touching it, and never kill `python.exe` processes by image name.
 - The same pattern works for any future project subdomain: add an Afrihost CNAME `<name>.psyphin.co.za` → `psyphin234.github.io`, set the custom domain in that repo's Settings → Pages (then `git pull` the `CNAME` file GitHub commits), turn on Enforce HTTPS once the certificate is issued, and update `projects.js` here.
+
+## Email (set up 2026-09-27)
+
+- **Receiving:** ImprovMX (free) forwards mail for `*@psyphin.co.za` (catch-all) to the owner's Gmail. MX records: `mx1.improvmx.com` (10), `mx2.improvmx.com` (20).
+- **Sending:** Brevo (free, about 300 emails a day) as Gmail's "Send mail as" SMTP. DNS: `brevo-code` TXT and DKIM CNAMEs `brevo1._domainkey` and `brevo2._domainkey`.
+- **SPF:** `v=spf1 include:spf.improvmx.com include:spf.brevo.com ~all`. A domain may have only **one** SPF record; merge new senders into it.
+- **DMARC:** `v=DMARC1; p=none; rua=mailto:rua@dmarc.brevo.com; fo=0; adkim=s; aspf=s`. Reports show in Brevo's dashboard. Never add a second `_dmarc` record.
+- Afrihost's Domain Parking package includes **no** mailboxes. The old Afrihost mail records (`mail`, `webmail`, `autoconfig`, `autodiscover`, SRV, `mailconf`) and `cpanel`/`ftp` were deleted as dead.
+
+## Security reminders (to do)
+
+- [ ] **From about 2026-10-18 (3 weeks after setup): tighten DMARC.** Check Brevo's DMARC reports first. Only step up if all legitimate mail (sent via Brevo) passes DKIM.
+  1. Change `_dmarc` to `p=quarantine` (keep the other tags). Watch for about 2 weeks.
+  2. Then change it to `p=reject`.
+  3. At the same time, change SPF's `~all` to `-all`.
+  - If you ever add another sending service (for example a newsletter tool), add it to SPF and set up its DKIM **before** tightening, or its mail will be rejected.
+- [ ] **Turn off catch-all once the addresses in use are known.** In ImprovMX, replace the `*` alias with specific aliases (for example `info@` plus the owner's personal address). Anything else will then bounce instead of reaching Gmail as spam. Keep the contact page's address in the alias list.
+- [ ] **Account security (owner's side):**
+  - GitHub 2FA is on (2026-09-27).
+  - Still to confirm: 2FA and unique passwords on Afrihost ClientZone, Gmail, ImprovMX and Brevo.
+  - Turn on domain **auto-renew** at Afrihost (expires 26 Sep 2027).
+- [ ] Optional: add a CAA record `psyphin.co.za CAA 0 issue "letsencrypt.org"`, so only Let's Encrypt (which GitHub Pages uses) can issue certificates.
+- [ ] Optional: replace this PC's `gh` login (full `repo` scope, used by the hourly fuel publish job) with a fine-grained token limited to `psyphin234/sa-fuel-price-preview`.
+
