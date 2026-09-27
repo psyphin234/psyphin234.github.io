@@ -68,6 +68,7 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
 ## Conventions
 
 - The brand name is written **PsyPhin** (capital P, lowercase sy, capital P, lowercase hin) in all visible text: titles, meta tags, alt text and footers. Domains and URLs stay lowercase (`psyphin.co.za`).
+- **Commit identity:** commits use the GitHub private address `74655215+psyphin234@users.noreply.github.com` (set globally in git on this PC, 2026-09-27). Never commit with a personal email: in 2026-09 the history of this repo was rewritten to remove it. Old-history backups are in `E:\Claude_projects\_git-backups-2026-09-27\` (local only; never push them).
 - Keep paths **relative** (`css/style.css`, not `/css/style.css`) so the page also works when opened directly from disk.
 - The only absolute URLs are the Open Graph tags in `<head>` (these need the full `https://psyphin.co.za/...`).
 - Mobile-first check: layout must fit at 390px wide with no horizontal scroll.
