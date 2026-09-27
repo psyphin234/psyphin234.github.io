@@ -1,3 +1,5 @@
 __pycache__/
 .DS_Store
 Thumbs.db
+# DNS zone exports from Afrihost (reference only, never publish)
+*.zone

@@ -1,4 +1,5 @@
-// Renders the project cards from window.PROJECTS (defined in /projects.js).
+// Shared page script: renders project cards from window.PROJECTS (projects.js) when the
+// page has a #project-grid, wires up copy-to-clipboard buttons, and sets the footer year.
 (function () {
   var grid = document.getElementById("project-grid");
   var projects = window.PROJECTS || [];
@@ -10,11 +11,11 @@
     return node;
   }
 
-  if (!projects.length) {
+  if (grid && !projects.length) {
     grid.appendChild(el("p", "empty", "Projects coming soon."));
   }
 
-  projects.forEach(function (project) {
+  if (grid) projects.forEach(function (project) {
     var card = el("article", "card");
 
     if (project.tags && project.tags.length) {
@@ -36,6 +37,18 @@
     card.appendChild(link);
 
     grid.appendChild(card);
+  });
+
+  // <button data-copy="text">: copies the text and briefly confirms on the button itself.
+  document.querySelectorAll("[data-copy]").forEach(function (button) {
+    var label = button.textContent;
+    button.addEventListener("click", function () {
+      if (!navigator.clipboard) return;
+      navigator.clipboard.writeText(button.getAttribute("data-copy")).then(function () {
+        button.textContent = "Copied!";
+        setTimeout(function () { button.textContent = label; }, 1800);
+      });
+    });
   });
 
   document.getElementById("year").textContent = new Date().getFullYear();

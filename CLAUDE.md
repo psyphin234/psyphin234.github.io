@@ -7,9 +7,10 @@ Plain static HTML/CSS/JS. **No build step, no framework, no bundler.** Whatever 
 ## Structure
 
 ```
-index.html              Page markup: hero logo, Projects, footer
+index.html              Home page: hero logo, Projects, footer
+contact.html            Contact page: compact logo + info@psyphin.co.za (mailto link + copy button)
 projects.js             THE project list (window.PROJECTS). Edit this to add/change projects.
-js/main.js              Renders project cards from window.PROJECTS; sets footer year
+js/main.js              Shared script for all pages: renders project cards (if #project-grid exists), copy buttons ([data-copy]), footer year
 css/style.css           All styles. Colours are CSS variables at the top of the file.
 assets/img/             Web-optimised logo (logo-{480,800,1200}.{webp,jpg}) + og-image.jpg
 favicon.ico             16/32/48px favicon, cropped from the "P" in the logo
@@ -38,7 +39,9 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
 
 ## Editing content
 
-- The page is intentionally just the logo + Projects. To add a new section (e.g. About/Skills), copy the `<section class="section">` pattern in `index.html` - the `.section` styles and `h2` treatment apply automatically - and add a matching link in the header `<nav>`.
+- The home page is intentionally just the logo + Projects. To add a new section (e.g. About/Skills), copy the `<section class="section">` pattern in `index.html` - the `.section` styles and `h2` treatment apply automatically - and add a matching link in the header `<nav>`.
+- **New pages:** copy `contact.html` as the template (head, header, compact logo, footer, scripts). Every page's header `<nav>` must list the same links, with `aria-current="page"` on the current one, and every page loads `js/main.js` and the GoatCounter tag.
+- **Contact email:** `info@psyphin.co.za` appears three times in `contact.html` (two `mailto:` links and the copy button's `data-copy`). Mail for any `@psyphin.co.za` address is forwarded to Gmail by ImprovMX (catch-all) and sent from Gmail via Brevo SMTP.
 - **Colours/fonts:** CSS variables in `:root` at the top of `css/style.css`. `--accent` is the circuit blue from the logo. `--bg` is deliberately almost pure black to match the logo image's background so the logo blends in. If you change `--bg`, the hero logo's edges will show.
 
 ## Conventions
@@ -47,7 +50,7 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
 - The only absolute URLs are the Open Graph tags in `<head>` (these need the full `https://psyphin.co.za/...`).
 - Mobile-first check: layout must fit at 390px wide with no horizontal scroll.
 - Fonts come from Google Fonts (Rajdhani for headings, Inter for body) with system-font fallbacks.
-- Visitor stats: GoatCounter (cookie-free, no consent banner needed), with the script tag just before `</body>` in `index.html`. The dashboard is https://psyphin.goatcounter.com/ and is shared with the fuel site; pages are told apart by path. `/` is the landing page; fuel-site paths are prefixed with its host (`fuel.psyphin.co.za/`), and its visits before 2026-09-27 are under `/sa-fuel-price-preview/`. Don't add it to the PCB site.
+- Visitor stats: GoatCounter (cookie-free, no consent banner needed), with the script tag just before `</body>` on every page. The dashboard is https://psyphin.goatcounter.com/ and is shared with the fuel site; pages are told apart by path. `/` is the landing page, `/contact.html` the contact page; fuel-site paths are prefixed with its host (`fuel.psyphin.co.za/`), and its visits before 2026-09-27 are under `/sa-fuel-price-preview/`. Don't add it to the PCB site.
 
 ## Changing the logo
 
