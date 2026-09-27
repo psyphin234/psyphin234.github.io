@@ -17,7 +17,8 @@ sherp-crawler/index.html  Project page for RC SHERP Crawler -> psyphin.co.za/she
 projects.js             THE project list (window.PROJECTS). Edit this to add/change projects.
 js/main.js              Shared script for all pages: project cards (#project-grid), project-page headings ([data-project]), email + copy buttons, footer year
 css/style.css           All styles. Colours are CSS variables at the top of the file.
-assets/img/             Web-optimised logo (logo-{480,800,1200}.{webp,jpg}) + og-image.jpg
+assets/img/             Web-optimised logo (logo-{480,800,1200}.{webp,jpg}) + og-image.jpg + brand-64.png (pinned-header icon)
+assets/img/projects/    Card photos, 800x450 (16:9): fuel-chart.jpg, dmr-gem.jpg, sherp-wire.jpg
 favicon.ico             16/32/48px favicon, cropped from the "P" in the logo
 favicon-32.png          PNG favicon
 apple-touch-icon.png    180px iOS home-screen icon (full shield)
@@ -37,7 +38,7 @@ Add **one line** to the array in `projects.js`:
 { title: "My New Thing", description: "What it does in a sentence.", url: "https://example.com", cta: "Open", tags: ["Tag", { label: "Actively maintained", color: "green" }] },
 ```
 
-- `title` and `description` are required; `url`, `cta` (button text, default "Open") and `tags` are optional. A project with no `url` gets a card with no button (used for projects with no public page, such as a private repo).
+- `title` and `description` are required; `url`, `cta` (button text, default "Open"), `tags`, `image` + `imageAlt` (a 16:9 photo across the top of the card, kept in `assets/img/projects/`) and `updated` (a short grey line above the button, e.g. "Updated 25 Sep 2026") are optional. **Update the `updated` date when a project moves on.** The fuel card's image is a crop of the live site's first chart (captured at a 900 px-wide window, 2x scale, placed on the chart panel's colour), so refresh it now and then. A project with no `url` gets a card with no button (used for projects with no public page, such as a private repo).
 - A tag is a plain string (blue pill), or `{ label, color }` for a coloured pill. Status tags: green for live work ("Actively maintained", "In progress"), amber for work that's built but still changing or being debugged ("Prototyping", "In testing"), grey for finished work that needs no changes ("Complete"). To add another colour, add a `.tags li.tag--<color>` rule in `css/style.css`.
 - Order in the array = order on the page.
 - A project's URL lives **only** in `projects.js`. To move a project to a new address, change its `url` there. Nothing else on this site needs updating.
@@ -67,6 +68,7 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
   - The Patient Monitor Smartwatch card and page (`patient-monitor/`) were removed on 2026-09-27; restore them from git history if needed. If it comes back, keep its "Hobby project, not a medical device" notice (`.notice`) and never describe it as clinically useful. Its code repo (`psyphin234/patient_Monitor`) is private.
 - **New pages:** copy `contact.html` as the template (head, header, compact logo, footer, scripts). Every page's header `<nav>` must list the same links, with `aria-current="page"` on the current one, and every page loads `js/main.js` and the GoatCounter tag.
 - **Contact email:** to hide it from spam bots, `contact.html` never contains a plain `info@psyphin.co.za`. Elements carry `data-user="info" data-domain="psyphin.co.za"` (three places), and `js/main.js` builds the address at runtime: `mailto:` on links, the visible text where `data-email="text"`, and `data-copy` on the button. To change the address, edit `data-user` in all three. Don't write a plain address anywhere in the HTML.
+- **Look and motion:** a faint circuit-trace pattern (`body::before`, inline SVG) fades out down the top of every page; `.hero::before` is a soft blue glow that fades in behind the logo, which uses `mix-blend-mode: screen` so its black background disappears over the glow. The header is sticky: `js/main.js` adds `body.scrolled` after 40 px, which darkens it and shows the `.brand` mark (shield + PsyPhin). Every page's header has the `.site-header-inner` > `.brand` + `.nav` structure. Cards fade up as they come into view (`.reveal` / `.is-visible`), with a fail-safe that shows them after 2 s. All motion is off for visitors who prefer reduced motion.
 - **Colours/fonts:** CSS variables in `:root` at the top of `css/style.css`. `--accent` is the circuit blue from the logo. `--bg` is deliberately almost pure black to match the logo image's background so the logo blends in. If you change `--bg`, the hero logo's edges will show.
 
 ## Conventions

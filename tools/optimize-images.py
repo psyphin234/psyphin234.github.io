@@ -35,6 +35,7 @@ def main():
     shield = src.crop((left, top, left + size, top + size))
 
     shield.resize((180, 180), Image.LANCZOS).save(ROOT / "apple-touch-icon.png", optimize=True)
+    shield.resize((64, 64), Image.LANCZOS).save(OUT / "brand-64.png", optimize=True)  # pinned-header icon
 
     left, top, size = P_BOX
     p = src.crop((left, top, left + size, top + size))

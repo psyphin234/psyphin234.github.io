@@ -28,13 +28,35 @@
 
   if (grid) projects.forEach(function (project) {
     var card = el("article", "card");
+    // Outside sites open in a new tab (with the arrow); pages on this site open in place.
+    var external = project.url && /^https?:/.test(project.url);
+
+    // Photo across the top of the card; it links to the project too (hidden from screen
+    // readers and the tab order, since the button below is the accessible link).
+    if (project.image) {
+      var media = el(project.url ? "a" : "div", "card-media");
+      if (project.url) {
+        media.href = project.url;
+        media.tabIndex = -1;
+        media.setAttribute("aria-hidden", "true");
+        if (external) { media.target = "_blank"; media.rel = "noopener"; }
+      }
+      var img = el("img");
+      img.src = project.image;
+      img.alt = project.imageAlt || "";
+      img.loading = "lazy";
+      img.width = 800;
+      img.height = 450;
+      media.appendChild(img);
+      card.appendChild(media);
+    }
+
     if (project.tags && project.tags.length) card.appendChild(tagList(project.tags));
     card.appendChild(el("h3", null, project.title));
     card.appendChild(el("p", null, project.description));
+    if (project.updated) card.appendChild(el("p", "card-updated", project.updated));
 
     if (project.url) {
-      // Outside sites open in a new tab (with the arrow); pages on this site open in place.
-      var external = /^https?:/.test(project.url);
       var link = el("a", external ? "button" : "button button--plain", project.cta || "Open");
       link.href = project.url;
       if (external) {
@@ -49,6 +71,34 @@
 
     grid.appendChild(card);
   });
+
+  // Cards fade up as they come into view (skipped when the visitor prefers reduced motion).
+  // Fail-safe: cards already on screen show at once, and anything still hidden after 2 s is
+  // shown anyway, so a browser quirk can never leave the project list invisible.
+  if (grid && "IntersectionObserver" in window &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var show = function (card) { card.classList.add("is-visible"); };
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        show(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: "0px 0px -40px 0px" });
+    var cards = grid.querySelectorAll(".card");
+    cards.forEach(function (card, i) {
+      card.classList.add("reveal");
+      card.style.setProperty("--delay", (i % 3) * 90 + "ms");
+      if (card.getBoundingClientRect().top < window.innerHeight) show(card);
+      else observer.observe(card);
+    });
+    setTimeout(function () { cards.forEach(show); }, 2000);
+  }
+
+  // Pinned header: once the page scrolls, give the header a background and show the brand mark.
+  function onScroll() { document.body.classList.toggle("scrolled", window.scrollY > 40); }
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
 
   // Project page heading: <div data-project="dmr-hotspot/"> gets that project's title and tags
   // from projects.js, so a status change there shows on the card and the page at once.

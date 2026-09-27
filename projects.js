@@ -7,12 +7,14 @@
 //                 opens in place, and that folder's page shows the same title + tags.
 //                 Optional: leave it out and the card has no button (e.g. no public page yet).
 //   cta         - button label (optional, defaults to "Open")
+//   image       - picture across the top of the card, 16:9 crop (optional); imageAlt describes it
+//   updated     - short line above the button, e.g. "Updated 25 Sep 2026" (optional)
 //   tags        - short labels shown on the card (optional). A plain string is a blue tag;
 //                 { label: "...", color: "green" } is a green one (e.g. for status).
 //                 Status tags: green "Actively maintained" / "In progress", amber "Prototyping" /
 //                 "In testing", grey "Complete".
 window.PROJECTS = [
-  { title: "SA Fuel Price Preview", description: "Fuel price predictions for South Africa, so you know what's coming at the pump before the official announcement.", url: "https://fuel.psyphin.co.za/", cta: "View predictions", tags: ["Data", "South Africa", { label: "Actively maintained", color: "green" }] },
-  { title: "Digital Radio Hotspot", description: "A true-duplex DMR hotspot on a Raspberry Pi 3B with an MMDVM dual hat, running WPSD and linking a handheld radio to the BrandMeister network.", url: "dmr-hotspot/", cta: "View project", tags: ["DMR", "Raspberry Pi", { label: "In testing", color: "amber" }] },
-  { title: "RC SHERP Crawler", description: "A scratch-built 1:15 radio-controlled crawler based on the SHERP ATV, designed in Tinkercad, 3D printed in PETG and TPU, and driven by an ESP32.", url: "sherp-crawler/", cta: "View project", tags: ["3D printing", "ESP32", { label: "Prototyping", color: "amber" }] },
+  { title: "SA Fuel Price Preview", description: "Fuel price predictions for South Africa, so you know what's coming at the pump before the official announcement.", url: "https://fuel.psyphin.co.za/", cta: "View predictions", image: "assets/img/projects/fuel-chart.jpg", imageAlt: "Chart of the daily Basic Fuel Price rising through the review period, with estimated days marked", updated: "Live data, updated hourly", tags: ["Data", "South Africa", { label: "Actively maintained", color: "green" }] },
+  { title: "Digital Radio Hotspot", description: "A true-duplex DMR hotspot on a Raspberry Pi 3B with an MMDVM dual hat, running WPSD and linking a handheld radio to the BrandMeister network.", url: "dmr-hotspot/", cta: "View project", image: "assets/img/projects/dmr-gem.jpg", imageAlt: "The hotspot in its blue 3D-printed case, with two antennas and glowing status lights", updated: "Updated 27 Sep 2026", tags: ["DMR", "Raspberry Pi", { label: "In testing", color: "amber" }] },
+  { title: "RC SHERP Crawler", description: "A scratch-built 1:15 radio-controlled crawler based on the SHERP ATV, designed in Tinkercad, 3D printed in PETG and TPU, and driven by an ESP32.", url: "sherp-crawler/", cta: "View project", image: "assets/img/projects/sherp-wire.jpg", imageAlt: "Wireframe 3D model of the SHERP-style crawler with its big tyres", updated: "Updated 25 Sep 2026", tags: ["3D printing", "ESP32", { label: "Prototyping", color: "amber" }] },
 ];
