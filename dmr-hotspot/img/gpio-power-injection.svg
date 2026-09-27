@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" font-family="Helvetica, Arial, sans-serif" font-size="14">
+  <rect width="720" height="380" fill="#fff"/>
+  <text x="360" y="30" text-anchor="middle" font-size="18" font-weight="bold">Option: GPIO 5V Power Injection (Pi 3B)</text>
+  <text x="235" y="62" text-anchor="middle" font-size="12">40-pin header (top pins)</text>
+  <rect x="180" y="75" width="110" height="215" rx="4" fill="#222"/>
+  <g font-size="11" fill="#333">
+    <circle cx="215" cy="95" r="9" fill="#999"/><text x="170" y="99" text-anchor="end">1  3V3</text>
+    <circle cx="255" cy="95" r="9" fill="#d22"/>
+    <circle cx="215" cy="130" r="9" fill="#999"/><text x="170" y="134" text-anchor="end">3  SDA</text>
+    <circle cx="255" cy="130" r="9" fill="#d22"/>
+    <circle cx="215" cy="165" r="9" fill="#999"/><text x="170" y="169" text-anchor="end">5  SCL</text>
+    <circle cx="255" cy="165" r="9" fill="#111" stroke="#fff"/>
+    <circle cx="215" cy="200" r="9" fill="#999"/><circle cx="255" cy="200" r="9" fill="#999"/>
+    <circle cx="215" cy="235" r="9" fill="#999"/><circle cx="255" cy="235" r="9" fill="#999"/>
+    <circle cx="215" cy="270" r="9" fill="#999"/><circle cx="255" cy="270" r="9" fill="#999"/>
+  </g>
+  <line x1="264" y1="95" x2="500" y2="95" stroke="#d22" stroke-width="3"/>
+  <line x1="264" y1="130" x2="440" y2="130" stroke="#d22" stroke-width="3"/>
+  <line x1="440" y1="95" x2="440" y2="130" stroke="#d22" stroke-width="3"/>
+  <polyline points="500,95 500,160 530,160" fill="none" stroke="#d22" stroke-width="3"/>
+  <polyline points="264,165 470,165 470,210 530,210" fill="none" stroke="#111" stroke-width="3"/>
+  <g font-size="11">
+    <text x="350" y="88" text-anchor="middle" fill="#d22">pin 2 — +5V</text>
+    <text x="350" y="123" text-anchor="middle" fill="#d22">pin 4 — +5V</text>
+    <text x="350" y="158" text-anchor="middle">pin 6 — GND</text>
+  </g>
+  <rect x="530" y="140" width="150" height="90" rx="6" fill="#fde2c4" stroke="#333"/>
+  <text x="605" y="170" text-anchor="middle">Regulated 5.1V</text><text x="605" y="190" text-anchor="middle">supply, 3A+</text><text x="605" y="210" text-anchor="middle" font-size="11">clean, verified</text>
+  <text x="520" y="155" text-anchor="end" font-size="11" fill="#d22">+</text>
+  <text x="520" y="205" text-anchor="end" font-size="11">−</text>
+  <rect x="40" y="300" width="640" height="60" rx="6" fill="#fff4f4" stroke="#d22"/>
+  <text x="60" y="325" font-size="12"><tspan font-weight="bold" fill="#d22">WARNING: </tspan>bypasses the Pi's Micro-USB input protection (polyfuse). Regulated 5.0–5.25V only.</text>
+  <text x="60" y="345" font-size="12">Use short wire, 22 AWG or heavier. Never connect the Micro-USB supply at the same time.</text>
+</svg>

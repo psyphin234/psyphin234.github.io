@@ -286,13 +286,99 @@ img {
 }
 
 .prose p,
-.prose ul {
+.prose ul,
+.prose ol {
   margin: 0 0 16px;
   color: var(--text-muted);
 }
 
-.prose ul {
+.prose ul,
+.prose ol {
   padding-left: 20px;
+}
+
+.prose li {
+  margin-bottom: 6px;
+}
+
+.prose strong {
+  color: var(--text);
+}
+
+.prose h4 {
+  margin: 24px 0 8px;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--metal-light);
+}
+
+.prose code {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 0.88em;
+  color: var(--text);
+  background: var(--surface);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.prose pre {
+  margin: 0 0 16px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.prose pre code {
+  padding: 0;
+  background: none;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+/* Wide tables scroll inside their own box on phones instead of widening the page */
+.table-wrap {
+  margin: 0 0 16px;
+  overflow-x: auto;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.prose th,
+.prose td {
+  padding: 8px 12px 8px 0;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.prose th {
+  color: var(--metal-light);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.prose figure {
+  margin: 0 0 24px;
+}
+
+.prose figcaption {
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--metal-dark);
+}
+
+/* Diagrams have their own white background; round them to sit on the dark page */
+.prose img.diagram {
+  width: 100%;
+  border-radius: 10px;
 }
 
 .prose .lead {
@@ -325,10 +411,21 @@ img {
   margin: 0 0 16px;
 }
 
+.gallery figure {
+  margin: 0;
+}
+
 .gallery img {
   width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
   border: 1px solid var(--border);
   border-radius: 10px;
+  transition: border-color 0.2s;
+}
+
+.gallery a:hover img {
+  border-color: rgba(63, 182, 255, 0.5);
 }
 
 .placeholder {
@@ -394,6 +491,11 @@ img {
 }
 
 @media (max-width: 600px) {
+  .gallery {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
   .hero {
     padding-bottom: 40px;
   }

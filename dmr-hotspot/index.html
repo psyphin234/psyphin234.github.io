@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Digital Radio Hotspot · PsyPhin</title>
-  <meta name="description" content="A DMR digital radio hotspot on a Raspberry Pi.">
+  <meta name="description" content="ZR6KW: a true-duplex DMR hotspot on a Raspberry Pi 3B and an MMDVM_HS_Dual_Hat, running WPSD and linked to BrandMeister.">
   <meta name="theme-color" content="#020203">
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://psyphin.co.za/dmr-hotspot/">
   <meta property="og:title" content="Digital Radio Hotspot · PsyPhin">
-  <meta property="og:description" content="A DMR digital radio hotspot on a Raspberry Pi.">
-  <meta property="og:image" content="https://psyphin.co.za/assets/img/og-image.jpg">
+  <meta property="og:description" content="ZR6KW: a true-duplex DMR hotspot on a Raspberry Pi 3B and an MMDVM_HS_Dual_Hat, running WPSD and linked to BrandMeister.">
+  <meta property="og:image" content="https://psyphin.co.za/dmr-hotspot/img/case-and-cooling-fan-1600.jpg">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" href="../favicon.ico" sizes="48x48">
@@ -54,26 +54,230 @@
       <!-- Title and tags come from this project's line in ../projects.js (matched by url). -->
       <div class="project-head" data-project="dmr-hotspot/"><h2>Digital Radio Hotspot</h2></div>
 
+      <!-- Source write-up: E:\Claude_projects\DMR\README.md. Photos made with tools/optimize-photos.py. -->
       <div class="prose">
-        <!-- PLACEHOLDER TEXT: replace everything in this block with your own write-up. -->
-        <p class="lead">A DMR digital radio hotspot on a Raspberry Pi, linking a handheld radio to digital voice networks over the internet.</p>
+        <p class="lead">ZR6KW: a true-duplex DMR hotspot built on a Raspberry Pi 3B and an MMDVM_HS_Dual_Hat, running WPSD and linked to BrandMeister.</p>
 
-        <h3>What it does</h3>
-        <p>Describe what the hotspot is for and how you use it.</p>
-
-        <h3>How it's built</h3>
-        <ul>
-          <li>Hardware: Raspberry Pi model, radio board, antenna</li>
-          <li>Software: the hotspot software and networks it connects to</li>
-          <li>Setup notes worth remembering</li>
-        </ul>
+        <div class="table-wrap">
+          <table>
+            <tbody>
+              <tr><th scope="row">Callsign</th><td>ZR6KW</td></tr>
+              <tr><th scope="row">DMR ID</th><td>6550447</td></tr>
+              <tr><th scope="row">Network</th><td>BrandMeister, master <code>BM_6551_South_Africa</code></td></tr>
+              <tr><th scope="row">Primary talkgroup</th><td>TG 655 (ZA National), static, Timeslot 2</td></tr>
+              <tr><th scope="row">Mode</th><td>DMR, true duplex</td></tr>
+              <tr><th scope="row">Status</th><td>Operational and RX calibrated; TX decode and modem lock-up under investigation</td></tr>
+            </tbody>
+          </table>
+        </div>
 
         <h3>Photos</h3>
-        <!-- Put photos in dmr-hotspot/img/ and replace the placeholder with, for example:
-             <div class="gallery">
-               <img src="img/hotspot.jpg" alt="The hotspot on the desk" width="800" height="600" loading="lazy">
-             </div> -->
-        <p class="placeholder">Photos coming soon.</p>
+        <div class="gallery">
+          <figure>
+            <a href="img/case-and-cooling-fan-1600.jpg"><img src="img/case-and-cooling-fan-800.jpg" alt="The hotspot in its blue 3D-printed case, with two antennas, the OLED screen and the modem board visible" width="800" height="600" loading="lazy"></a>
+            <figcaption>In the 3D-printed case</figcaption>
+          </figure>
+          <figure>
+            <a href="img/case-printed-with-cooling-fan-1600.jpg"><img src="img/case-printed-with-cooling-fan-800.jpg" alt="The printed case from the side, showing the cooling fan opening" width="800" height="600" loading="lazy"></a>
+            <figcaption>Case with cooling fan</figcaption>
+          </figure>
+          <figure>
+            <a href="img/hat-next-to-pi-3b-1600.jpg"><img src="img/hat-next-to-pi-3b-800.jpg" alt="The MMDVM dual hat with antennas lying next to a Raspberry Pi 3B" width="800" height="600" loading="lazy"></a>
+            <figcaption>MMDVM_HS_Dual_Hat next to the Pi 3B</figcaption>
+          </figure>
+          <figure>
+            <a href="img/hat-on-pi3b-1600.jpg"><img src="img/hat-on-pi3b-800.jpg" alt="The dual hat mounted on the Raspberry Pi 3B" width="800" height="600" loading="lazy"></a>
+            <figcaption>Hat mounted on the Pi</figcaption>
+          </figure>
+          <figure>
+            <a href="img/mmdvm-hat-1600.jpg"><img src="img/mmdvm-hat-800.jpg" alt="The bare MMDVM dual hat with its antennas, connectors and header pins before assembly" width="800" height="600" loading="lazy"></a>
+            <figcaption>The modem board before assembly</figcaption>
+          </figure>
+          <figure>
+            <a href="img/issue-with-scrambling-of-the-screen-1600.jpg"><img src="img/issue-with-scrambling-of-the-screen-800.jpg" alt="Close-up of the OLED screen showing garbled text" width="600" height="800" loading="lazy"></a>
+            <figcaption>Fault: scrambled OLED screen</figcaption>
+          </figure>
+        </div>
+
+        <h3>Hardware</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Component</th><th>Detail</th></tr></thead>
+            <tbody>
+              <tr><td>Single-board computer</td><td>Raspberry Pi 3B</td></tr>
+              <tr><td>Modem</td><td>MMDVM_HS_Dual_Hat: dual ADF7021 (one RX, one TX) for true duplex</td></tr>
+              <tr><td>Modem firmware</td><td>v1.6.1</td></tr>
+              <tr><td>Reference oscillator</td><td>14.7456 MHz TCXO</td></tr>
+              <tr><td>Pi to modem link</td><td>GPIO UART, <code>/dev/ttyAMA0</code> at 115200 baud</td></tr>
+              <tr><td>Handheld radio</td><td>Baofeng DM-32UV</td></tr>
+              <tr><td>Power (current)</td><td>5 V / 3.5 A wall supply via Micro-USB (cable gauge unverified; see Power investigation)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <figure>
+          <a href="img/block-diagram.svg"><img class="diagram" src="img/block-diagram.svg" alt="Block diagram: a 5 V supply powers the Raspberry Pi 3B running WPSD, which talks to the MMDVM dual hat over UART and to BrandMeister over the internet. The hat's RX chip hears the handheld on 433.300 MHz and its TX chip transmits to it on 438.300 MHz." width="900" height="420" loading="lazy"></a>
+          <figcaption>System block diagram (click to enlarge)</figcaption>
+        </figure>
+
+        <h3>Software</h3>
+        <ul>
+          <li><strong>WPSD</strong>, current Debian Trixie-based image (fresh reinstall)</li>
+          <li>Set up during the reinstall: modem type, timezone <code>Africa/Johannesburg</code>, BrandMeister network config, firewall and password hardening, persistent journald logging</li>
+          <li>Pi 3B UART: Bluetooth must not hold the hardware UART. Check <code>dtoverlay=disable-bt</code> (or <code>pi3-disable-bt</code>) in <code>/boot/firmware/config.txt</code> and that <code>hciuart</code> is disabled. WPSD sets this by default, but it's worth confirming after updates.</li>
+        </ul>
+
+        <h3>RF and radio configuration</h3>
+        <h4>Hotspot</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>RX frequency</td><td>433.300 MHz</td></tr>
+              <tr><td>TX frequency</td><td>438.300 MHz</td></tr>
+              <tr><td>Color Code</td><td>1</td></tr>
+              <tr><td>Timeslot</td><td>2</td></tr>
+              <tr><td>RXOffset</td><td>−75 Hz (calibrated)</td></tr>
+              <tr><td>TXOffset</td><td>−75 Hz (estimated, not measured)</td></tr>
+              <tr><td>DMRTXLevel</td><td>45 (trial value)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Relevant MMDVMHost settings (credentials omitted):</p>
+<pre><code>[General]
+Callsign=ZR6KW
+Id=6550447
+Duplex=1
+
+[Info]
+RXFrequency=433300000
+TXFrequency=438300000
+
+[Modem]
+Port=/dev/ttyAMA0
+UARTSpeed=115200
+RXOffset=-75        ; calibrated, BER 0.09%
+TXOffset=-75        ; estimated from RXOffset - needs SDR verification
+DMRTXLevel=45       ; trial value - needs SDR verification
+
+[DMR]
+Enable=1
+ColorCode=1</code></pre>
+
+        <h4>Handheld codeplug (Baofeng DM-32UV)</h4>
+        <p>Channel <strong>107, <code>ZR6KW-ZA-655</code></strong>. The radio is the mirror image of the hotspot:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Channel type</td><td>Digital</td></tr>
+              <tr><td>RX frequency</td><td>438.300 MHz (= hotspot TX)</td></tr>
+              <tr><td>TX frequency</td><td><strong>433.300 MHz</strong> (= hotspot RX)</td></tr>
+              <tr><td>Color Code</td><td>1</td></tr>
+              <tr><td>Timeslot</td><td>2</td></tr>
+              <tr><td>TX contact</td><td>TG 655 ZA National</td></tr>
+              <tr><td>RX group list</td><td>TG 655 ZA National</td></tr>
+              <tr><td>TX Admit</td><td><em>Always</em> is recommended for a single-user hotspot. Color Code Idle can cause "Channel Busy" while network traffic is passing.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="notice">An earlier codeplug had the channel's TX frequency set to 430.700 MHz, a 2.6 MHz mismatch. Make sure TX reads 433.300.</p>
+
+        <h3>Calibration</h3>
+        <h4>RX offset: done</h4>
+        <p>Done with the WPSD calibration tool:</p>
+        <ol>
+          <li>Select DMR mode, click <strong>Start</strong> and wait for the status indicator to go green.</li>
+          <li>On the radio, set TX Admit to <em>Always</em> temporarily and hold PTT on the normal hotspot channel (not VFO).</li>
+          <li>Step the offset in 100 Hz, then 50 Hz, then 25 Hz steps, chasing the lowest BER.</li>
+          <li>Run long enough to check the best offset doesn't drift as the board warms up.</li>
+          <li><strong>Save Offset</strong>, <strong>Stop</strong>, then set TX Admit back.</li>
+        </ol>
+        <p><strong>Result:</strong> BER 0.09% at RXOffset −75 Hz. DMR is comfortable up to about 1%.</p>
+
+        <h4>TX offset and deviation: open</h4>
+        <p>The calibration tool uses the radio as the signal source, so it only measures RX. TXOffset was set to −75 on the assumption that both ADF7021s share the same TCXO and the two frequencies are close, and DMRTXLevel was trialled at 45. Neither is a measurement. Proper TX calibration needs an <strong>RTL-SDR</strong> (or a spectrum analyser) to check the hotspot's actual transmitted frequency and deviation.</p>
+
+        <h3>Troubleshooting log</h3>
+        <h4>Issue A: phantom TX lock-up (workaround in place)</h4>
+        <ul>
+          <li><strong>Symptom:</strong> the dashboard freezes on <code>TX: DMR</code>, the radio shows "link timeout" on PTT, and network traffic on the dashboard doesn't reach the radio. It receives fine for days and tends to happen around transmitting.</li>
+          <li><strong>Diagnosis:</strong> the modem reports it is transmitting and never reports completion, so it is stuck at the STM32/firmware level.</li>
+          <li><strong>Workaround:</strong> <code>sudo systemctl restart mmdvmhost</code> restores it every time. Keep the WPSD Services Watchdog enabled for automatic recovery; a systemd timer that checks the modem and restarts it is a fallback.</li>
+          <li><strong>Suspected root cause:</strong> power (see below).</li>
+        </ul>
+
+        <h4>Issue B: carrier but no DMR decode on the handheld (open)</h4>
+        <ul>
+          <li><strong>Symptom:</strong> the radio's RX LED and signal meter respond to the hotspot's 438.300 MHz transmission, but no audio or callsign is decoded. Seen on TG93, TG214, TG222, TG255 and Parrot TG9990, and later as intermittent drop-outs.</li>
+          <li><strong>Key point:</strong> carrier detect and the S-meter only prove RF is present, not that the modulation can be decoded.</li>
+          <li><strong>Tried:</strong> TXOffset −75 and DMRTXLevel 45, with no fix.</li>
+          <li><strong>Next:</strong> measure TX frequency and deviation with an RTL-SDR, and correlate drop-outs with BER on the dashboard and with under-voltage events.</li>
+        </ul>
+
+        <h4>Resolved</h4>
+        <ul>
+          <li>The <strong>SVC LED flashing red</strong> is the normal firmware heartbeat, not a fault. An earlier forum-based diagnosis was wrong.</li>
+        </ul>
+
+        <h3>Power investigation</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Check</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td><code>vcgencmd get_throttled</code></td><td><code>0x50000</code>: under-voltage and throttling <strong>have occurred</strong> since boot</td></tr>
+              <tr><td>After a cable swap</td><td>Still <code>0x50000</code></td></tr>
+              <tr><td>Live check</td><td><code>0x50005</code>: under-voltage and throttling <strong>currently active</strong></td></tr>
+              <tr><td>Supply</td><td>5 V / 3.5 A wall charger; both cables of unknown gauge</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Hypothesis:</strong> load spikes (at boot, and from the dual hat while transmitting) cause brief voltage sags at the Pi. These glitch the UART to the STM32 and leave the modem wedged, which would explain Issue A and may contribute to Issue B.</p>
+        <p><strong>Reading <code>get_throttled</code>:</strong> bits 0–3 mean "happening now" (0x1 under-voltage, 0x2 frequency capped, 0x4 throttled, 0x8 soft temperature limit); bits 16–19 mean "has happened since boot". The flags only clear on reboot. Watch them live with <code>watch -n 1 vcgencmd get_throttled</code>.</p>
+        <p><strong>Fix options, in order of effort:</strong></p>
+        <ol>
+          <li>A short Micro-USB cable with a <strong>verified 20–24 AWG</strong> power pair (cheap cables are typically 28–30 AWG).</li>
+          <li>Measure the voltage at the Pi under load with a multimeter (test points, or GPIO pins 2/4 to 6).</li>
+          <li><strong>GPIO power injection:</strong> feed regulated 5 V straight to header pins 2/4 (5 V) and 6 (GND), bypassing the Micro-USB connector and cable losses. This also bypasses the Pi's input polyfuse, so use only a clean, verified 5 V supply.</li>
+        </ol>
+        <figure>
+          <a href="img/gpio-power-injection.svg"><img class="diagram" src="img/gpio-power-injection.svg" alt="Wiring for GPIO power injection: a regulated 5.1 V, 3 A supply's positive lead to header pins 2 and 4, negative lead to pin 6. Warning: this bypasses the Micro-USB input protection; use 5.0 to 5.25 V only, short 22 AWG or heavier wire, and never connect Micro-USB power at the same time." width="720" height="380" loading="lazy"></a>
+          <figcaption>GPIO 5 V power injection (click to enlarge)</figcaption>
+        </figure>
+
+        <h3>Mobile version (12 V vehicle power)</h3>
+        <p>A mobile version of the Pi 3B and MMDVM hat, powered from a vehicle's 12 V system, has also been explored.</p>
+        <ul>
+          <li><strong>Didn't work:</strong> LM2596 and XL4015 buck modules, and a homebrew LM317 regulator. They caused RF interference in the receiver or board resets.</li>
+          <li><strong>Planned:</strong> vehicle 12 V → fuse → LC/ferrite input filter → Pololu D24V50F5 (or equivalent) synchronous 5 V buck → LC/ferrite output filter → Pi 3B and hat.</li>
+          <li><strong>No-solder alternative:</strong> a quality USB car charger with clip-on ferrites on the cable.</li>
+        </ul>
+
+        <h3>Useful commands</h3>
+<pre><code>sudo systemctl restart mmdvmhost        # clear a stuck modem
+sudo systemctl status mmdvmhost         # PID / uptime - is it the same process?
+journalctl -u mmdvmhost -f              # live MMDVMHost journal only
+ls /var/log/pi-star/MMDVM-*.log         # MMDVMHost's own detailed log
+vcgencmd get_throttled                  # power / throttling flags
+watch -n 1 vcgencmd get_throttled       # catch under-voltage live
+systemctl status hciuart                # should be disabled (UART free for modem)</code></pre>
+
+        <h3>Lessons learned</h3>
+        <ul>
+          <li>Carrier and S-meter response are not the same as a successful DMR decode. Verify the modulation.</li>
+          <li>Guessing DMRTXLevel and TXOffset isn't calibration. Measure with an SDR.</li>
+          <li>A clean <code>get_throttled</code> at one moment doesn't rule out power; the "since boot" bits and a live watch tell the real story.</li>
+          <li>Don't trust forum diagnoses of LED patterns without checking the firmware's actual behaviour.</li>
+        </ul>
+
+        <h3>Next steps</h3>
+        <ul>
+          <li>Get an RTL-SDR and calibrate TX frequency and deviation</li>
+          <li>Fix power delivery (a verified-gauge cable or GPIO injection) and confirm <code>get_throttled</code> stays <code>0x0</code></li>
+          <li>Confirm the codeplug TX frequency is 433.300 MHz</li>
+          <li>Verify the WPSD Services Watchdog is enabled</li>
+        </ul>
       </div>
     </section>
   </main>

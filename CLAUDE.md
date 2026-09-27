@@ -12,6 +12,7 @@ Plain static HTML/CSS/JS. **No build step, no framework, no bundler.** Whatever 
 index.html              Home page: hero logo, Projects, footer
 contact.html            Contact page: compact logo + info@psyphin.co.za (mailto link + copy button)
 dmr-hotspot/index.html  Project page for Digital Radio Hotspot  -> psyphin.co.za/dmr-hotspot/
+dmr-hotspot/img/        Its photos (<name>-800.jpg + <name>-1600.jpg) and the two SVG diagrams
 projects.js             THE project list (window.PROJECTS). Edit this to add/change projects.
 js/main.js              Shared script for all pages: project cards (#project-grid), project-page headings ([data-project]), email + copy buttons, footer year
 css/style.css           All styles. Colours are CSS variables at the top of the file.
@@ -22,6 +23,7 @@ apple-touch-icon.png    180px iOS home-screen icon (full shield)
 psyphin-logo-black.jpg  Source logo used to generate everything in assets/img and the favicons (keep - reference original)
 psyphin-logo.jpg        Alternative white-background logo, not used on the site (keep - reference original)
 tools/optimize-images.py  Regenerates images/favicons from the source logo (needs Pillow)
+tools/optimize-photos.py  Shrinks project photos to 800/1600 px JPGs and strips EXIF (GPS, camera): python tools/optimize-photos.py <src folder> <project>/img
 CNAME                   Custom domain for GitHub Pages - must contain only: psyphin.co.za
 .nojekyll               Tells GitHub Pages to serve files as-is (skip Jekyll)
 ```
@@ -49,7 +51,9 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
   2. In `projects.js`, set that project's `url` to `"<folder>/"` and `cta: "View project"`.
   3. In the page, set `data-project="<folder>/"` on the `.project-head`. Its title and tags then come from `projects.js`, so a status change updates the card and the page together.
   4. Update the page's `<title>`, description and `og:url`.
-  - Every path in a project page starts with `../`: styles, scripts, logo, favicons and nav links. Photos go in `<folder>/img/` and use the `.gallery` grid (example in the page comments). The `.placeholder` box shows until photos are added.
+  - Every path in a project page starts with `../`: styles, scripts, logo, favicons and nav links.
+  - **Photos:** never commit camera originals. Run `tools/optimize-photos.py` into `<folder>/img/`; it strips EXIF, which can hold GPS location. The gallery shows `-800.jpg` and links each to `-1600.jpg`, using `<figure>` + `<figcaption>`. Diagrams use `<img class="diagram">`. Tables go inside `<div class="table-wrap">` so they scroll on phones instead of widening the page. The `.placeholder` box is for pages with no photos yet.
+  - **DMR hotspot source:** the write-up comes from `E:\Claude_projects\DMR\README.md` (plus its `Photos/`, `diagrams/` and `config/`), which is outside this repo. When that README changes, update the page to match. Keep credentials out: the config excerpt omits passwords, and the "rotate BrandMeister password" to-do is deliberately not published.
   - Relative `url`s open in the same tab without the ↗ arrow; `https://` urls open a new tab with the arrow.
   - Preview project folders with `python -m http.server`. Opening from disk shows a folder listing, because `dmr-hotspot/` doesn't resolve to `index.html` there.
   - The Patient Monitor Smartwatch card and page (`patient-monitor/`) were removed on 2026-09-27; restore them from git history if needed. If it comes back, keep its "Hobby project, not a medical device" notice (`.notice`) and never describe it as clinically useful. Its code repo (`psyphin234/patient_Monitor`) is private.

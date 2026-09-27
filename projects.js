@@ -12,5 +12,5 @@
 //                 Status tags: green "Actively maintained" / "In progress", grey "Complete".
 window.PROJECTS = [
   { title: "SA Fuel Price Preview", description: "Fuel price predictions for South Africa, so you know what's coming at the pump before the official announcement.", url: "https://fuel.psyphin.co.za/", cta: "View predictions", tags: ["Data", "South Africa", { label: "Actively maintained", color: "green" }] },
-  { title: "Digital Radio Hotspot", description: "A DMR digital radio hotspot on a Raspberry Pi, linking a handheld radio to digital voice networks over the internet.", url: "dmr-hotspot/", cta: "View project", tags: ["DMR", "Raspberry Pi", { label: "Complete", color: "grey" }] },
+  { title: "Digital Radio Hotspot", description: "A true-duplex DMR hotspot on a Raspberry Pi 3B with an MMDVM dual hat, running WPSD and linking a handheld radio to the BrandMeister network.", url: "dmr-hotspot/", cta: "View project", tags: ["DMR", "Raspberry Pi", { label: "Complete", color: "grey" }] },
 ];
