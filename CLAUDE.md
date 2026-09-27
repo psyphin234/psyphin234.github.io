@@ -4,6 +4,8 @@ Personal landing page for PsyPhin, hosted on GitHub Pages from the `psyphin234/p
 
 Plain static HTML/CSS/JS. **No build step, no framework, no bundler.** Whatever is committed is what's served.
 
+**Runbook:** this site is the proof of concept for a repeatable small-business website + domain + email setup, documented in the living doc [Runbook: Small-Business Website, Domain & Email](https://claude.ai/code/artifact/c6599b33-9301-4e65-8b4d-bd8c06bd1c0c). When the process changes (a new DNS quirk, a finished step, a lesson learned), update that runbook as well as this file.
+
 ## Structure
 
 ```
