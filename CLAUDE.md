@@ -1,6 +1,6 @@
 # psyphin.co.za
 
-Personal landing page for Psyphin, hosted on GitHub Pages from the `psyphin234/psyphin234.github.io` repo (branch `main`, root folder) at the custom domain **psyphin.co.za**.
+Personal landing page for PsyPhin, hosted on GitHub Pages from the `psyphin234/psyphin234.github.io` repo (branch `main`, root folder) at the custom domain **psyphin.co.za**.
 
 Plain static HTML/CSS/JS. **No build step, no framework, no bundler.** Whatever is committed is what's served.
 
@@ -46,6 +46,7 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
 
 ## Conventions
 
+- The brand name is written **PsyPhin** (capital P, lowercase sy, capital P, lowercase hin) in all visible text: titles, meta tags, alt text and footers. Domains and URLs stay lowercase (`psyphin.co.za`).
 - Keep paths **relative** (`css/style.css`, not `/css/style.css`) so the page also works when opened directly from disk.
 - The only absolute URLs are the Open Graph tags in `<head>` (these need the full `https://psyphin.co.za/...`).
 - Mobile-first check: layout must fit at 390px wide with no horizontal scroll.
@@ -89,7 +90,7 @@ Because this is the `psyphin234.github.io` **user site** with a custom domain, *
 
 `psyphin234/pcb-consulting-website` (local clone `E:\Claude_projects\Pieter_Website`) is a **separate client site**. It's only stored in this account until its own domain becomes available (waiting for it to expire from the previous web developer). Because of the inheritance above, it's currently reachable at `psyphin.co.za/pcb-consulting-website/`. That's a side effect, not intended.
 
-- Don't link to it, add it to `projects.js`, or add psyphin tracking or branding to it.
+- Don't link to it, add it to `projects.js`, or add PsyPhin tracking or branding to it.
 - When its domain arrives, set that domain as the custom domain in *its* repo's Settings → Pages (plus DNS at its registrar), and it stops using psyphin.co.za. If it's needed off psyphin.co.za sooner, move the repo to a free GitHub organisation.
 
 ### SA Fuel Price Preview
