@@ -15,8 +15,8 @@ assets/img/             Web-optimised logo (logo-{480,800,1200}.{webp,jpg}) + og
 favicon.ico             16/32/48px favicon, cropped from the "P" in the logo
 favicon-32.png          PNG favicon
 apple-touch-icon.png    180px iOS home-screen icon (full shield)
-psyphin-logo-black.jpg  Source logo used to generate everything in assets/img and the favicons
-psyphin-logo.jpg        Alternative white-background logo (not used on the site)
+psyphin-logo-black.jpg  Source logo used to generate everything in assets/img and the favicons (keep - reference original)
+psyphin-logo.jpg        Alternative white-background logo, not used on the site (keep - reference original)
 tools/optimize-images.py  Regenerates images/favicons from the source logo (needs Pillow)
 CNAME                   Custom domain for GitHub Pages - must contain only: psyphin.co.za
 .nojekyll               Tells GitHub Pages to serve files as-is (skip Jekyll)
@@ -59,3 +59,33 @@ Open `index.html` in a browser, or run `python -m http.server` and visit http://
 ## Deploying
 
 Push to `main`. GitHub Pages redeploys automatically (usually within a minute or two).
+
+## Domain, DNS and HTTPS (set up 2026-09-27)
+
+- DNS is at **Afrihost** (ClientZone). Nameservers: `ns.dns1.co.za`, `ns.dns2.co.za`, `ns.otherdns.com`, `ns.otherdns.net`.
+- Records for the site:
+  - `@` A → `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+  - `www` CNAME → `psyphin234.github.io.`
+  - `_github-pages-challenge-psyphin234` TXT → the verification code shown at https://github.com/settings/pages. Removing and re-adding the domain there generates a **new** code, and the TXT value must then be updated.
+- Mail records (MX, `mail`, `webmail`, `cpanel`, SPF, DMARC, autodiscover) still point at Afrihost. Don't touch them when editing web records. A `*` wildcard A record also points at Afrihost; a specific record such as `fuel` overrides it.
+- Enforce HTTPS is on. GitHub issues and renews the Let's Encrypt certificate for `psyphin.co.za` and `www.psyphin.co.za` automatically. If a certificate is ever stuck, go to repo Settings → Pages, clear the Custom domain, save, re-enter `psyphin.co.za` and save again.
+- Check status: `gh api repos/psyphin234/psyphin234.github.io/pages` and `.../pages/health`.
+
+## Other GitHub Pages repos live under this domain
+
+Because this is the `psyphin234.github.io` **user site** with a custom domain, **every other psyphin234 repo with Pages enabled (and no CNAME of its own) is automatically served at `https://psyphin.co.za/<repo-name>/`**. The old `psyphin234.github.io/<repo-name>/` address 301-redirects there.
+
+- Don't create files or folders here whose names match another Pages repo (for example `sa-fuel-price-preview/`), or the paths will clash.
+- Removing the custom domain or `CNAME` from this repo moves every project site back to `psyphin234.github.io/...`.
+- A new project hosted on Pages gets its URL for free. Add its card to `projects.js` using `https://psyphin.co.za/<repo-name>/`.
+
+### SA Fuel Price Preview
+
+- Lives at **https://psyphin.co.za/sa-fuel-price-preview/** (repo `psyphin234/sa-fuel-price-preview`, local clone `E:\Claude_projects\BFP_Website`, which has its own CLAUDE.md). **Do fuel-project work from that folder, not this one.**
+- Its header has a "← psyphin.co.za" back link to https://psyphin.co.za/.
+- That repo is auto-committed and pushed hourly at about :18 by a scheduled Python task. Read its CLAUDE.md before touching it, and never kill `python.exe` processes by image name.
+- To move it to `fuel.psyphin.co.za` later:
+  1. Add Afrihost `fuel` CNAME → `psyphin234.github.io.`
+  2. Set the custom domain in that repo's Settings → Pages.
+  3. Update the `url` in `projects.js` here.
+  4. Update the absolute back-link URL and README in that repo if needed.
