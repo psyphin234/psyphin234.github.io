@@ -3,3 +3,4 @@ __pycache__/
 Thumbs.db
 # DNS zone exports from Afrihost (reference only, never publish)
 *.zone
+.review/

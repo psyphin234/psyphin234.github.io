@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RC SHERP Crawler · PsyPhin</title>
+  <meta name="description" content="A scratch-built 1:15 radio-controlled crawler based on the SHERP ATV, designed in Tinkercad, 3D printed in PETG and TPU, and driven by an ESP32.">
+  <meta name="theme-color" content="#020203">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://psyphin.co.za/sherp-crawler/">
+  <meta property="og:title" content="RC SHERP Crawler · PsyPhin">
+  <meta property="og:description" content="A scratch-built 1:15 radio-controlled crawler based on the SHERP ATV, designed in Tinkercad, 3D printed in PETG and TPU, and driven by an ESP32.">
+  <meta property="og:image" content="https://psyphin.co.za/sherp-crawler/img/19-wheels-on-800.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="../favicon.ico" sizes="48x48">
+  <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@400;500&display=swap">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Main">
+      <a href="../index.html#projects">Projects</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero hero--compact">
+      <a href="../index.html" aria-label="PsyPhin home">
+        <picture>
+          <source type="image/webp"
+                  srcset="../assets/img/logo-480.webp 480w, ../assets/img/logo-800.webp 800w"
+                  sizes="(max-width: 480px) 100vw, 440px">
+          <img class="hero-logo"
+               src="../assets/img/logo-480.jpg"
+               srcset="../assets/img/logo-480.jpg 480w, ../assets/img/logo-800.jpg 800w"
+               sizes="(max-width: 480px) 100vw, 440px"
+               width="1200" height="655"
+               alt="PsyPhin logo">
+        </picture>
+      </a>
+    </section>
+
+    <section class="section">
+      <!-- Title and tags come from this project's line in ../projects.js (matched by url). -->
+      <div class="project-head" data-project="sherp-crawler/"><h2>RC SHERP Crawler</h2></div>
+
+      <!-- Source: E:\Claude_projects\Sherp_Build (sherp-crawler-build-log.md + photo-map.md).
+           Images made with tools/optimize-photos.py (sources are small forum copies, so only -800.jpg is kept). -->
+      <div class="prose">
+        <p class="lead">A radio-controlled crawler designed from scratch and loosely based on the SHERP ATV, the amphibious off-road vehicle with giant, soft, low-pressure tyres.</p>
+        <p>Everything is designed in Tinkercad, 3D printed in PETG and TPU, and driven by an ESP32 microcontroller. This page follows the build in date order, including what went wrong and how I fixed it. The community discussion is in the <a href="https://www.4x4community.co.za/forum/showthread.php/389487-4x4-build-thread-(rc)">4x4community.co.za build thread</a>.</p>
+
+        <h3>Where it's at</h3>
+        <ul>
+          <li><strong>Wheels on, one motor in:</strong> the body, wheels and first motor are fitted, and one side has driven.</li>
+          <li><strong>Belts being replaced:</strong> the 3D-printed belts stretched and slip, so real rubber GT2 belts are going in.</li>
+          <li><strong>Next:</strong> fit the second motor, get both sides driving, and do the first real drive test before deciding whether the motors need upgrading.</li>
+        </ul>
+
+        <figure class="figs">
+          <img class="wide" src="img/19-wheels-on-800.jpg" alt="The black 3D-printed crawler body sitting on four chunky black tyres with blue rims, with a marker pen beside it for scale" width="800" height="600" loading="lazy">
+        </figure>
+
+        <h3>Why build one?</h3>
+        <p>My son loves RC cars, but he gets bored of things quickly, so I wasn't about to spend on a proper one yet. I wanted something biggish, different and fully customisable, where I could change the power, the controls or the body whenever I liked instead of being locked into store-bought parts. That meant 3D printing and DIY electronics.</p>
+        <p>I chose the SHERP after seeing one in real life. DCD Protected Mobility has one, which I first saw at an outdoor expo and which has been lent out for search-and-rescue missions. I kept the real SHERP's core principles:</p>
+        <ul>
+          <li><strong>Skid steering.</strong> There's no steering linkage; each side is driven at a different speed.</li>
+          <li><strong>Belt- or chain-driven solid axles.</strong> Front and rear wheels on each side are linked.</li>
+          <li><strong>No suspension.</strong> The soft tyres do the job.</li>
+          <li><strong>Low centre of gravity.</strong></li>
+        </ul>
+        <p>I thought the insides would be easy: print a few connections, shove in some motors and a battery. They weren't. Motor size depended on weight, weight depended on the body, the body depended on the wheels, and the wheels depended on the insides. Everything depended on everything else.</p>
+
+        <h3>Build log</h3>
+
+        <h4>1 September: first motor test</h4>
+        <p>To get moving I bought a cheap test motor with a built-in reduction: an <strong>N20 micro gearmotor</strong>, 6 V, 1:298, 33 RPM, 1.5 kg·cm stall torque. It's cheap, tiny and a standard size, so I can swap it for something faster or stronger later without redesigning everything.</p>
+        <figure class="figs">
+          <img src="img/01-motor-test-800.jpg" alt="An N20 gearmotor in a blue 3D-printed test mount driving a small wheel" width="450" height="600" loading="lazy">
+          <figcaption>The N20 test rig. <a href="https://youtube.com/shorts/EkiAbtufWBc">Video of the motor running</a> at 4 V (it's rated up to 9 V).</figcaption>
+        </figure>
+
+        <h4>3 September: scale, wheels and gearing</h4>
+        <p><strong>Scale: 1:15, then 1:20.</strong> I originally wanted 1:15, but the parts were too big for my printer bed, so I redesigned at 1:20. I researched the real vehicle's clearance, wheel size and wheelbase and scaled them down, which gave wheels of <strong>90 mm × 30 mm</strong>. The roof ended up slightly lower than scale because of printer limits, but I kept the wheels and main body as close to scale as I could.</p>
+        <figure class="figs">
+          <img src="img/02-early-design-1-800.jpg" alt="Tinkercad render of an early design: four large treaded wheels around a blue body" width="561" height="425" loading="lazy">
+          <img src="img/03-early-design-2-800.jpg" alt="Tinkercad render of an early chassis: a red and blue floor pan between four large wheels" width="427" height="492" loading="lazy">
+          <figcaption>Early 1:20 design iterations in Tinkercad.</figcaption>
+        </figure>
+        <p><strong>Drivetrain layout.</strong> I played with a few ideas for copying the real drivetrain, but the real SHERP uses clutches and brakes to steer, which wasn't going to work at this scale. So I settled on <strong>two motors, one per side</strong>.</p>
+        <p><strong>Gearing.</strong> My first attempt was 3D-printed gears. They looked great on paper and were terrible in real life at this tiny size.</p>
+        <figure class="figs">
+          <img src="img/05-printed-gear-800.jpg" alt="A blue 3D-printed gear train on a test base, with visibly rough teeth" width="584" height="386" loading="lazy">
+          <figcaption>Printed gears: scrapped.</figcaption>
+        </figure>
+        <p>I switched to bought gears: <strong>Tamiya Module 0.6, 18T on the motor driving 29T on the axle</strong>, with a pulley linking to the other axle. I'd been aiming for 3:1, but this was what the shop had.</p>
+        <figure class="figs">
+          <img src="img/06-gear-concept-800.jpg" alt="Tinkercad render of the inside of the body with an N20 motor and gears at each end" width="773" height="609" loading="lazy">
+          <figcaption>Gear and pulley concept.</figcaption>
+        </figure>
+        <p>On paper that gave about <strong>3× the torque needed</strong>, roughly 1 kg of pulling force and about 0.5 km/h top speed. The axles are <strong>3.18 mm (1/8") piano wire</strong> with two bearings per axle. The estimated weight at this point was <strong>about 700 g</strong>.</p>
+        <p><strong>Community input:</strong> a member pointed out that the motor's torque figure is interpolated rather than measured, and that I should allow about 30% loss through the gears and belts. Even so, grip would run out before the motor did. Another member warned that 1:20 might be too small for proper off-roading clearance, which turned out to be right.</p>
+
+        <h4>4 September: how to link the axles</h4>
+        <p>A forum member suggested a clever layout for an amphibious build. The motors sit low inside the body and drive belts <strong>up to a shaft near the roof</strong>, which then drives an outside belt down to both wheels with a tensioner. The only holes through the hull would then be high above the waterline.</p>
+        <figure class="figs">
+          <img class="wide" src="img/07-belt-concept-800.jpg" alt="Line sketch of two wheels with belts running up to a high shaft between them" width="800" height="347" loading="lazy">
+          <figcaption>My rough sketch of the high-mounted belt idea.</figcaption>
+        </figure>
+        <p>Someone also suggested <strong>four motors, one per wheel</strong>. I considered it, but the motor drivers I know handle two motors at most, and all four would need to run at exactly the same speed or the wheels would fight each other.</p>
+        <p><strong>Decision:</strong> a 6 mm GT2 belt was the narrowest I could easily get, which made the high-mounted layout messy, and adding a tensioner was tricky. So I went with a <strong>direct fit instead: a 232 mm, 6 mm GT2 belt on 20T pulleys with 3.17 mm bores</strong>. No single shop had every part, so I bought them as I passed through each area.</p>
+        <figure class="figs">
+          <img class="wide" src="img/08-direct-belt-800.jpg" alt="Tinkercad renders of the direct-fit layout: a pulley inside the body and a belt linking the front and rear wheels" width="800" height="363" loading="lazy">
+          <figcaption>Direct-fit belt layout.</figcaption>
+        </figure>
+
+        <h4>7 September: TPU tyres</h4>
+        <p>I printed the first <strong>TPU tyres</strong>. The idea is that they deform a bit under the vehicle's weight (estimated at about 1.2 kg by then) and act as the suspension. I'm not sold on the beadlock rims yet; a future version may drop them.</p>
+        <figure class="figs">
+          <img src="img/09-tpu-tyre-1-800.jpg" alt="A black TPU tyre with deep treads on a blue rim" width="450" height="600" loading="lazy">
+          <img src="img/10-tpu-tyre-2-800.jpg" alt="The motor gearbox held next to a printed tyre" width="800" height="558" loading="lazy">
+        </figure>
+
+        <h4>10 September: the weight problem, and back to 1:15</h4>
+        <p>While working out filament quantities for costing, I realised how heavy this had become:</p>
+        <ul>
+          <li>Going back to <strong>1:15</strong> (because everything at 1:20 was just too tight inside) added about <strong>800 g</strong>.</li>
+          <li>The <strong>wheels and rims alone weighed 532 g</strong>.</li>
+          <li>I had sized the motors for <strong>400 g</strong>, and the vehicle was now around <strong>1.2 kg</strong>. The N20s would stall at maximum load.</li>
+        </ul>
+        <p>My options were:</p>
+        <ol>
+          <li><strong>Cut weight.</strong> This was unlikely to get far; maybe 100 g from thinner walls and less infill.</li>
+          <li><strong>Use RC-style torque motors.</strong> These have no built-in gearbox, so I'd need another reduction stage, and I had no idea where they'd fit.</li>
+          <li><strong>Upgrade slightly to a 25 mm planetary gearmotor, 77 RPM, 6 V.</strong> It would be pushing the limits, but it should fit mounted perpendicular and meets my torque and speed targets.</li>
+        </ol>
+        <p>Either upgrade also needs a bigger motor driver.</p>
+        <p>A forum member suggested putting the motors up in the side "sponson" boxes so the heavier batteries could lie flat on the floor, lowering the centre of gravity. He also suggested making some inner areas solid, since most of a print's weight is in the surface layers.</p>
+        <figure class="figs">
+          <img src="img/12-motor-placement-1-800.jpg" alt="Tinkercad render comparing the current small motors with newer, larger ones being fit-tested inside the body" width="800" height="646" loading="lazy">
+          <img src="img/13-motor-placement-2-800.jpg" alt="Tinkercad render with motors raised into the side boxes and batteries lying on the floor" width="760" height="800" loading="lazy">
+          <figcaption>Motor placement sketches.</figcaption>
+        </figure>
+
+        <h4>11 September: inside belts and a shell mockup</h4>
+        <p>A refinement came up on the forum: run the belts <strong>inside</strong> the body with an idler pulley. That keeps the floor clear for the batteries and makes it easier to use a standard-length belt. Belts on the outside would have forced the wheels too far out and ruined the shape. The batteries won't need to come out, because I'm building in a charger.</p>
+        <figure class="figs">
+          <img src="img/14-inside-belt-1-800.jpg" alt="Tinkercad render of the drivetrain with belts running inside the body over an idler pulley" width="800" height="576" loading="lazy">
+          <img src="img/15-inside-belt-2-800.jpg" alt="Angled Tinkercad view of the inside-belt layout with motors, batteries and wheels" width="800" height="527" loading="lazy">
+          <figcaption>Inside belts with an idler pulley.</figcaption>
+        </figure>
+        <p>I also printed a <strong>mockup of the shell</strong> for weight planning and to try ideas in real life. Proper GT2 belts were on order from China.</p>
+
+        <h4>16 September: final wheels</h4>
+        <p>TPU prints slowly, so each tyre took <strong>about 15 hours</strong>. A few didn't come out perfectly, but they're good enough for a prototype.</p>
+        <ul>
+          <li><strong>R29 per tyre and R7 per rim: R144 for the full set of four</strong></li>
+          <li><strong>328 g for all four</strong>, down from 532 g for the first versions</li>
+        </ul>
+        <p>TPU settings that worked: 8% infill, retraction off, 25 mm/s, 100% cooling fan. The rim bore is 57 mm rather than the scale-accurate 42.3 mm, because that's what makes assembly practical.</p>
+        <figure class="figs">
+          <img src="img/16-wheel-set-800.jpg" alt="Four finished black TPU tyres on blue rims, stacked in two pairs" width="800" height="600" loading="lazy">
+          <figcaption>The finished wheel set.</figcaption>
+        </figure>
+
+        <h4>20 September: body, components board and first belt test</h4>
+        <p><strong>Thin-shell body.</strong> I printed the body as a thin shell. It developed some cracks, but it's the prototype body and I'll use it until it fails.</p>
+        <figure class="figs">
+          <img src="img/17-body-print-800.jpg" alt="The grey body shell printing on the 3D printer's bed" width="800" height="600" loading="lazy">
+          <figcaption>The prototype body printing.</figcaption>
+        </figure>
+        <p><strong>Removable components board.</strong> I cut out a section in the middle of the body so the components board prints separately. If I want to change the layout, I only reprint that board instead of the whole body.</p>
+        <p><strong>Parts arrive, and the axles don't fit.</strong> The cheap gears and belts from China turned out to be surprisingly good quality. But the gears came with <strong>3 mm bores and my axles are 3.18 mm</strong>. Drilling out the gears didn't work, so I <strong>sanded the axles down</strong> instead.</p>
+        <p><strong>Printed TPU belts.</strong> I printed the belts in TPU at exactly <strong>296 mm</strong>, the right length for my 128 mm axle spacing with 20T pulleys. For this first test all the wheels are joined to one motor just to prove the belt run. In the final build, this motor will only drive the right-hand wheels, and a second motor at the bottom will drive the left.</p>
+        <p>Next steps at this point were to cut a keyway into the axles so the wheels lock on, mount the bearings in the body, and fit the components board. I'm sticking with the N20s for now because I already have them. If they turn out too weak, I'll fit the larger motors then.</p>
+        <p><strong>Printer problems.</strong> Around this time, big prints (including the body) started showing <strong>horizontal cracks every 13–15 mm</strong>, bad enough to snap supports and force me to abort an <strong>18-hour print</strong>. My old Anet E10 was dying anyway, so I replaced it with a <strong>Creality Ender 3 V3 SE</strong>. The cracks came back even on a plain calibration cube, which pointed at the slicer rather than the printer. The cause was <strong>Z-hop combined with retract-on-layer-change in Creality Print</strong>. Turning both off (and slicing in Cura) fixed it.</p>
+
+        <h4>25 September: wheels on, motor in</h4>
+        <p>Wheels are on and the motor is fitted on one side.</p>
+        <figure class="figs">
+          <img src="img/20-motor-seating-800.jpg" alt="Looking down into the body at the N20 motor and gears seated on the bottom plate" width="450" height="600" loading="lazy">
+          <img src="img/21-belt-run-inside-800.jpg" alt="Inside the body, the motor and the belt running between the axles" width="450" height="600" loading="lazy">
+          <img src="img/22-belt-and-motor-800.jpg" alt="Close-up of the belt, pulleys and motor inside the body" width="800" height="600" loading="lazy">
+          <figcaption>Motor seating and the belt run.</figcaption>
+        </figure>
+        <p><strong>Swappable build plate.</strong> I made a swappable plate at the bottom so I can change the motor seating without reprinting the whole model. I forgot a support and it didn't fit, but the test still showed up some defects worth fixing.</p>
+        <p><strong>The belt problem.</strong> The TPU belt stretched and now jumps teeth on the pulley, so for now it's "1.3-wheel drive". Real GT2 belts have fibreglass or Kevlar cords inside to stop them stretching, and TPU doesn't. An idler probably won't help, because the TPU just keeps stretching.</p>
+        <p><strong>Fix:</strong> I bought a <strong>roughly 900 mm real rubber GT2 belt from China for about R20</strong>. I'll cut and join it into two 296 mm loops, one per side, and keep the printed belts as spares.</p>
+        <figure class="figs">
+          <img src="img/23-gt2-belt-teeth-800.jpg" alt="Close-up of a black GT2 belt's teeth" width="800" height="600" loading="lazy">
+          <img src="img/24-rubber-gt2-belt-800.jpg" alt="The long black rubber GT2 belt laid out in a loop" width="450" height="600" loading="lazy">
+          <figcaption>The rubber GT2 belt that replaces the printed ones.</figcaption>
+        </figure>
+
+        <h3>Electronics</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Part</th><th>Choice</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td>Controller</td><td>ESP32-C3</td><td>Runs the tank mixing and motor control</td></tr>
+              <tr><td>Transmitter</td><td>Second ESP32-C3</td><td>Handheld unit, linked over ESP-NOW</td></tr>
+              <tr><td>Motor driver</td><td>DRV8833 dual driver</td><td>R49; 1.2 A continuous / 2 A peak per channel</td></tr>
+              <tr><td>Battery</td><td>4 × 18650 in 2S2P</td><td>Built-in USB-C 2S charger/BMS, so the cells never need removing</td></tr>
+              <tr><td>ESP32 power</td><td>Buck converter</td><td>Steps the battery voltage down</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Skid-steer mixing is done in code:</p>
+<pre><code>left  = throttle + steering
+right = throttle - steering</code></pre>
+
+        <h3>The motor question (still open)</h3>
+        <p>The crawler currently runs <strong>N20 33 RPM 6 V motors</strong>. They're light (about 9 g each), run cool and draw only 0.2 A at stall, but they were sized for a 400 g vehicle.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Option</th><th>For</th><th>Against</th></tr></thead>
+            <tbody>
+              <tr><td>Stay on N20 33 RPM</td><td>Already fitted, cheap</td><td>Thin torque margin at about 1.1–1.2 kg; slow</td></tr>
+              <tr><td>Pololu HP N20 (150:1 / 380:1)</td><td>Same size, drop-in</td><td>About R1,000–1,300 landed after import</td></tr>
+              <tr><td>25 mm planetary / JGA25-370, 77 RPM</td><td>6.2 kg·cm stall; local stock</td><td>89 g each; 1.8 A stall is near the DRV8833's limit; needs new mounts</td></tr>
+              <tr><td>JGA25-370 130 RPM, Tamiya 540, Reedy Radon 2 550</td><td>Evaluated</td><td>Speed, size, weight or fitting drawbacks</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The plan is to see how the N20s actually perform once both sides are driving, then decide.</p>
+
+        <h3>What it costs</h3>
+        <p>My parts plan, with actual prices filled in where I have them:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Item</th><th>Planned</th><th>Actual so far</th></tr></thead>
+            <tbody>
+              <tr><td>2 × N20 33 RPM motors</td><td>R180</td><td>R196</td></tr>
+              <tr><td>Gear sets</td><td>R200</td><td></td></tr>
+              <tr><td>Belts</td><td>R69</td><td>+ about R20 for the rubber GT2 belt</td></tr>
+              <tr><td>2 × ESP32-C3</td><td>R140</td><td></td></tr>
+              <tr><td>Motor driver</td><td>R70</td><td>R49 (DRV8833)</td></tr>
+              <tr><td>Driver board</td><td>R70</td><td></td></tr>
+              <tr><td>Bearings</td><td>R140</td><td></td></tr>
+              <tr><td>Piano wire</td><td>R80</td><td></td></tr>
+              <tr><td>Nuts and bolts</td><td>R100</td><td></td></tr>
+              <tr><td>Battery pack</td><td>R200</td><td></td></tr>
+              <tr><td>Filament</td><td>R600</td><td>R144 so far (wheels)</td></tr>
+              <tr><td><strong>Total</strong></td><td><strong>About R1,880</strong></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Not included:</strong> the handheld remote (about R500), a motor upgrade (closer to R800 for the pair locally), and the Ender 3 V3 SE, which replaced a dying printer and is a workshop tool.</p>
+        <p>For comparison, a forum member estimated <strong>at least R5,000</strong> for a SHERP-style build using decent off-the-shelf motors, ESCs, servos and radio gear. The real cost is my time, and I'm happy to give it. I couldn't buy this out of the box, and even if I could, I wouldn't.</p>
+
+        <h3>Lessons so far</h3>
+        <ul>
+          <li><strong>Weight drives everything.</strong> Re-check the motor torque every time the weight estimate changes; mine went from 400 g to 1.2 kg.</li>
+          <li><strong>Printer size shouldn't dictate scale.</strong> I went 1:15 → 1:20 → 1:15 because 1:20 was too cramped inside.</li>
+          <li><strong>Printed gears don't work at this size.</strong> Buy them.</li>
+          <li><strong>Printed TPU belts stretch.</strong> Use reinforced rubber GT2 belts.</li>
+          <li><strong>Check bore sizes.</strong> 3 mm gears on 3.18 mm axles cost me an afternoon of sanding.</li>
+          <li><strong>Design for swapping.</strong> The separate components board and bottom plate mean small changes don't need a full reprint.</li>
+          <li><strong>Slicer settings can look like hardware faults.</strong> Z-hop plus retract-on-layer-change caused cracks I blamed on the printer.</li>
+        </ul>
+
+        <h3>Next steps</h3>
+        <ul>
+          <li>Join the rubber GT2 belts and refit</li>
+          <li>Fit the second motor and get both sides driving</li>
+          <li>Cut keyways into the axles and mount the bearings in the body</li>
+          <li>Design printed dust caps for the wheel hubs</li>
+          <li>First real drive test, then decide on the motor upgrade</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year">2026</span> PsyPhin &middot; psyphin.co.za</p>
+  </footer>
+
+  <script src="../projects.js"></script>
+  <script src="../js/main.js"></script>
+  <!-- GoatCounter: cookie-free visitor stats at https://psyphin.goatcounter.com/ -->
+  <script data-goatcounter="https://psyphin.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

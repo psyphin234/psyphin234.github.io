@@ -13,6 +13,7 @@ index.html              Home page: hero logo, Projects, footer
 contact.html            Contact page: compact logo + info@psyphin.co.za (mailto link + copy button)
 dmr-hotspot/index.html  Project page for Digital Radio Hotspot  -> psyphin.co.za/dmr-hotspot/
 dmr-hotspot/img/        Its photos (<name>-800.jpg + <name>-1600.jpg) and the two SVG diagrams
+sherp-crawler/index.html  Project page for RC SHERP Crawler -> psyphin.co.za/sherp-crawler/ (images in sherp-crawler/img/, -800.jpg only)
 projects.js             THE project list (window.PROJECTS). Edit this to add/change projects.
 js/main.js              Shared script for all pages: project cards (#project-grid), project-page headings ([data-project]), email + copy buttons, footer year
 css/style.css           All styles. Colours are CSS variables at the top of the file.
@@ -59,6 +60,8 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
     - Owner's rules: **no talkgroup configuration** (the README and diagram's TG details are left out, and the diagram copy here has "TG655" removed), **no location** (the town was removed), frequencies only **433.300 MHz (hotspot RX) / 438.300 MHz (hotspot TX)** (anything else in old notes is outdated), callsign ZR6KW is fine.
     - Dashboard screenshots can show other operators' callsigns, names and towns: cover them before publishing (`dashboard-live-call` has the caller's name and town covered). `Dashboard1.png` in the DMR folder has not been reviewed, so it isn't published.
     - Current state (2026-09-27): a 3 A-rated Micro-USB cable appears to have fixed the under-voltage; GPIO power injection was tried and removed (it bypasses the Pi's input protection); intermittent modem lock-ups remain; the WPSD Services Watchdog still needs fixing; TX calibration needs an RTL-SDR. Status tag: amber "In testing".
+  - **Inline image groups:** `<figure class="figs">` holds one or more `<img>` (no cropping; two per row on wide screens, one on phones) plus an optional `<figcaption>`; add `class="wide"` to an image to span the full width. Use this for build-log style pages. `.gallery` (cropped 4:3 thumbnails that link to large versions) suits photo sets.
+  - **RC SHERP Crawler source:** `E:\Claude_projects\Sherp_Build` (`sherp-crawler-build-log.md` + `photo-map.md` + forum image downloads). Sources are small forum copies, so only `-800.jpg` versions are kept. Not published: the shell-mockup video (no full link yet), the "inside the body" photo and drivetrain/weight-planning images (not in the folder), vendor spec/shop screenshots, and two Land Cruiser RC photos that aren't part of this build (one shows a number plate). Shop names were dropped from prices.
   - Relative `url`s open in the same tab without the ↗ arrow; `https://` urls open a new tab with the arrow.
   - Preview project folders with `python -m http.server`. Opening from disk shows a folder listing, because `dmr-hotspot/` doesn't resolve to `index.html` there.
   - The Patient Monitor Smartwatch card and page (`patient-monitor/`) were removed on 2026-09-27; restore them from git history if needed. If it comes back, keep its "Hobby project, not a medical device" notice (`.notice`) and never describe it as clinically useful. Its code repo (`psyphin234/patient_Monitor`) is private.
@@ -74,7 +77,7 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
 - The only absolute URLs are the Open Graph tags in `<head>` (these need the full `https://psyphin.co.za/...`).
 - Mobile-first check: layout must fit at 390px wide with no horizontal scroll.
 - Fonts come from Google Fonts (Rajdhani for headings, Inter for body) with system-font fallbacks.
-- Visitor stats: GoatCounter (cookie-free, no consent banner needed), with the script tag just before `</body>` on every page. The dashboard is https://psyphin.goatcounter.com/ and is shared with the fuel site; pages are told apart by path. `/` is the landing page, `/contact.html` the contact page, `/dmr-hotspot/` the project page; fuel-site paths are prefixed with its host (`fuel.psyphin.co.za/`), and its visits before 2026-09-27 are under `/sa-fuel-price-preview/`. Don't add it to the PCB site.
+- Visitor stats: GoatCounter (cookie-free, no consent banner needed), with the script tag just before `</body>` on every page. The dashboard is https://psyphin.goatcounter.com/ and is shared with the fuel site; pages are told apart by path. `/` is the landing page, `/contact.html` the contact page, `/dmr-hotspot/` and `/sherp-crawler/` the project pages; fuel-site paths are prefixed with its host (`fuel.psyphin.co.za/`), and its visits before 2026-09-27 are under `/sa-fuel-price-preview/`. Don't add it to the PCB site.
 
 ## Changing the logo
 

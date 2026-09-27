@@ -14,4 +14,5 @@
 window.PROJECTS = [
   { title: "SA Fuel Price Preview", description: "Fuel price predictions for South Africa, so you know what's coming at the pump before the official announcement.", url: "https://fuel.psyphin.co.za/", cta: "View predictions", tags: ["Data", "South Africa", { label: "Actively maintained", color: "green" }] },
   { title: "Digital Radio Hotspot", description: "A true-duplex DMR hotspot on a Raspberry Pi 3B with an MMDVM dual hat, running WPSD and linking a handheld radio to the BrandMeister network.", url: "dmr-hotspot/", cta: "View project", tags: ["DMR", "Raspberry Pi", { label: "In testing", color: "amber" }] },
+  { title: "RC SHERP Crawler", description: "A scratch-built 1:15 radio-controlled crawler based on the SHERP ATV, designed in Tinkercad, 3D printed in PETG and TPU, and driven by an ESP32.", url: "sherp-crawler/", cta: "View project", tags: ["3D printing", "ESP32", { label: "In progress", color: "green" }] },
 ];
