@@ -20,8 +20,10 @@
 
     if (project.tags && project.tags.length) {
       var tags = el("ul", "tags");
+      // A tag is a plain string (blue), or { label, color } for a coloured tag, e.g. color: "green".
       project.tags.forEach(function (tag) {
-        tags.appendChild(el("li", null, tag));
+        if (typeof tag === "string") return tags.appendChild(el("li", null, tag));
+        tags.appendChild(el("li", tag.color ? "tag--" + tag.color : null, tag.label));
       });
       card.appendChild(tags);
     }
