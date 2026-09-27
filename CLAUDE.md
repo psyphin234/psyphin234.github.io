@@ -47,6 +47,7 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
 - The only absolute URLs are the Open Graph tags in `<head>` (these need the full `https://psyphin.co.za/...`).
 - Mobile-first check: layout must fit at 390px wide with no horizontal scroll.
 - Fonts come from Google Fonts (Rajdhani for headings, Inter for body) with system-font fallbacks.
+- Visitor stats: GoatCounter (cookie-free, no consent banner needed), with the script tag just before `</body>` in `index.html`. The dashboard is https://psyphin.goatcounter.com/ and is shared with the fuel site; pages are told apart by path (`/` = landing page, `/sa-fuel-price-preview/` = fuel site). Don't add it to the PCB site.
 
 ## Changing the logo
 
