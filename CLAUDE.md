@@ -46,6 +46,7 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
 ## Editing content
 
 - The home page is intentionally just the logo + Projects. To add a new section (e.g. About/Skills), copy the `<section class="section">` pattern in `index.html` - the `.section` styles and `h2` treatment apply automatically - and add a matching link in the header `<nav>`.
+- **Project source material** (raw photos, notes, build logs, screenshots) lives **outside this repo** in `E:\Claude_projects\<Project>` (e.g. `DMR`, `Sherp_Build`). Only web-ready output (optimised photos, the page) comes into the repo. This repo is public, so anything committed here is published and stays in the history.
 - **Project pages** live in their own folder (`dmr-hotspot/index.html`), served at `psyphin.co.za/<folder>/`. To add one:
   1. Copy an existing project folder and rename it: lowercase with hyphens, because URLs are case-sensitive. The name must not match another psyphin234 Pages repo.
   2. In `projects.js`, set that project's `url` to `"<folder>/"` and `cta: "View project"`.
