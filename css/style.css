@@ -387,6 +387,12 @@ img {
   border-radius: 10px;
 }
 
+.prose img.shot {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
 .prose .lead {
   font-size: 1.15rem;
   color: var(--text);
