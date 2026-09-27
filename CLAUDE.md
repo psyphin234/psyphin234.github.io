@@ -79,6 +79,13 @@ Because this is the `psyphin234.github.io` **user site** with a custom domain, *
 - Removing the custom domain or `CNAME` from this repo moves every project site back to `psyphin234.github.io/...`.
 - A new project hosted on Pages gets its URL for free. Add its card to `projects.js` using `https://psyphin.co.za/<repo-name>/`.
 
+### PCB Consulting (not part of this site)
+
+`psyphin234/pcb-consulting-website` (local clone `E:\Claude_projects\Pieter_Website`) is a **separate client site**. It's only stored in this account until its own domain becomes available (waiting for it to expire from the previous web developer). Because of the inheritance above, it's currently reachable at `psyphin.co.za/pcb-consulting-website/`. That's a side effect, not intended.
+
+- Don't link to it, add it to `projects.js`, or add psyphin tracking or branding to it.
+- When its domain arrives, set that domain as the custom domain in *its* repo's Settings → Pages (plus DNS at its registrar), and it stops using psyphin.co.za. If it's needed off psyphin.co.za sooner, move the repo to a free GitHub organisation.
+
 ### SA Fuel Price Preview
 
 - Lives at **https://psyphin.co.za/sa-fuel-price-preview/** (repo `psyphin234/sa-fuel-price-preview`, local clone `E:\Claude_projects\BFP_Website`, which has its own CLAUDE.md). **Do fuel-project work from that folder, not this one.**
