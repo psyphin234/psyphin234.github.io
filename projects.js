@@ -13,5 +13,4 @@
 window.PROJECTS = [
   { title: "SA Fuel Price Preview", description: "Fuel price predictions for South Africa, so you know what's coming at the pump before the official announcement.", url: "https://fuel.psyphin.co.za/", cta: "View predictions", tags: ["Data", "South Africa", { label: "Actively maintained", color: "green" }] },
   { title: "Digital Radio Hotspot", description: "A DMR digital radio hotspot on a Raspberry Pi, linking a handheld radio to digital voice networks over the internet.", url: "dmr-hotspot/", cta: "View project", tags: ["DMR", "Raspberry Pi", { label: "Complete", color: "grey" }] },
-  { title: "Patient Monitor Smartwatch", description: "An experimental ESP32 wearable that reads and displays vital signs. A hobby build for learning, not a medical device.", url: "patient-monitor/", cta: "View project", tags: ["ESP32", "Health", { label: "In progress", color: "green" }] },
 ];
