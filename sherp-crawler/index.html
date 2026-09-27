@@ -99,6 +99,10 @@
           <figcaption>Early 1:20 design iterations in Tinkercad.</figcaption>
         </figure>
         <p><strong>Drivetrain layout.</strong> I played with a few ideas for copying the real drivetrain, but the real SHERP uses clutches and brakes to steer, which wasn't going to work at this scale. So I settled on <strong>two motors, one per side</strong>.</p>
+        <figure class="figs">
+          <a class="video" href="https://www.youtube.com/watch?v=R5urUB5ClUg" target="_blank" rel="noopener" aria-label="the early chassis turning in a Tinkercad animation (video, opens YouTube in a new tab)"><img src="img/video-R5urUB5ClUg.jpg" alt="Tinkercad animation of the early chassis turning on its four big wheels" width="480" height="270" loading="lazy"></a>
+          <figcaption>Video: the early chassis turning in a Tinkercad animation</figcaption>
+        </figure>
         <p><strong>Gearing.</strong> My first attempt was 3D-printed gears. They looked great on paper and were terrible in real life at this tiny size.</p>
         <figure class="figs">
           <img src="img/05-printed-gear-800.jpg" alt="A blue 3D-printed gear train on a test base, with visibly rough teeth" width="584" height="386" loading="lazy">
@@ -108,6 +112,10 @@
         <figure class="figs">
           <img src="img/06-gear-concept-800.jpg" alt="Tinkercad render of the inside of the body with an N20 motor and gears at each end" width="773" height="609" loading="lazy">
           <figcaption>Gear and pulley concept.</figcaption>
+        </figure>
+        <figure class="figs">
+          <a class="video" href="https://www.youtube.com/watch?v=7lt6-QjoEU8" target="_blank" rel="noopener" aria-label="the N20 motor driving the gears on a test mount (3 September) (video, opens YouTube in a new tab)"><img src="img/video-7lt6-QjoEU8.jpg" alt="The N20 motor turning white gears on a blue 3D-printed test mount, powered from a bench supply" width="480" height="270" loading="lazy"></a>
+          <figcaption>Video: the N20 motor driving the gears on a test mount (3 September)</figcaption>
         </figure>
         <p>On paper that gave about <strong>3× the torque needed</strong>, roughly 1 kg of pulling force and about 0.5 km/h top speed. The axles are <strong>3.18 mm (1/8") piano wire</strong> with two bearings per axle. The estimated weight at this point was <strong>about 700 g</strong>.</p>
         <p><strong>Community input:</strong> a member pointed out that the motor's torque figure is interpolated rather than measured, and that I should allow about 30% loss through the gears and belts. Even so, grip would run out before the motor did. Another member warned that 1:20 might be too small for proper off-roading clearance, which turned out to be right.</p>
@@ -161,6 +169,10 @@
           <figcaption>Inside belts with an idler pulley.</figcaption>
         </figure>
         <p>I also printed a <strong>mockup of the shell</strong> for weight planning and to try ideas in real life. Proper GT2 belts were on order from China.</p>
+        <figure class="figs">
+          <a class="video" href="https://www.youtube.com/watch?v=V7XB4yDnorY" target="_blank" rel="noopener" aria-label="the shell design doing a skid turn in a Tinkercad animation (video, opens YouTube in a new tab)"><img src="img/video-V7XB4yDnorY.jpg" alt="Tinkercad animation of the grey body shell on its wheels doing a skid turn" width="480" height="270" loading="lazy"></a>
+          <figcaption>Video: the shell design doing a skid turn in a Tinkercad animation</figcaption>
+        </figure>
 
         <h4>16 September: final wheels</h4>
         <p>TPU prints slowly, so each tyre took <strong>about 15 hours</strong>. A few didn't come out perfectly, but they're good enough for a prototype.</p>
@@ -183,6 +195,10 @@
         <p><strong>Removable components board.</strong> I cut out a section in the middle of the body so the components board prints separately. If I want to change the layout, I only reprint that board instead of the whole body.</p>
         <p><strong>Parts arrive, and the axles don't fit.</strong> The cheap gears and belts from China turned out to be surprisingly good quality. But the gears came with <strong>3 mm bores and my axles are 3.18 mm</strong>. Drilling out the gears didn't work, so I <strong>sanded the axles down</strong> instead.</p>
         <p><strong>Printed TPU belts.</strong> I printed the belts in TPU at exactly <strong>296 mm</strong>, the right length for my 128 mm axle spacing with 20T pulleys. For this first test all the wheels are joined to one motor just to prove the belt run. In the final build, this motor will only drive the right-hand wheels, and a second motor at the bottom will drive the left.</p>
+        <figure class="figs">
+          <a class="video" href="https://www.youtube.com/watch?v=OcPXJzV2oLc" target="_blank" rel="noopener" aria-label="first test of the axles with the printed belts (video, opens YouTube in a new tab)"><img src="img/video-OcPXJzV2oLc.jpg" alt="Both axles turning together on the 3D-printed TPU belts, driven by one N20 motor" width="480" height="270" loading="lazy"></a>
+          <figcaption>Video: first test of the axles with the printed belts</figcaption>
+        </figure>
         <p>Next steps at this point were to cut a keyway into the axles so the wheels lock on, mount the bearings in the body, and fit the components board. I'm sticking with the N20s for now because I already have them. If they turn out too weak, I'll fit the larger motors then.</p>
         <p><strong>Printer problems.</strong> Around this time, big prints (including the body) started showing <strong>horizontal cracks every 13–15 mm</strong>, bad enough to snap supports and force me to abort an <strong>18-hour print</strong>. My old Anet E10 was dying anyway, so I replaced it with a <strong>Creality Ender 3 V3 SE</strong>. The cracks came back even on a plain calibration cube, which pointed at the slicer rather than the printer. The cause was <strong>Z-hop combined with retract-on-layer-change in Creality Print</strong>. Turning both off (and slicing in Cura) fixed it.</p>
 
