@@ -31,12 +31,14 @@
     card.appendChild(el("h3", null, project.title));
     card.appendChild(el("p", null, project.description));
 
-    var link = el("a", "button", project.cta || "Open");
-    link.href = project.url;
-    link.target = "_blank";
-    link.rel = "noopener";
-    link.setAttribute("aria-label", (project.cta || "Open") + ": " + project.title + " (opens in a new tab)");
-    card.appendChild(link);
+    if (project.url) {
+      var link = el("a", "button", project.cta || "Open");
+      link.href = project.url;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.setAttribute("aria-label", (project.cta || "Open") + ": " + project.title + " (opens in a new tab)");
+      card.appendChild(link);
+    }
 
     grid.appendChild(card);
   });

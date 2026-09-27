@@ -226,6 +226,12 @@ img {
   border-color: rgba(74, 222, 128, 0.3);
 }
 
+.tags li.tag--grey {
+  color: var(--metal);
+  background: rgba(154, 164, 174, 0.08);
+  border-color: rgba(154, 164, 174, 0.3);
+}
+
 .button {
   align-self: flex-start;
   padding: 10px 20px;
