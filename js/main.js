@@ -1,5 +1,6 @@
 // Shared page script: renders project cards from window.PROJECTS (projects.js) when the
-// page has a #project-grid, wires up copy-to-clipboard buttons, and sets the footer year.
+// page has a #project-grid, fills a project page's heading + tags from the same data
+// (data-project="<url>"), wires up copy-to-clipboard buttons, and sets the footer year.
 (function () {
   var grid = document.getElementById("project-grid");
   var projects = window.PROJECTS || [];
@@ -11,36 +12,52 @@
     return node;
   }
 
+  // A tag is a plain string (blue), or { label, color } for a coloured tag, e.g. color: "green".
+  function tagList(tagsData) {
+    var tags = el("ul", "tags");
+    tagsData.forEach(function (tag) {
+      if (typeof tag === "string") return tags.appendChild(el("li", null, tag));
+      tags.appendChild(el("li", tag.color ? "tag--" + tag.color : null, tag.label));
+    });
+    return tags;
+  }
+
   if (grid && !projects.length) {
     grid.appendChild(el("p", "empty", "Projects coming soon."));
   }
 
   if (grid) projects.forEach(function (project) {
     var card = el("article", "card");
-
-    if (project.tags && project.tags.length) {
-      var tags = el("ul", "tags");
-      // A tag is a plain string (blue), or { label, color } for a coloured tag, e.g. color: "green".
-      project.tags.forEach(function (tag) {
-        if (typeof tag === "string") return tags.appendChild(el("li", null, tag));
-        tags.appendChild(el("li", tag.color ? "tag--" + tag.color : null, tag.label));
-      });
-      card.appendChild(tags);
-    }
-
+    if (project.tags && project.tags.length) card.appendChild(tagList(project.tags));
     card.appendChild(el("h3", null, project.title));
     card.appendChild(el("p", null, project.description));
 
     if (project.url) {
-      var link = el("a", "button", project.cta || "Open");
+      // Outside sites open in a new tab (with the arrow); pages on this site open in place.
+      var external = /^https?:/.test(project.url);
+      var link = el("a", external ? "button" : "button button--plain", project.cta || "Open");
       link.href = project.url;
-      link.target = "_blank";
-      link.rel = "noopener";
-      link.setAttribute("aria-label", (project.cta || "Open") + ": " + project.title + " (opens in a new tab)");
+      if (external) {
+        link.target = "_blank";
+        link.rel = "noopener";
+        link.setAttribute("aria-label", (project.cta || "Open") + ": " + project.title + " (opens in a new tab)");
+      } else {
+        link.setAttribute("aria-label", (project.cta || "Open") + ": " + project.title);
+      }
       card.appendChild(link);
     }
 
     grid.appendChild(card);
+  });
+
+  // Project page heading: <div data-project="dmr-hotspot/"> gets that project's title and tags
+  // from projects.js, so a status change there shows on the card and the page at once.
+  document.querySelectorAll("[data-project]").forEach(function (head) {
+    var project = projects.filter(function (p) { return p.url === head.getAttribute("data-project"); })[0];
+    if (!project) return;
+    head.textContent = "";
+    head.appendChild(el("h2", null, project.title));
+    if (project.tags && project.tags.length) head.appendChild(tagList(project.tags));
   });
 
   // Anti-scraping email: elements with data-user + data-domain get the real address at runtime.

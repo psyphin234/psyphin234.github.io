@@ -12,6 +12,7 @@
   --accent-strong: #1e8fff;
   --accent-glow: rgba(63, 182, 255, 0.35);
   --green: #4ade80;
+  --amber: #fbbf24;
   --radius: 14px;
   --max-width: 1040px;
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -272,6 +273,70 @@ img {
 .button--secondary:hover {
   border-color: rgba(63, 182, 255, 0.5);
   box-shadow: none;
+}
+
+/* Project pages (dmr-hotspot/, patient-monitor/, ...) */
+
+.project-head .tags {
+  margin: -8px 0 24px;
+}
+
+.prose {
+  max-width: 680px;
+}
+
+.prose p,
+.prose ul {
+  margin: 0 0 16px;
+  color: var(--text-muted);
+}
+
+.prose ul {
+  padding-left: 20px;
+}
+
+.prose .lead {
+  font-size: 1.15rem;
+  color: var(--text);
+}
+
+.prose h3 {
+  margin: 32px 0 10px;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--metal-light);
+}
+
+.notice,
+.prose .notice {
+  margin: 0 0 24px;
+  padding: 12px 16px;
+  color: var(--text);
+  background: rgba(251, 191, 36, 0.08);
+  border-left: 3px solid var(--amber);
+  border-radius: 8px;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 0 0 16px;
+}
+
+.gallery img {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.placeholder {
+  padding: 28px;
+  text-align: center;
+  color: var(--metal-dark);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
 }
 
 /* Contact */

@@ -11,8 +11,10 @@ Plain static HTML/CSS/JS. **No build step, no framework, no bundler.** Whatever 
 ```
 index.html              Home page: hero logo, Projects, footer
 contact.html            Contact page: compact logo + info@psyphin.co.za (mailto link + copy button)
+dmr-hotspot/index.html  Project page for Digital Radio Hotspot  -> psyphin.co.za/dmr-hotspot/
+patient-monitor/index.html  Project page for Patient Monitor Smartwatch -> psyphin.co.za/patient-monitor/
 projects.js             THE project list (window.PROJECTS). Edit this to add/change projects.
-js/main.js              Shared script for all pages: renders project cards (if #project-grid exists), copy buttons ([data-copy]), footer year
+js/main.js              Shared script for all pages: project cards (#project-grid), project-page headings ([data-project]), email + copy buttons, footer year
 css/style.css           All styles. Colours are CSS variables at the top of the file.
 assets/img/             Web-optimised logo (logo-{480,800,1200}.{webp,jpg}) + og-image.jpg
 favicon.ico             16/32/48px favicon, cropped from the "P" in the logo
@@ -43,6 +45,15 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
 ## Editing content
 
 - The home page is intentionally just the logo + Projects. To add a new section (e.g. About/Skills), copy the `<section class="section">` pattern in `index.html` - the `.section` styles and `h2` treatment apply automatically - and add a matching link in the header `<nav>`.
+- **Project pages** live in their own folder (`dmr-hotspot/index.html`), served at `psyphin.co.za/<folder>/`. To add one:
+  1. Copy an existing project folder and rename it: lowercase with hyphens, because URLs are case-sensitive. The name must not match another psyphin234 Pages repo.
+  2. In `projects.js`, set that project's `url` to `"<folder>/"` and `cta: "View project"`.
+  3. In the page, set `data-project="<folder>/"` on the `.project-head`. Its title and tags then come from `projects.js`, so a status change updates the card and the page together.
+  4. Update the page's `<title>`, description and `og:url`.
+  - Every path in a project page starts with `../`: styles, scripts, logo, favicons and nav links. Photos go in `<folder>/img/` and use the `.gallery` grid (example in the page comments). The `.placeholder` box shows until photos are added.
+  - Relative `url`s open in the same tab without the ↗ arrow; `https://` urls open a new tab with the arrow.
+  - Preview project folders with `python -m http.server`. Opening from disk shows a folder listing, because `dmr-hotspot/` doesn't resolve to `index.html` there.
+  - **Patient monitor:** keep the "Hobby project, not a medical device" notice (`.notice`) and never describe it as clinically useful. Its code repo (`psyphin234/patient_Monitor`) is private and its own CLAUDE.md sets strict rules.
 - **New pages:** copy `contact.html` as the template (head, header, compact logo, footer, scripts). Every page's header `<nav>` must list the same links, with `aria-current="page"` on the current one, and every page loads `js/main.js` and the GoatCounter tag.
 - **Contact email:** to hide it from spam bots, `contact.html` never contains a plain `info@psyphin.co.za`. Elements carry `data-user="info" data-domain="psyphin.co.za"` (three places), and `js/main.js` builds the address at runtime: `mailto:` on links, the visible text where `data-email="text"`, and `data-copy` on the button. To change the address, edit `data-user` in all three. Don't write a plain address anywhere in the HTML.
 - **Colours/fonts:** CSS variables in `:root` at the top of `css/style.css`. `--accent` is the circuit blue from the logo. `--bg` is deliberately almost pure black to match the logo image's background so the logo blends in. If you change `--bg`, the hero logo's edges will show.
@@ -54,7 +65,7 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
 - The only absolute URLs are the Open Graph tags in `<head>` (these need the full `https://psyphin.co.za/...`).
 - Mobile-first check: layout must fit at 390px wide with no horizontal scroll.
 - Fonts come from Google Fonts (Rajdhani for headings, Inter for body) with system-font fallbacks.
-- Visitor stats: GoatCounter (cookie-free, no consent banner needed), with the script tag just before `</body>` on every page. The dashboard is https://psyphin.goatcounter.com/ and is shared with the fuel site; pages are told apart by path. `/` is the landing page, `/contact.html` the contact page; fuel-site paths are prefixed with its host (`fuel.psyphin.co.za/`), and its visits before 2026-09-27 are under `/sa-fuel-price-preview/`. Don't add it to the PCB site.
+- Visitor stats: GoatCounter (cookie-free, no consent banner needed), with the script tag just before `</body>` on every page. The dashboard is https://psyphin.goatcounter.com/ and is shared with the fuel site; pages are told apart by path. `/` is the landing page, `/contact.html` the contact page, `/dmr-hotspot/` and `/patient-monitor/` the project pages; fuel-site paths are prefixed with its host (`fuel.psyphin.co.za/`), and its visits before 2026-09-27 are under `/sa-fuel-price-preview/`. Don't add it to the PCB site.
 
 ## Changing the logo
 
