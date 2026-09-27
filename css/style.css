@@ -227,6 +227,12 @@ img {
   border-color: rgba(74, 222, 128, 0.3);
 }
 
+.tags li.tag--amber {
+  color: var(--amber);
+  background: rgba(251, 191, 36, 0.08);
+  border-color: rgba(251, 191, 36, 0.3);
+}
+
 .tags li.tag--grey {
   color: var(--metal);
   background: rgba(154, 164, 174, 0.08);

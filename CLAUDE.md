@@ -37,7 +37,7 @@ Add **one line** to the array in `projects.js`:
 ```
 
 - `title` and `description` are required; `url`, `cta` (button text, default "Open") and `tags` are optional. A project with no `url` gets a card with no button (used for projects with no public page, such as a private repo).
-- A tag is a plain string (blue pill), or `{ label, color }` for a coloured pill. Status tags: green for live work ("Actively maintained", "In progress"), grey for finished work that needs no changes ("Complete"). To add another colour, add a `.tags li.tag--<color>` rule in `css/style.css`.
+- A tag is a plain string (blue pill), or `{ label, color }` for a coloured pill. Status tags: green for live work ("Actively maintained", "In progress"), amber for built but still being tested or debugged ("In testing"), grey for finished work that needs no changes ("Complete"). To add another colour, add a `.tags li.tag--<color>` rule in `css/style.css`.
 - Order in the array = order on the page.
 - A project's URL lives **only** in `projects.js`. To move a project to a new address, change its `url` there. Nothing else on this site needs updating.
 
