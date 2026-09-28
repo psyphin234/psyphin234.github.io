@@ -21,12 +21,13 @@ js/main.js              Shared script for all pages: project cards (#project-gri
 css/style.css           All styles. Colours are CSS variables at the top of the file.
 assets/img/             Web-optimised logo (logo-{480,800,1200}.{webp,jpg}) + og-image.jpg + brand-64.png (pinned-header icon)
 assets/img/projects/    Card photos, 800x450 (16:9): fuel-chart.jpg, dmr-gem.jpg, sherp-wire.jpg, battery-monitor.jpg, rc-remote.jpg
-favicon.ico             16/32/48px favicon, cropped from the "P" in the logo
-favicon-32.png          PNG favicon
-apple-touch-icon.png    180px iOS home-screen icon (full shield)
-psyphin-logo-black.jpg  Source logo used to generate everything in assets/img and the favicons (keep - reference original)
-psyphin-logo.jpg        Alternative white-background logo, not used on the site (keep - reference original)
-tools/optimize-images.py  Regenerates images/favicons from the source logo (needs Pillow)
+favicon.ico             48/32/16px favicon, cropped around the "P" shield in psyphin-logo.jpg
+favicon-{48,96,192}x{48,96,192}.png  PNG favicons (Google wants multiples of 48px)
+apple-touch-icon.png    180px iOS home-screen icon (same crop)
+                        The favicon set is identical to fuel.psyphin.co.za's (BFP_Website/docs); change both together.
+psyphin-logo-black.jpg  Source logo used to generate everything in assets/img (keep - reference original)
+psyphin-logo.jpg        White-background logo, the source of the favicons (keep - reference original)
+tools/optimize-images.py  Regenerates images/favicons from the source logos (needs Pillow)
 tools/optimize-photos.py  Shrinks project photos to 800/1600 px JPGs and strips EXIF (GPS, camera): python tools/optimize-photos.py <src folder> <project>/img
 CNAME                   Custom domain for GitHub Pages - must contain only: psyphin.co.za
 .nojekyll               Tells GitHub Pages to serve files as-is (skip Jekyll)
@@ -90,7 +91,7 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
 
 ## Changing the logo
 
-Replace `psyphin-logo-black.jpg`, then run `python tools/optimize-images.py`. If the new logo's composition differs, adjust `SHIELD_BOX` / `P_BOX` (crop areas for the icons) in that script, and the `width`/`height` attributes on the hero `<img>` in `index.html` to match the new aspect ratio.
+Replace `psyphin-logo-black.jpg`, then run `python tools/optimize-images.py`. If the new logo's composition differs, adjust `SHIELD_BOX` (crop for the pinned-header icon) and `FAVICON_BOX` (crop of `psyphin-logo.jpg` for the favicons) in that script, and the `width`/`height` attributes on the hero `<img>` in `index.html` to match the new aspect ratio.
 
 ## Preview locally
 
