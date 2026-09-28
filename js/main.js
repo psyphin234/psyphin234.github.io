@@ -120,6 +120,12 @@
     if (node.getAttribute("data-email") === "text") node.textContent = address;
   });
 
+  // <button data-copy-from="id">: copy the text of that element (e.g. a code listing).
+  document.querySelectorAll("[data-copy-from]").forEach(function (button) {
+    var source = document.getElementById(button.getAttribute("data-copy-from"));
+    if (source) button.setAttribute("data-copy", source.textContent);
+  });
+
   // <button data-copy="text">: copies the text and briefly confirms on the button itself.
   document.querySelectorAll("[data-copy]").forEach(function (button) {
     var label = button.textContent;
