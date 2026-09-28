@@ -66,11 +66,13 @@
         <p class="lead">A small home-made gadget that shows how full my caravan's battery is: on its own little screen, on my phone and in my smart-home app. Clipped onto a car battery, it doubles as a tester that shows whether the car will start reliably.</p>
         <p>Inside is an ESP32-C3 board with a 16-bit ADC and a two-colour OLED. In the caravan it watches a 100&nbsp;Ah LiFePO4 battery and reports to Home Assistant. Clipped onto a car, it records how far the voltage falls while the engine cranks, which shows whether the battery or a cable is the weak link.</p>
 
+        <p class="notice"><strong>A monitor, not a charger.</strong> It only watches the battery, including while it charges; it never charges it. The charge percentage is calibrated for a LiFePO4 (lithium iron phosphate) battery, not other lithium-ion types. Voltage alone can only estimate the charge, so it still needs a current shunt to work fully. That's planned.</p>
+
         <h3>Where it's at</h3>
         <ul>
-          <li><strong>Caravan monitor:</strong> working, showing charge on its screen and in Home Assistant, at home and on the road.</li>
+          <li><strong>Caravan monitor:</strong> working as a voltage-based monitor, showing an estimated charge on its screen and in Home Assistant, at home and on the road.</li>
           <li><strong>Crank tester:</strong> working, as a separate piece of firmware on the same hardware.</li>
-          <li><strong>Next:</strong> current sensing for a proper amp-hour count, and a temperature probe for winter trips.</li>
+          <li><strong>Still to do:</strong> a current shunt, which it needs to count amp-hours and give an accurate charge reading. It's planned, along with a temperature probe for winter trips.</li>
         </ul>
 
         <figure class="oled">
