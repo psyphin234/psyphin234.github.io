@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ESP32 RC Remote · PsyPhin</title>
+  <meta name="description" content="A 3D-printed dual-joystick 2.4 GHz remote control and receiver built on ESP32 boards, talking directly over ESP-NOW.">
+  <meta name="theme-color" content="#020203">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://psyphin.co.za/rc-remote/">
+  <meta property="og:title" content="ESP32 RC Remote · PsyPhin">
+  <meta property="og:description" content="A 3D-printed dual-joystick 2.4 GHz remote control and receiver built on ESP32 boards, talking directly over ESP-NOW.">
+  <meta property="og:image" content="https://psyphin.co.za/assets/img/projects/rc-remote.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="../favicon.ico" sizes="48x48">
+  <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@400;500&display=swap">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="site-header-inner">
+      <!-- Brand mark: hidden at the top of the page, shown once you scroll (js/main.js adds body.scrolled) -->
+      <a class="brand" href="../index.html" aria-label="PsyPhin home"><img src="../assets/img/brand-64.png" alt="" width="30" height="30"><span>PsyPhin</span></a>
+      <nav class="nav" aria-label="Main">
+        <a href="../index.html#projects">Projects</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero hero--compact">
+      <a href="../index.html" aria-label="PsyPhin home">
+        <picture>
+          <source type="image/webp"
+                  srcset="../assets/img/logo-480.webp 480w, ../assets/img/logo-800.webp 800w"
+                  sizes="(max-width: 480px) 100vw, 440px">
+          <img class="hero-logo"
+               src="../assets/img/logo-480.jpg"
+               srcset="../assets/img/logo-480.jpg 480w, ../assets/img/logo-800.jpg 800w"
+               sizes="(max-width: 480px) 100vw, 440px"
+               width="1200" height="655"
+               alt="PsyPhin logo">
+        </picture>
+      </a>
+    </section>
+
+    <section class="section">
+      <!-- Title and tags come from this project's line in ../projects.js (matched by url). -->
+      <div class="project-head" data-project="rc-remote/"><h2>ESP32 RC Remote</h2></div>
+
+      <!-- Source: E:\Claude_projects\Remote control ("New Text Document.md" + photos). The notes stop after the
+           data-packet struct, so only that part of the firmware is published. -->
+      <div class="prose">
+        <p class="lead">A home-made, two-joystick remote control and a matching receiver, for driving my own radio-controlled builds without buying a commercial transmitter.</p>
+        <p>The handheld transmitter is a 3D-printed case around an ESP32-C3 board, two thumbsticks and a rechargeable battery. It talks straight to an ESP32 in the vehicle using ESP-NOW on 2.4&nbsp;GHz, a direct board-to-board link with very little lag and no Wi-Fi router or phone signal needed. It's meant for custom RC projects such as off-road rigs or bait boats.</p>
+
+        <figure class="figs">
+          <img class="wide" src="img/01-front-assembled-800.jpg" alt="The finished orange 3D-printed remote from the front, with two black thumbsticks and the ESP32-C3 board mounted on top" width="800" height="600" loading="lazy">
+          <figcaption>The assembled transmitter.</figcaption>
+        </figure>
+
+        <h3>How it works</h3>
+        <ul>
+          <li><strong>Direct link.</strong> ESP-NOW sends short packets straight from one ESP32 to another, fixed to Wi-Fi channel 6 (2.437&nbsp;GHz), with the transmitter at its maximum output of 19.5&nbsp;dBm.</li>
+          <li><strong>Four axes, two buttons.</strong> Each thumbstick gives an X and a Y reading, read by the ESP32-C3's 12-bit converter (0–4095), plus a push button.</li>
+          <li><strong>About 20 updates a second.</strong> The transmitter sends every 50&nbsp;ms.</li>
+          <li><strong>Rechargeable.</strong> A single 18650 lithium-ion cell, charged over USB-C through a TP4056 board, with a step-up converter for the electronics.</li>
+          <li><strong>Receiver.</strong> A classic ESP32 in the vehicle drives the motor controllers, servos or relays, and uses its onboard LED to show the link status and failsafe.</li>
+        </ul>
+
+        <h3>Parts and cost</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Part</th><th>Qty</th><th>Job</th><th>Local (ZAR)</th><th>Imported</th></tr></thead>
+            <tbody>
+              <tr><td>ESP32-C3 SuperMini</td><td>1</td><td>Transmitter board</td><td class="v">R75–R110</td><td class="v">R40–R55</td></tr>
+              <tr><td>ESP32 Dev Module (classic)</td><td>1</td><td>Receiver in the vehicle</td><td class="v">R90–R120</td><td class="v">R50–R70</td></tr>
+              <tr><td>Dual-axis joystick modules</td><td>2</td><td>Throttle and steering</td><td class="v">R24–R50</td><td class="v">R15–R20</td></tr>
+              <tr><td>TP4056 charger module</td><td>1</td><td>USB-C charging and battery protection</td><td class="v">R15–R25</td><td class="v">R8–R12</td></tr>
+              <tr><td>PETG filament</td><td>~150&nbsp;g</td><td>Case panels and plates</td><td class="v">R45–R65</td><td class="v">R30–R40</td></tr>
+              <tr><td>M3 hardware and wiring</td><td>—</td><td>Screws, standoffs, silicone wire</td><td class="v">R20–R35</td><td class="v">R10–R15</td></tr>
+              <tr><td><strong>Total</strong></td><td></td><td></td><td class="v"><strong>R269–R405</strong></td><td class="v"><strong>R153–R212</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>The case</h3>
+        <p>The transmitter is built from stacked, screwed-together panels. That keeps it stiff and means any part can be opened up to swap or service the electronics.</p>
+        <figure class="figs">
+          <img src="img/02-layers-800.jpg" alt="The remote taken apart into its stacked orange panels, with the joystick and boards visible between the layers" width="450" height="600" loading="lazy">
+          <img src="img/04-side-battery-800.jpg" alt="The remote from the side and back, showing the battery compartment and the board mounted on top" width="450" height="600" loading="lazy">
+          <figcaption>Left: the stacked panels opened up. Right: the side and back, with the battery compartment.</figcaption>
+        </figure>
+        <ul>
+          <li><strong>Faceplate:</strong> recessed cut-outs so both thumbsticks move through their full range.</li>
+          <li><strong>Standoffs:</strong> built-in bosses for M3 self-tapping screws or heat-set brass inserts.</li>
+          <li><strong>Electronics:</strong> channels to hot-glue or plate-mount the TP4056 charger and the ESP32-C3 next to the USB cut-outs.</li>
+        </ul>
+        <p><strong>Print settings:</strong> PETG (tougher, more UV- and heat-resistant than PLA), 0.20&nbsp;mm layers, 20–30% grid or gyroid infill, 3 walls and 4 top and bottom layers. Supports are only needed around the counter-bored M3 holes and a few cut-outs.</p>
+        <figure class="figs">
+          <img src="img/03-early-front-800.jpg" alt="An earlier fit-up of the remote from the front, with one thumbstick fitted" width="450" height="600" loading="lazy">
+          <img src="img/05-underside-led-800.jpg" alt="The underside of the remote held in a hand, with a board's red LED glowing inside the case" width="450" height="600" loading="lazy">
+          <figcaption>Left: an early fit-up with one thumbstick in. Right: the underside, with a board's LED glowing inside.</figcaption>
+        </figure>
+
+        <h3>Wiring</h3>
+        <h4>Transmitter (ESP32-C3 SuperMini)</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Module</th><th>Pin</th><th>ESP32-C3</th><th>Job</th></tr></thead>
+            <tbody>
+              <tr><td>Left joystick</td><td>VRX</td><td>GPIO 0</td><td>Left X axis (ADC1_CH0)</td></tr>
+              <tr><td></td><td>VRY</td><td>GPIO 1</td><td>Left Y axis (ADC1_CH1)</td></tr>
+              <tr><td></td><td>SW</td><td>GPIO 6</td><td>Push button (<code>INPUT_PULLUP</code>)</td></tr>
+              <tr><td>Right joystick</td><td>VRX</td><td>GPIO 2</td><td>Right X axis (ADC1_CH2)</td></tr>
+              <tr><td></td><td>VRY</td><td>GPIO 3</td><td>Right Y axis (ADC1_CH3)</td></tr>
+              <tr><td></td><td>SW</td><td>GPIO 7</td><td>Push button (<code>INPUT_PULLUP</code>)</td></tr>
+              <tr><td>Power</td><td>VCC</td><td>3.3V</td><td>Shared 3.3&nbsp;V rail for the joysticks</td></tr>
+              <tr><td></td><td>GND</td><td>GND</td><td>Shared ground</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h4>Receiver (classic ESP32)</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Output</th><th>ESP32</th><th>Job</th></tr></thead>
+            <tbody>
+              <tr><td>Status LED</td><td>GPIO 2</td><td>Onboard LED: link and failsafe indicator</td></tr>
+              <tr><td>PWM / motor outputs</td><td>Set per vehicle</td><td>Motor controllers (ESCs), servos or relays</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>The data packet</h3>
+        <p>Each transmission carries both sticks and both buttons in one small structure, which the receiver unpacks with the same definition:</p>
+<pre><code>typedef struct struct_message {
+    int leftX;
+    int leftY;
+    bool leftBtn;
+    int rightX;
+    int rightY;
+    bool rightBtn;
+} struct_message;</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year">2026</span> PsyPhin &middot; psyphin.co.za</p>
+  </footer>
+
+  <script src="../projects.js"></script>
+  <script src="../js/main.js"></script>
+  <!-- GoatCounter: cookie-free visitor stats at https://psyphin.goatcounter.com/ -->
+  <script data-goatcounter="https://psyphin.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

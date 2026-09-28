@@ -15,11 +15,12 @@ dmr-hotspot/index.html  Project page for Digital Radio Hotspot  -> psyphin.co.za
 dmr-hotspot/img/        Its photos (<name>-800.jpg + <name>-1600.jpg) and the two SVG diagrams
 sherp-crawler/index.html  Project page for RC SHERP Crawler -> psyphin.co.za/sherp-crawler/ (images in sherp-crawler/img/, -800.jpg only)
 battery-monitor/index.html  Project page for Caravan Battery Monitor -> psyphin.co.za/battery-monitor/ (images in battery-monitor/img/, -800.jpg only)
+rc-remote/index.html    Project page for ESP32 RC Remote -> psyphin.co.za/rc-remote/ (images in rc-remote/img/, -800.jpg only)
 projects.js             THE project list (window.PROJECTS). Edit this to add/change projects.
 js/main.js              Shared script for all pages: project cards (#project-grid), project-page headings ([data-project]), email + copy buttons, footer year
 css/style.css           All styles. Colours are CSS variables at the top of the file.
 assets/img/             Web-optimised logo (logo-{480,800,1200}.{webp,jpg}) + og-image.jpg + brand-64.png (pinned-header icon)
-assets/img/projects/    Card photos, 800x450 (16:9): fuel-chart.jpg, dmr-gem.jpg, sherp-wire.jpg, battery-monitor.jpg
+assets/img/projects/    Card photos, 800x450 (16:9): fuel-chart.jpg, dmr-gem.jpg, sherp-wire.jpg, battery-monitor.jpg, rc-remote.jpg
 favicon.ico             16/32/48px favicon, cropped from the "P" in the logo
 favicon-32.png          PNG favicon
 apple-touch-icon.png    180px iOS home-screen icon (full shield)
@@ -66,6 +67,7 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
   - **RC SHERP Crawler source:** `E:\Claude_projects\Sherp_Build` (`sherp-crawler-build-log.md` + `photo-map.md` + forum image downloads). Sources are small forum copies, so only `-800.jpg` versions are kept. Videos (owner's YouTube) show as thumbnail links (`<a class="video">`, thumbnails saved as `img/video-<id>.jpg`), never embedded players, to keep the site free of third-party cookies. Not published: the "inside the body" photo and drivetrain/weight-planning images (not in the folder), vendor spec/shop screenshots, and two Land Cruiser RC photos that aren't part of this build (one shows a number plate). Shop names were dropped from prices.
   - **Caravan Battery Monitor source:** `E:\Claude_projects\Battery monitor` (a draft `index.html`, `battery-monitor.yaml`, `crank_tester.ino`, photos). The page was ported from that draft into the site's style. The draft's footer (the owner's full name and city) is deliberately left out. The page includes an interactive recreation of the device's OLED screen (`.oled-module` + inline SVG, with Roboto and VT323 loaded on that page only), an inline SVG chart (`figure.chart`), OK/Weak/Bad labels (`.result--ok/weak/bad`) and collapsible code listings (`details.code` with `data-copy-from` copy buttons).
     - **Secrets rule:** the ESPHome config shown on the page must keep every Wi-Fi password as a `!secret` reference (the source YAML does, since 2026-09-28). The secrets.yaml template on the page has placeholder values only. The fallback hotspot name `Caravan-Battery-Fallback` is public by design. Check the code listings for real SSIDs and passwords before every publish.
+  - **ESP32 RC Remote source:** `E:\Claude_projects\Remote control` (`New Text Document.md` + five WhatsApp photos). The notes were rewritten in the site's plain voice (their LaTeX-style units turned into plain text). They stop after the data-packet struct, so the full firmware isn't published; add it if the owner supplies it. Status "In progress" is a placeholder until the owner confirms.
   - Relative `url`s open in the same tab without the ↗ arrow; `https://` urls open a new tab with the arrow.
   - Preview project folders with `python -m http.server`. Opening from disk shows a folder listing, because `dmr-hotspot/` doesn't resolve to `index.html` there.
   - The Patient Monitor Smartwatch card and page (`patient-monitor/`) were removed on 2026-09-27; restore them from git history if needed. If it comes back, keep its "Hobby project, not a medical device" notice (`.notice`) and never describe it as clinically useful. Its code repo (`psyphin234/patient_Monitor`) is private.
@@ -83,7 +85,7 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
 - The only absolute URLs are the Open Graph tags in `<head>` (these need the full `https://psyphin.co.za/...`).
 - Mobile-first check: layout must fit at 390px wide with no horizontal scroll.
 - Fonts come from Google Fonts (Rajdhani for headings, Inter for body) with system-font fallbacks.
-- Visitor stats: GoatCounter (cookie-free, no consent banner needed), with the script tag just before `</body>` on every page. The dashboard is https://psyphin.goatcounter.com/ and is shared with the fuel site; pages are told apart by path. `/` is the landing page, `/contact.html` the contact page, `/dmr-hotspot/`, `/sherp-crawler/` and `/battery-monitor/` the project pages; fuel-site paths are prefixed with its host (`fuel.psyphin.co.za/`), and its visits before 2026-09-27 are under `/sa-fuel-price-preview/`. Don't add it to the PCB site.
+- Visitor stats: GoatCounter (cookie-free, no consent banner needed), with the script tag just before `</body>` on every page. The dashboard is https://psyphin.goatcounter.com/ and is shared with the fuel site; pages are told apart by path. `/` is the landing page, `/contact.html` the contact page, `/dmr-hotspot/`, `/sherp-crawler/`, `/battery-monitor/` and `/rc-remote/` the project pages; fuel-site paths are prefixed with its host (`fuel.psyphin.co.za/`), and its visits before 2026-09-27 are under `/sa-fuel-price-preview/`. Don't add it to the PCB site.
 
 ## Changing the logo
 
