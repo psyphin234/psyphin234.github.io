@@ -20,7 +20,7 @@ projects.js             THE project list (window.PROJECTS). Edit this to add/cha
 js/main.js              Shared script for all pages: project cards (#project-grid), project-page headings ([data-project]), email + copy buttons, footer year
 css/style.css           All styles. Colours are CSS variables at the top of the file.
 assets/img/             Web-optimised logo (logo-{480,800,1200}.{webp,jpg}) + og-image.jpg + brand-64.png (pinned-header icon)
-assets/img/projects/    Card photos, 800x450 (16:9): fuel-chart.jpg, dmr-gem.jpg, sherp-wire.jpg, battery-monitor.jpg, rc-remote.jpg
+assets/img/projects/    Card photos, 800x450 (16:9): fuel-chart.jpg, sa-towing-check.jpg, dmr-gem.jpg, sherp-wire.jpg, battery-monitor.jpg, rc-remote.jpg
 favicon.ico             48/32/16px favicon, cropped around the "P" shield in psyphin-logo.jpg
 favicon-{48,96,192}x{48,96,192}.png  PNG favicons (Google wants multiples of 48px)
 apple-touch-icon.png    180px iOS home-screen icon (same crop)
@@ -87,7 +87,7 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
 - The only absolute URLs are the Open Graph tags in `<head>` (these need the full `https://psyphin.co.za/...`).
 - Mobile-first check: layout must fit at 390px wide with no horizontal scroll.
 - Fonts come from Google Fonts (Rajdhani for headings, Inter for body) with system-font fallbacks.
-- Visitor stats: GoatCounter (cookie-free, no consent banner needed), with the script tag just before `</body>` on every page. The dashboard is https://psyphin.goatcounter.com/ and is shared with the fuel site; pages are told apart by path. `/` is the landing page, `/contact.html` the contact page, `/dmr-hotspot/`, `/sherp-crawler/`, `/battery-monitor/` and `/rc-remote/` the project pages; fuel-site paths are prefixed with its host (`fuel.psyphin.co.za/`), and its visits before 2026-09-27 are under `/sa-fuel-price-preview/`. Don't add it to the PCB site.
+- Visitor stats: GoatCounter (cookie-free, no consent banner needed), with the script tag just before `</body>` on every page. The dashboard is https://psyphin.goatcounter.com/ and is shared with the fuel site; pages are told apart by path. `/` is the landing page, `/contact.html` the contact page, `/dmr-hotspot/`, `/sherp-crawler/`, `/battery-monitor/` and `/rc-remote/` the project pages, `/sa-towing-check/` and `/sa-towing-check/sources.html` the towing checker (its own repo); fuel-site paths are prefixed with its host (`fuel.psyphin.co.za/`), and its visits before 2026-09-27 are under `/sa-fuel-price-preview/`. Don't add it to the PCB site.
 
 ## Changing the logo
 
@@ -128,6 +128,12 @@ Because this is the `psyphin234.github.io` **user site** with a custom domain, *
 
 - Don't link to it, add it to `projects.js`, or add PsyPhin tracking or branding to it.
 - When its domain arrives, set that domain as the custom domain in *its* repo's Settings → Pages (plus DNS at its registrar), and it stops using psyphin.co.za. If it's needed off psyphin.co.za sooner, move the repo to a free GitHub organisation.
+
+### SA Towing Check
+
+- Lives at **https://psyphin.co.za/sa-towing-check/**, served by inheritance from this site (no CNAME of its own). Repo `psyphin234/sa-towing-check`, local clone `E:\Claude_projects\tow_gvm_calc\sa-towing-check`, which has its own CLAUDE.md; the build brief is `E:\Claude_projects\tow_gvm_calc\SPEC.md`, kept out of the repo. **Do towing-checker work from that folder.**
+- Its header has a "← psyphin.co.za" back link. Its favicon set is a copy of this site's; change both together.
+- Card image `assets/img/projects/sa-towing-check.jpg` is a crop of the checker's rig diagram (worked example plus illustrative weighbridge readings). Status stays amber "In testing" while its rules are unverified against the gazetted regulations.
 
 ### SA Fuel Price Preview
 
