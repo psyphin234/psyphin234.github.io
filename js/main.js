@@ -28,8 +28,10 @@
 
   function renderCard(grid, project) {
     var card = el("article", "card");
-    // Outside sites open in a new tab (with the arrow); pages on this site open in place.
-    var external = project.url && /^https?:/.test(project.url);
+    // Outside sites open in a new tab (with the arrow). Pages on this site, and on
+    // psyphin.co.za addresses served by other repos (the tools), open in place.
+    var external = project.url && /^https?:/.test(project.url) &&
+      !/^https?:\/\/([a-z0-9-]+\.)*psyphin\.co\.za(\/|$)/i.test(project.url);
 
     // Photo across the top of the card; it links to the project too (hidden from screen
     // readers and the tab order, since the button below is the accessible link).
