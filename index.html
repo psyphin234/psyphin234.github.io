@@ -32,6 +32,7 @@
       <!-- Brand mark: hidden at the top of the page, shown once you scroll (js/main.js adds body.scrolled) -->
       <a class="brand" href="index.html" aria-label="PsyPhin home"><img src="assets/img/brand-64.png" alt="" width="30" height="30"><span>PsyPhin</span></a>
       <nav class="nav" aria-label="Main">
+        <a href="#tools">Tools</a>
         <a href="#projects">Projects</a>
         <a href="contact.html">Contact</a>
       </nav>
@@ -54,9 +55,16 @@
       </picture>
     </section>
 
+    <section id="tools" class="section">
+      <h2>Tools</h2>
+      <!-- Cards with kind: "tool" in /projects.js -->
+      <div id="tool-grid" class="grid"></div>
+      <noscript><p class="empty">Enable JavaScript to see the tools.</p></noscript>
+    </section>
+
     <section id="projects" class="section">
       <h2>Projects</h2>
-      <!-- Cards are generated from /projects.js -->
+      <!-- The other cards in /projects.js -->
       <div id="project-grid" class="grid"></div>
       <noscript><p class="empty">Enable JavaScript to see the project list.</p></noscript>
     </section>

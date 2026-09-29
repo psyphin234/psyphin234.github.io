@@ -1,9 +1,13 @@
-// Shared page script: renders project cards from window.PROJECTS (projects.js) when the
-// page has a #project-grid, fills a project page's heading + tags from the same data
-// (data-project="<url>"), wires up copy-to-clipboard buttons, and sets the footer year.
+// Shared page script: renders cards from window.PROJECTS (projects.js) into #tool-grid
+// (kind: "tool") and #project-grid (everything else) when the page has them, fills a
+// project page's heading + tags from the same data (data-project="<url>"), wires up
+// copy-to-clipboard buttons, and sets the footer year.
 (function () {
-  var grid = document.getElementById("project-grid");
   var projects = window.PROJECTS || [];
+  var grids = [
+    { node: document.getElementById("tool-grid"), items: projects.filter(function (p) { return p.kind === "tool"; }), empty: "Tools coming soon." },
+    { node: document.getElementById("project-grid"), items: projects.filter(function (p) { return p.kind !== "tool"; }), empty: "Projects coming soon." }
+  ].filter(function (g) { return g.node; });
 
   function el(tag, className, text) {
     var node = document.createElement(tag);
@@ -22,11 +26,7 @@
     return tags;
   }
 
-  if (grid && !projects.length) {
-    grid.appendChild(el("p", "empty", "Projects coming soon."));
-  }
-
-  if (grid) projects.forEach(function (project) {
+  function renderCard(grid, project) {
     var card = el("article", "card");
     // Outside sites open in a new tab (with the arrow); pages on this site open in place.
     var external = project.url && /^https?:/.test(project.url);
@@ -70,12 +70,17 @@
     }
 
     grid.appendChild(card);
+  }
+
+  grids.forEach(function (g) {
+    if (!g.items.length) g.node.appendChild(el("p", "empty", g.empty));
+    g.items.forEach(function (project) { renderCard(g.node, project); });
   });
 
   // Cards fade up as they come into view (skipped when the visitor prefers reduced motion).
   // Fail-safe: cards already on screen show at once, and anything still hidden after 2 s is
   // shown anyway, so a browser quirk can never leave the project list invisible.
-  if (grid && "IntersectionObserver" in window &&
+  if (grids.length && "IntersectionObserver" in window &&
       !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     var show = function (card) { card.classList.add("is-visible"); };
     var observer = new IntersectionObserver(function (entries) {
@@ -85,12 +90,15 @@
         observer.unobserve(entry.target);
       });
     }, { rootMargin: "0px 0px -40px 0px" });
-    var cards = grid.querySelectorAll(".card");
-    cards.forEach(function (card, i) {
-      card.classList.add("reveal");
-      card.style.setProperty("--delay", (i % 3) * 90 + "ms");
-      if (card.getBoundingClientRect().top < window.innerHeight) show(card);
-      else observer.observe(card);
+    var cards = [];
+    grids.forEach(function (g) {
+      g.node.querySelectorAll(".card").forEach(function (card, i) {
+        card.classList.add("reveal");
+        card.style.setProperty("--delay", (i % 3) * 90 + "ms");
+        if (card.getBoundingClientRect().top < window.innerHeight) show(card);
+        else observer.observe(card);
+        cards.push(card);
+      });
     });
     setTimeout(function () { cards.forEach(show); }, 2000);
   }

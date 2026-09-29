@@ -9,7 +9,7 @@ Plain static HTML/CSS/JS. **No build step, no framework, no bundler.** Whatever 
 ## Structure
 
 ```
-index.html              Home page: hero logo, Projects, footer
+index.html              Home page: hero logo, Tools, Projects, footer
 contact.html            Contact page: compact logo + info@psyphin.co.za (mailto link + copy button)
 dmr-hotspot/index.html  Project page for Digital Radio Hotspot  -> psyphin.co.za/dmr-hotspot/
 dmr-hotspot/img/        Its photos (<name>-800.jpg + <name>-1600.jpg) and the two SVG diagrams
@@ -41,16 +41,17 @@ Add **one line** to the array in `projects.js`:
 { title: "My New Thing", description: "What it does in a sentence.", url: "https://example.com", cta: "Open", tags: ["Tag", { label: "Actively maintained", color: "green" }] },
 ```
 
-- `title` and `description` are required; `url`, `cta` (button text, default "Open"), `tags`, `image` + `imageAlt` (a 16:9 photo across the top of the card, kept in `assets/img/projects/`) and `updated` (a short grey line above the button, e.g. "Updated 25 Sep 2026") are optional. **Update the `updated` date when a project moves on.** The fuel card's image is a crop of the live site's first chart (captured at a 900 px-wide window, 2x scale, placed on the chart panel's colour), so refresh it now and then. A project with no `url` gets a card with no button (used for projects with no public page, such as a private repo).
+- `title` and `description` are required; `kind`, `url`, `cta` (button text, default "Open"), `tags`, `image` + `imageAlt` (a 16:9 photo across the top of the card, kept in `assets/img/projects/`) and `updated` (a short grey line above the button, e.g. "Updated 25 Sep 2026") are optional. **Update the `updated` date when a project moves on.** The fuel card's image is a crop of the live site's first chart (captured at a 900 px-wide window, 2x scale, placed on the chart panel's colour), so refresh it now and then. A project with no `url` gets a card with no button (used for projects with no public page, such as a private repo).
 - A tag is a plain string (blue pill), or `{ label, color }` for a coloured pill. Status tags: green only for live, finished work that is still kept up to date ("Actively maintained"); amber for anything still under way ("In progress", "Prototyping", "In testing"); grey for finished work that needs no changes ("Complete"). To add another colour, add a `.tags li.tag--<color>` rule in `css/style.css`.
 - Order in the array = order on the page.
+- **Tools vs projects:** `kind: "tool"` puts a card in the **Tools** section (`#tool-grid`, above Projects): online tools people use, currently the fuel site and the towing checker. Everything else is a build project in **Projects** (`#project-grid`). Both tools' header pills read "← More PsyPhin tools" and link to `https://psyphin.co.za/#tools`; a new tool should do the same.
 - A project's URL lives **only** in `projects.js`. To move a project to a new address, change its `url` there. Nothing else on this site needs updating.
 
 Cards are built by `js/main.js` with `textContent`, so project text is never interpreted as HTML.
 
 ## Editing content
 
-- The home page is intentionally just the logo + Projects. To add a new section (e.g. About/Skills), copy the `<section class="section">` pattern in `index.html` - the `.section` styles and `h2` treatment apply automatically - and add a matching link in the header `<nav>`.
+- The home page is intentionally just the logo + Tools + Projects. To add a new section (e.g. About/Skills), copy the `<section class="section">` pattern in `index.html` - the `.section` styles and `h2` treatment apply automatically - and add a matching link in the header `<nav>`.
 - **Project source material** (raw photos, notes, build logs, screenshots) lives **outside this repo** in `E:\Claude_projects\<Project>` (e.g. `DMR`, `Sherp_Build`). Only web-ready output (optimised photos, the page) comes into the repo. This repo is public, so anything committed here is published and stays in the history.
 - **Project pages** live in their own folder (`dmr-hotspot/index.html`), served at `psyphin.co.za/<folder>/`. To add one:
   1. Copy an existing project folder and rename it: lowercase with hyphens, because URLs are case-sensitive. The name must not match another psyphin234 Pages repo.
@@ -132,14 +133,14 @@ Because this is the `psyphin234.github.io` **user site** with a custom domain, *
 ### SA Towing Check
 
 - Lives at **https://psyphin.co.za/sa-towing-check/**, served by inheritance from this site (no CNAME of its own). Repo `psyphin234/sa-towing-check`, local clone `E:\Claude_projects\tow_gvm_calc\sa-towing-check`, which has its own CLAUDE.md; the build brief is `E:\Claude_projects\tow_gvm_calc\SPEC.md`, kept out of the repo. **Do towing-checker work from that folder.**
-- Its header has a "← psyphin.co.za" back link. Its favicon set is a copy of this site's; change both together.
+- Its header has a "← More PsyPhin tools" pill (same design as the fuel site's) linking to `https://psyphin.co.za/#tools`. Its favicon set is a copy of this site's; change both together.
 - Card image `assets/img/projects/sa-towing-check.jpg` is a crop of the checker's rig diagram (worked example plus illustrative weighbridge readings). Status stays amber "In testing" while its rules are unverified against the gazetted regulations.
 
 ### SA Fuel Price Preview
 
 - Lives at **https://fuel.psyphin.co.za/**. It has its own custom domain (a `docs/CNAME` file in its repo, plus the Afrihost `fuel` CNAME), so it no longer inherits psyphin.co.za. The older `psyphin.co.za/sa-fuel-price-preview/` and `psyphin234.github.io/sa-fuel-price-preview/` addresses 301-redirect to it.
 - Repo `psyphin234/sa-fuel-price-preview`, local clone `E:\Claude_projects\BFP_Website`, which has its own CLAUDE.md. **Do fuel-project work from that folder, not this one.**
-- Its header has a "← psyphin.co.za" back link to https://psyphin.co.za/.
+- Its header has a "← More PsyPhin tools" pill linking to https://psyphin.co.za/#tools.
 - That repo is auto-committed and pushed hourly at about :18 by a scheduled Python task. Read its CLAUDE.md before touching it, and never kill `python.exe` processes by image name.
 - The same pattern works for any future project subdomain: add an Afrihost CNAME `<name>.psyphin.co.za` → `psyphin234.github.io`, set the custom domain in that repo's Settings → Pages (then `git pull` the `CNAME` file GitHub commits), turn on Enforce HTTPS once the certificate is issued, and update `projects.js` here.
 
