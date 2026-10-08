@@ -110,6 +110,7 @@ Push to `main`. GitHub Pages redeploys automatically (usually within a minute or
   - `www` CNAME → `psyphin234.github.io.`
   - `fuel` CNAME → `psyphin234.github.io` (the SA Fuel Price Preview site; see below)
   - `towing` CNAME → `psyphin234.github.io` (SA Towing Check; added 2026-10-05)
+  - `tyres` CNAME → `psyphin234.github.io` (4x4 Tyre Pressures, repo `psyphin234/sa-tyre-pressures`; added 2026-10-08, under construction, no home-page card yet: it's on the local branch `tyres-card`)
   - `_github-pages-challenge-psyphin234` TXT → the verification code shown at https://github.com/settings/pages. Removing and re-adding the domain there generates a **new** code, and the TXT value must then be updated.
 - Mail records (MX, `mail`, `webmail`, `cpanel`, SPF, DMARC, autodiscover) still point at Afrihost. Don't touch them when editing web records. There is **no `*` wildcard record**: it was deleted on 2026-09-27, so a subdomain without its own record simply doesn't resolve. Before that, it sent unknown subdomains to Afrihost's parking page, which has a certificate for someone else's domain and so triggered "not secure" warnings. A catch-all redirect to the landing page isn't possible with GitHub Pages plus Afrihost DNS (it would need a proxy such as Cloudflare), and it was judged not worth a DNS migration. Every new subdomain needs its own record.
 - Afrihost's DNS form wants the **full** hostname, for example `fuel.psyphin.co.za` rather than just `fuel`; it rejects names shorter than 5 characters.
