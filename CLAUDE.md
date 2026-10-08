@@ -135,7 +135,7 @@ Because this is the `psyphin234.github.io` **user site** with a custom domain, *
 ### 4x4 Tyre Pressures
 
 - Lives at **https://tyres.psyphin.co.za/** since 2026-10-08 (its own `CNAME` plus the Afrihost `tyres` CNAME). Repo `psyphin234/sa-tyre-pressures`, local folder `E:\Claude_projects\Tyre_Pressures`, which has its own CLAUDE.md. **Do tyre-calculator work from that folder.**
-- The site itself is marked UNDER CONSTRUCTION (banner and noindex). Its card here has the amber "Under construction" tag; keep it until the owner says the site is ready. Card image `assets/img/projects/sa-tyre-pressures.jpg` is a crop of a CC0 Wikimedia Commons photo (Dyaa Eldin Moustafa).
+- The site itself is marked UNDER CONSTRUCTION (banner and noindex). Its card here has the amber "Under construction" tag; keep it until the owner says the site is ready. Card image `assets/img/projects/sa-tyre-pressures.jpg` is an 800x450 crop of the owner's own red-dune photo (Amam Dunes, Northern Cape; original `Pics/DeepSand.jpg` in the tyre project, saved without EXIF because the original has GPS).
 
 ### SA Towing Check
 
