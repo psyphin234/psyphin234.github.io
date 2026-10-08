@@ -44,7 +44,7 @@ Add **one line** to the array in `projects.js`:
 - `title` and `description` are required; `kind`, `url`, `cta` (button text, default "Open"), `tags`, `image` + `imageAlt` (a 16:9 photo across the top of the card, kept in `assets/img/projects/`) and `updated` (a short grey line above the button, e.g. "Updated 25 Sep 2026") are optional. **Update the `updated` date when a project moves on.** The fuel card's image is a crop of the live site's first chart (captured at a 900 px-wide window, 2x scale, placed on the chart panel's colour), so refresh it now and then. A project with no `url` gets a card with no button (used for projects with no public page, such as a private repo).
 - A tag is a plain string (blue pill), or `{ label, color }` for a coloured pill. Status tags: green only for live, finished work that is still kept up to date ("Actively maintained"); amber for anything still under way ("In progress", "Prototyping", "In testing"); grey for finished work that needs no changes ("Complete"). To add another colour, add a `.tags li.tag--<color>` rule in `css/style.css`.
 - Order in the array = order on the page.
-- **Tools vs projects:** `kind: "tool"` puts a card in the **Tools** section (`#tool-grid`, above Projects): online tools people use, currently the fuel site and the towing checker. Everything else is a build project in **Projects** (`#project-grid`). Both tools' header pills read "← More PsyPhin tools" and link to `https://psyphin.co.za/#tools`; a new tool should do the same.
+- **Tools vs projects:** `kind: "tool"` puts a card in the **Tools** section (`#tool-grid`, above Projects): online tools people use, currently the fuel site, the towing checker and the 4x4 tyre pressure calculator. Everything else is a build project in **Projects** (`#project-grid`). Both tools' header pills read "← More PsyPhin tools" and link to `https://psyphin.co.za/#tools`; a new tool should do the same.
 - A project's URL lives **only** in `projects.js`. To move a project to a new address, change its `url` there. Nothing else on this site needs updating.
 
 Cards are built by `js/main.js` with `textContent`, so project text is never interpreted as HTML.
@@ -110,7 +110,7 @@ Push to `main`. GitHub Pages redeploys automatically (usually within a minute or
   - `www` CNAME → `psyphin234.github.io.`
   - `fuel` CNAME → `psyphin234.github.io` (the SA Fuel Price Preview site; see below)
   - `towing` CNAME → `psyphin234.github.io` (SA Towing Check; added 2026-10-05)
-  - `tyres` CNAME → `psyphin234.github.io` (4x4 Tyre Pressures, repo `psyphin234/sa-tyre-pressures`; added 2026-10-08, under construction, no home-page card yet: it's on the local branch `tyres-card`)
+  - `tyres` CNAME → `psyphin234.github.io` (4x4 Tyre Pressures, repo `psyphin234/sa-tyre-pressures`; added 2026-10-08)
   - `_github-pages-challenge-psyphin234` TXT → the verification code shown at https://github.com/settings/pages. Removing and re-adding the domain there generates a **new** code, and the TXT value must then be updated.
 - Mail records (MX, `mail`, `webmail`, `cpanel`, SPF, DMARC, autodiscover) still point at Afrihost. Don't touch them when editing web records. There is **no `*` wildcard record**: it was deleted on 2026-09-27, so a subdomain without its own record simply doesn't resolve. Before that, it sent unknown subdomains to Afrihost's parking page, which has a certificate for someone else's domain and so triggered "not secure" warnings. A catch-all redirect to the landing page isn't possible with GitHub Pages plus Afrihost DNS (it would need a proxy such as Cloudflare), and it was judged not worth a DNS migration. Every new subdomain needs its own record.
 - Afrihost's DNS form wants the **full** hostname, for example `fuel.psyphin.co.za` rather than just `fuel`; it rejects names shorter than 5 characters.
@@ -131,6 +131,11 @@ Because this is the `psyphin234.github.io` **user site** with a custom domain, *
 
 - Don't link to it, add it to `projects.js`, or add PsyPhin tracking or branding to it.
 - When its domain arrives, set that domain as the custom domain in *its* repo's Settings → Pages (plus DNS at its registrar), and it stops using psyphin.co.za. If it's needed off psyphin.co.za sooner, move the repo to a free GitHub organisation.
+
+### 4x4 Tyre Pressures
+
+- Lives at **https://tyres.psyphin.co.za/** since 2026-10-08 (its own `CNAME` plus the Afrihost `tyres` CNAME). Repo `psyphin234/sa-tyre-pressures`, local folder `E:\Claude_projects\Tyre_Pressures`, which has its own CLAUDE.md. **Do tyre-calculator work from that folder.**
+- The site itself is marked UNDER CONSTRUCTION (banner and noindex). Its card here has the amber "Under construction" tag; keep it until the owner says the site is ready. Card image `assets/img/projects/sa-tyre-pressures.jpg` is a crop of a CC0 Wikimedia Commons photo (Dyaa Eldin Moustafa).
 
 ### SA Towing Check
 
