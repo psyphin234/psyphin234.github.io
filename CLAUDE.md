@@ -20,7 +20,7 @@ projects.js             THE project list (window.PROJECTS). Edit this to add/cha
 js/main.js              Shared script for all pages: project cards (#project-grid), project-page headings ([data-project]), email + copy buttons, footer year
 css/style.css           All styles. Colours are CSS variables at the top of the file.
 assets/img/             Web-optimised logo (logo-{480,800,1200}.{webp,jpg}) + og-image.jpg + brand-64.png (pinned-header icon)
-assets/img/projects/    Card photos, 800x450 (16:9): fuel-chart.jpg, sa-towing-check.jpg, dmr-gem.jpg, sherp-wire.jpg, battery-monitor.jpg, rc-remote.jpg
+assets/img/projects/    Card photos, 800x450 (16:9): fuel-chart.jpg, sa-towing-check.jpg, sa-tyre-pressures.jpg, winch-recovery-sizing.jpg, dmr-gem.jpg, sherp-wire.jpg, battery-monitor.jpg, rc-remote.jpg
 favicon.ico             48/32/16px favicon, cropped around the "P" shield in psyphin-logo.jpg
 favicon-{48,96,192}x{48,96,192}.png  PNG favicons (Google wants multiples of 48px)
 apple-touch-icon.png    180px iOS home-screen icon (same crop)
@@ -42,9 +42,9 @@ Add **one line** to the array in `projects.js`:
 ```
 
 - `title` and `description` are required; `kind`, `url`, `cta` (button text, default "Open"), `tags`, `image` + `imageAlt` (a 16:9 photo across the top of the card, kept in `assets/img/projects/`) and `updated` (a short grey line above the button, e.g. "Updated 25 Sep 2026") are optional. **Update the `updated` date when a project moves on.** The fuel card's image is a crop of the live site's first chart (captured at a 900 px-wide window, 2x scale, placed on the chart panel's colour), so refresh it now and then. A project with no `url` gets a card with no button (used for projects with no public page, such as a private repo).
-- A tag is a plain string (blue pill), or `{ label, color }` for a coloured pill. Status tags: green for live, finished work that is still kept up to date ("Actively maintained") or built work in its final long-run test ("Endurance testing"); amber for anything still under way ("In progress", "Prototyping", "In testing", "Re-designing", "Under construction"); grey for finished work that needs no changes ("Complete"). Current (2026-10-08, the owner's calls): fuel and towing "Actively maintained", DMR hotspot "Endurance testing", SHERP crawler and battery monitor "Prototyping", RC remote "Re-designing", tyre pressures "Under construction". To add another colour, add a `.tags li.tag--<color>` rule in `css/style.css`.
+- A tag is a plain string (blue pill), or `{ label, color }` for a coloured pill. Status tags: green for live, finished work that is still kept up to date ("Actively maintained") or built work in its final long-run test ("Endurance testing"); amber for anything still under way ("In progress", "Prototyping", "In testing", "Re-designing", "Under construction"); grey for finished work that needs no changes ("Complete"). Current (2026-10-08, the owner's calls): fuel and towing "Actively maintained", DMR hotspot "Endurance testing", SHERP crawler and battery monitor "Prototyping", RC remote "Re-designing", tyre pressures and winch sizing "Under construction". To add another colour, add a `.tags li.tag--<color>` rule in `css/style.css`.
 - Order in the array = order on the page.
-- **Tools vs projects:** `kind: "tool"` puts a card in the **Tools** section (`#tool-grid`, above Projects): online tools people use, currently the fuel site, the towing checker and the 4x4 tyre pressure calculator. Everything else is a build project in **Projects** (`#project-grid`). Both tools' header pills read "← More PsyPhin tools" and link to `https://psyphin.co.za/#tools`; a new tool should do the same.
+- **Tools vs projects:** `kind: "tool"` puts a card in the **Tools** section (`#tool-grid`, above Projects): online tools people use, currently the fuel site, the towing checker, the 4x4 tyre pressure calculator and the winch & recovery sizing calculator. Everything else is a build project in **Projects** (`#project-grid`). Both tools' header pills read "← More PsyPhin tools" and link to `https://psyphin.co.za/#tools`; a new tool should do the same.
 - A project's URL lives **only** in `projects.js`. To move a project to a new address, change its `url` there. Nothing else on this site needs updating.
 
 Cards are built by `js/main.js` with `textContent`, so project text is never interpreted as HTML.
@@ -88,7 +88,7 @@ Cards are built by `js/main.js` with `textContent`, so project text is never int
 - The only absolute URLs are the Open Graph tags in `<head>` (these need the full `https://psyphin.co.za/...`).
 - Mobile-first check: layout must fit at 390px wide with no horizontal scroll.
 - Fonts come from Google Fonts (Rajdhani for headings, Inter for body) with system-font fallbacks.
-- Visitor stats: GoatCounter (cookie-free, no consent banner needed), with the script tag just before `</body>` on every page. The dashboard is https://psyphin.goatcounter.com/ and is shared with the fuel site; pages are told apart by path. `/` is the landing page, `/contact.html` the contact page, `/dmr-hotspot/`, `/sherp-crawler/`, `/battery-monitor/` and `/rc-remote/` the project pages, the towing checker, the tyre calculator (their own repos) and the fuel site prefix their paths with their host (`towing.psyphin.co.za/`, `tyres.psyphin.co.za/`, `fuel.psyphin.co.za/`); the tyre calculator was added 2026-10-08. Older visits are under `/sa-towing-check/` (towing, before 2026-10-05) and `/sa-fuel-price-preview/` (fuel, before 2026-09-27). Don't add it to the PCB site.
+- Visitor stats: GoatCounter (cookie-free, no consent banner needed), with the script tag just before `</body>` on every page. The dashboard is https://psyphin.goatcounter.com/ and is shared with the fuel site; pages are told apart by path. `/` is the landing page, `/contact.html` the contact page, `/dmr-hotspot/`, `/sherp-crawler/`, `/battery-monitor/` and `/rc-remote/` the project pages, the towing checker, the tyre calculator (their own repos) and the fuel site prefix their paths with their host (`towing.psyphin.co.za/`, `tyres.psyphin.co.za/`, `fuel.psyphin.co.za/`); the tyre calculator was added 2026-10-08. The winch calculator (2026-10-11) has the same host prefix, so until its subdomain is set up its visits show as `psyphin.co.za/winch-recovery-sizing/`. Older visits are under `/sa-towing-check/` (towing, before 2026-10-05) and `/sa-fuel-price-preview/` (fuel, before 2026-09-27). Don't add it to the PCB site.
 
 ## Changing the logo
 
@@ -131,6 +131,12 @@ Because this is the `psyphin234.github.io` **user site** with a custom domain, *
 
 - Don't link to it, add it to `projects.js`, or add PsyPhin tracking or branding to it.
 - When its domain arrives, set that domain as the custom domain in *its* repo's Settings → Pages (plus DNS at its registrar), and it stops using psyphin.co.za. If it's needed off psyphin.co.za sooner, move the repo to a free GitHub organisation.
+
+### Winch & Recovery Sizing
+
+- Repo `psyphin234/winch-recovery-sizing` (public, since 2026-10-11), local folder `E:\Claude_projects\Winch_Calc`, which has its own CLAUDE.md. **Do winch-calculator work from that folder.**
+- For now it has **no custom domain**, so it's served at `https://psyphin.co.za/winch-recovery-sizing/` through the inheritance above (don't create a `winch-recovery-sizing/` folder here). Planned address: **https://winching.psyphin.co.za/**. To switch: the owner adds an Afrihost CNAME `winching.psyphin.co.za` → `psyphin234.github.io`; once it resolves, set the custom domain in that repo's Pages settings, enforce HTTPS when the certificate is issued, add the `winching` record to the DNS list above, and change the card's `url` in `projects.js`. The old path then redirects. Full steps are in that folder's CLAUDE.md.
+- Under construction (banner and noindex on its pages); its card here has the amber "Under construction" tag. Keep both until the owner says it's ready. Card image `assets/img/projects/winch-recovery-sizing.jpg` is the calculator's own rigging diagram (double line, its deep-mud example) rendered at 800x450.
 
 ### 4x4 Tyre Pressures
 
