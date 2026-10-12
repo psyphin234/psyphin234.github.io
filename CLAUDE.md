@@ -137,7 +137,7 @@ Because this is the `psyphin234.github.io` **user site** with a custom domain, *
 
 - Repo `psyphin234/winch-recovery-sizing` (public, since 2026-10-11), local folder `E:\Claude_projects\Winch_Calc`, which has its own CLAUDE.md. **Do winch-calculator work from that folder.**
 - Lives at **https://winching.psyphin.co.za/** since 2026-10-12 (its own `CNAME` plus the Afrihost `winching` CNAME; HTTPS enforced). The first address, `psyphin.co.za/winch-recovery-sizing/`, redirects there. Don't create a `winch-recovery-sizing/` folder here.
-- Card title **Winch Planning and Sizing** since 2026-10-12 (owner's call; it was "Winch & Recovery Sizing", which the tool's own pages still use).
+- Card title **Winch Planning and Sizing** since 2026-10-12 (owner's call; it was "Winch & Recovery Sizing"). The tool's own pages use the same name.
 - Under construction (banner and noindex on its pages); its card here has the amber "Under construction" tag. Keep both until the owner says it's ready. Card image `assets/img/projects/winch-recovery-sizing.jpg` is the calculator's own side-view picture (a 4x4 bogged to the axles in mud on a 12° slope, double line to a tree 15 m away), rendered at 800x450 with extra sky for the 16:9 crop (since 2026-10-12; before that, the rope diagram).
 
 ### 4x4 Tyre Pressures
