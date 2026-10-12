@@ -144,7 +144,7 @@ Because this is the `psyphin234.github.io` **user site** with a custom domain, *
 ### Ropes and Shackles
 
 - Repo `psyphin234/ropes-recovery-gear` (public), local folder `E:\Claude_projects\Ropes_Recovery`, which has its own CLAUDE.md. **Do ropes-page work from that folder.** Lives at **https://ropes.psyphin.co.za/** (its own `CNAME` plus the Afrihost `ropes` CNAME).
-- Card added 2026-10-12 at the owner's request, titled **Ropes and Shackles** (the page itself is headed "Ropes & Recovery Gear"). Under construction (banner and noindex on its pages); its card has the amber "Under construction" tag. Keep both until the owner says it's ready. Card image `assets/img/projects/ropes-recovery-gear.jpg` is the page's own side-view scene (stuck 4x4 sunk in sand, kinetic rope tight, a safety lanyard at each end), rendered at 800x450 with extra sky for the 16:9 crop.
+- Card added 2026-10-12 at the owner's request, titled **Ropes and Shackles**; the page uses the same name (it was "Ropes & Recovery Gear" until 2026-10-12). Under construction (banner and noindex on its pages); its card has the amber "Under construction" tag. Keep both until the owner says it's ready. Card image `assets/img/projects/ropes-recovery-gear.jpg` is the page's own side-view scene (stuck 4x4 sunk in sand, kinetic rope tight, a safety lanyard at each end), rendered at 800x450 with extra sky for the 16:9 crop.
 - Its visits show in GoatCounter as `ropes.psyphin.co.za/` (host-prefix snippet).
 
 ### 4x4 Tyre Pressures
