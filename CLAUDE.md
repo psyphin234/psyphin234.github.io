@@ -189,3 +189,6 @@ Because this is the `psyphin234.github.io` **user site** with a custom domain, *
 - [ ] Optional: add a CAA record `psyphin.co.za CAA 0 issue "letsencrypt.org"`, so only Let's Encrypt (which GitHub Pages uses) can issue certificates.
 - [ ] Optional: replace this PC's `gh` login (full `repo` scope, used by the hourly fuel publish job) with a fine-grained token limited to `psyphin234/sa-fuel-price-preview`.
 
+## Search (SEO)
+
+Set up 2026-10-13, following the [Runbook: SEO for Small Sites & Tools](https://claude.ai/code/artifact/0e4d5503-7f20-4cb5-a25b-840f4caa3545). The `<title>` leads with the tool's name and adds the words people search for; the meta description is at most 155 characters (Google cuts the rest). Every page has a canonical link; `index.html` has `Organization` + `WebSite` JSON-LD and a visually hidden `<h1>` (the logo is the visible heading). Add a new page to `sitemap.xml` and give it a canonical link. Project pages' headings are `<h2>` from `js/main.js`; making them `<h1>` would need a CSS change too and wasn't done. `robots.txt` and `sitemap.xml` are at the site root: **update the sitemap's `lastmod` when a page's content changes.** Indexable.
