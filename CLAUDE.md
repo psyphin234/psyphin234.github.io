@@ -139,18 +139,18 @@ Because this is the `psyphin234.github.io` **user site** with a custom domain, *
 - Repo `psyphin234/winch-recovery-sizing` (public, since 2026-10-11), local folder `E:\Claude_projects\Winch_Calc`, which has its own CLAUDE.md. **Do winch-calculator work from that folder.**
 - Lives at **https://winching.psyphin.co.za/** since 2026-10-12 (its own `CNAME` plus the Afrihost `winching` CNAME; HTTPS enforced). The first address, `psyphin.co.za/winch-recovery-sizing/`, redirects there. Don't create a `winch-recovery-sizing/` folder here.
 - Card title **Winch Planning and Sizing** since 2026-10-12 (owner's call; it was "Winch & Recovery Sizing"). The tool's own pages use the same name.
-- Under construction (banner and noindex on its pages); its card here has the amber "Under construction" tag. Keep both until the owner says it's ready. Card image `assets/img/projects/winch-recovery-sizing.jpg` is the calculator's own side-view picture (a 4x4 bogged to the axles in mud on a 12° slope, double line to a tree 15 m away), rendered at 800x450 with extra sky for the 16:9 crop (since 2026-10-12; before that, the rope diagram).
+- Finished (owner, 2026-10-14): banner and noindex removed from its pages, card tag green "Actively maintained" (amber "Under construction" before). Card image `assets/img/projects/winch-recovery-sizing.jpg` is the calculator's own side-view picture (a 4x4 bogged to the axles in mud on a 12° slope, double line to a tree 15 m away), rendered at 800x450 with extra sky for the 16:9 crop (since 2026-10-12; before that, the rope diagram).
 
 ### Ropes and Shackles
 
 - Repo `psyphin234/ropes-recovery-gear` (public), local folder `E:\Claude_projects\Ropes_Recovery`, which has its own CLAUDE.md. **Do ropes-page work from that folder.** Lives at **https://ropes.psyphin.co.za/** (its own `CNAME` plus the Afrihost `ropes` CNAME).
-- Card added 2026-10-12 at the owner's request, titled **Ropes and Shackles**; the page uses the same name (it was "Ropes & Recovery Gear" until 2026-10-12). Under construction (banner and noindex on its pages); its card has the amber "Under construction" tag. Keep both until the owner says it's ready. Card image `assets/img/projects/ropes-recovery-gear.jpg` is the page's own side-view scene (stuck 4x4 sunk in sand, kinetic rope tight, a safety lanyard at each end), rendered at 800x450 with extra sky for the 16:9 crop.
+- Card added 2026-10-12 at the owner's request, titled **Ropes and Shackles**; the page uses the same name (it was "Ropes & Recovery Gear" until 2026-10-12). Finished (owner, 2026-10-14): banner and noindex removed from its pages, card tag green "Actively maintained" (amber "Under construction" before). Card image `assets/img/projects/ropes-recovery-gear.jpg` is the page's own side-view scene (stuck 4x4 sunk in sand, kinetic rope tight, a safety lanyard at each end), rendered at 800x450 with extra sky for the 16:9 crop.
 - Its visits show in GoatCounter as `ropes.psyphin.co.za/` (host-prefix snippet).
 
 ### 4x4 Tyre Pressures
 
 - Lives at **https://tyres.psyphin.co.za/** since 2026-10-08 (its own `CNAME` plus the Afrihost `tyres` CNAME). Repo `psyphin234/sa-tyre-pressures`, local folder `E:\Claude_projects\Tyre_Pressures`, which has its own CLAUDE.md. **Do tyre-calculator work from that folder.**
-- The site itself is in SCENARIO TESTING (banner and noindex; "Under construction" until 2026-10-12). Its card here has the amber "Scenario testing" tag; keep it until the owner says the site is ready. Card image `assets/img/projects/sa-tyre-pressures.jpg` is an 800x450 crop of the owner's own red-dune photo (Amam Dunes, Northern Cape; original `Pics/DeepSand.jpg` in the tyre project, saved without EXIF because the original has GPS).
+- Finished (owner, 2026-10-14): banner and noindex removed, card tag green "Actively maintained" (amber "Scenario testing" from 2026-10-12, "Under construction" before). Card image `assets/img/projects/sa-tyre-pressures.jpg` is an 800x450 crop of the owner's own red-dune photo (Amam Dunes, Northern Cape; original `Pics/DeepSand.jpg` in the tyre project, saved without EXIF because the original has GPS).
 
 ### SA Towing Check
 
