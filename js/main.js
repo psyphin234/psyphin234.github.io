@@ -116,7 +116,7 @@
     var project = projects.filter(function (p) { return p.url === head.getAttribute("data-project"); })[0];
     if (!project) return;
     head.textContent = "";
-    head.appendChild(el("h2", null, project.title));
+    head.appendChild(el("h1", null, project.title));
     if (project.tags && project.tags.length) head.appendChild(tagList(project.tags));
   });
 

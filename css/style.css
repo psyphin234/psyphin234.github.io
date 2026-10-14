@@ -236,6 +236,7 @@ body.scrolled .brand {
   border-top: 1px solid var(--border);
 }
 
+.section h1,
 .section h2 {
   margin: 0 0 28px;
   font-family: var(--font-display);
@@ -249,6 +250,7 @@ body.scrolled .brand {
   color: transparent;
 }
 
+.section h1::after,
 .section h2::after {
   content: "";
   display: block;
@@ -897,6 +899,7 @@ body.scrolled .brand {
     padding: 40px 16px;
   }
 
+  .section h1,
   .section h2 {
     font-size: 1.6rem;
   }
