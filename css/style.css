@@ -237,7 +237,7 @@ body.scrolled .brand {
   position: relative;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 16px 56px;
+  padding: 0 16px 20px;
   text-align: center;
   overflow-x: clip; /* the glow is wider than a phone screen */
 }
@@ -247,8 +247,8 @@ body.scrolled .brand {
   position: absolute;
   top: 45%;
   left: 50%;
-  width: min(900px, 130%);
-  height: 560px;
+  width: min(700px, 130%);
+  height: 420px;
   transform: translate(-50%, -50%);
   z-index: -1;
   pointer-events: none;
@@ -276,8 +276,8 @@ body.scrolled .brand {
 .hero-logo {
   /* "screen" blending makes the logo's black background transparent over the glow */
   mix-blend-mode: screen;
-  width: 90%;
-  max-width: 738px;
+  width: 70%;
+  max-width: 420px;
   margin: 0 auto;
   /* Feather the image edges so the logo's black background melts into the page */
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent), linear-gradient(transparent, #000 5%, #000 95%, transparent);
@@ -292,11 +292,16 @@ body.scrolled .brand {
 }
 
 .hero--compact .hero-logo {
-  width: 100%;
-  max-width: 440px;
+  width: 60%;
+  max-width: 320px;
 }
 
 /* Sections */
+
+/* The first section sits close under the hero logo. */
+.hero + .section {
+  padding-top: 28px;
+}
 
 .section {
   position: relative;
@@ -1044,7 +1049,7 @@ body.scrolled .brand {
   }
 
   .hero {
-    padding-bottom: 40px;
+    padding-bottom: 12px;
   }
 
   .section {
