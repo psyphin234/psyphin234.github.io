@@ -1,22 +1,27 @@
+/* "Deep space" look, shared with fuel.psyphin.co.za (since 2026-10-18): navy page,
+   drifting blue/violet light, a glowing circuit board (js/circuit.js), glass cards
+   and cyan glow. */
 :root {
-  --bg: #020203; /* matches the logo image background so it blends in */
-  --surface: #111418;
-  --surface-2: #181c21;
-  --border: #262c33;
-  --metal-light: #d7dde3;
-  --metal: #9aa4ae;
-  --metal-dark: #5d6670;
-  --text: #e6ebef;
-  --text-muted: #9aa4ae;
-  --accent: #3fb6ff;
-  --accent-strong: #1e8fff;
-  --accent-glow: rgba(63, 182, 255, 0.35);
-  --green: #4ade80;
-  --amber: #fbbf24;
-  --radius: 14px;
+  --bg: #040817;
+  --surface: #0b1330;
+  --surface-2: #101a3c;
+  --glass: rgba(11, 19, 48, 0.58);
+  --border: rgba(120, 170, 255, 0.14);
+  --metal-light: #eaf2ff;
+  --metal: #a8b7d6;
+  --metal-dark: #7487ad;
+  --text: #eaf2ff;
+  --text-muted: #a8b7d6;
+  --accent: #4cc9ff;
+  --accent-strong: #2f6bff;
+  --accent-glow: rgba(76, 201, 255, 0.35);
+  --violet: #7c5cff;
+  --green: #2ee6a6;
+  --amber: #ffc857;
+  --radius: 18px;
   --max-width: 1040px;
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-display: "Rajdhani", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Sora", "Inter", system-ui, sans-serif;
 }
 
 *,
@@ -38,10 +43,16 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 a {
   color: var(--accent);
+}
+
+::selection {
+  background: rgba(76, 201, 255, 0.35);
+  color: #fff;
 }
 
 img {
@@ -69,16 +80,49 @@ img {
   outline-offset: 3px;
 }
 
-/* Circuit-trace pattern, the same on psyphin.co.za and every PsyPhin tool
-   (change them together); it echoes the logo. Fixed behind the whole page so it shows all
-   the way down. */
-body::before {
+/* Fixed layers behind the whole page, the same on every PsyPhin site (change them
+   together): a glowing circuit board and slow-drifting pools of blue and violet
+   light. js/circuit.js draws the circuit on two canvases (.circuit-fx) and adds
+   .fx-circuit to <html>, which hides the static fallback tile in body::before. */
+body::before,
+body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none'%3E%3Cg stroke='%233fb6ff' stroke-opacity='0.136' stroke-width='1'%3E%3Cpath d='M0 40h46l18 18h44M108 58v42l18 18h54M24 180v-44l18-18h34M180 22h-34L124 0M76 118v-20l-14-14H0M146 180v-26l12-12h22'/%3E%3C/g%3E%3Cg fill='%233fb6ff' fill-opacity='0.256'%3E%3Ccircle cx='108' cy='58' r='2.2'/%3E%3Ccircle cx='76' cy='118' r='2.2'/%3E%3Ccircle cx='146' cy='22' r='2.2'/%3E%3Ccircle cx='146' cy='154' r='2.2'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+body::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none'%3E%3Cfilter id='g' filterUnits='userSpaceOnUse' x='-20' y='-20' width='220' height='220'%3E%3CfeGaussianBlur stdDeviation='1.8' result='b'/%3E%3CfeMerge%3E%3CfeMergeNode in='b'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3Cg filter='url(%23g)'%3E%3Cg stroke='%233fb6ff' stroke-opacity='0.18' stroke-width='1.1'%3E%3Cpath d='M0 40h46l18 18h44M108 58v42l18 18h54M24 180v-44l18-18h34M180 22h-34L124 0M76 118v-20l-14-14H0M146 180v-26l12-12h22'/%3E%3C/g%3E%3Cg stroke='%235cc8ff' stroke-opacity='0.38'%3E%3Ccircle cx='108' cy='58' r='2.6'/%3E%3Ccircle cx='76' cy='118' r='2.6'/%3E%3Ccircle cx='146' cy='22' r='2.6'/%3E%3Ccircle cx='146' cy='154' r='2.6'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.fx-circuit body::before {
+  display: none;
+}
+
+body::after {
+  z-index: -2;
+  inset: -20%;
+  background:
+    radial-gradient(38% 32% at 82% 8%, rgba(47, 107, 255, 0.3), transparent 70%),
+    radial-gradient(30% 28% at 10% 40%, rgba(124, 92, 255, 0.18), transparent 70%),
+    radial-gradient(34% 30% at 70% 85%, rgba(0, 180, 255, 0.12), transparent 70%);
+  animation: aurora 38s ease-in-out infinite alternate;
+}
+
+@keyframes aurora {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-4%, 3%, 0) scale(1.06); }
+  100% { transform: translate3d(3%, -2%, 0) scale(1.02); }
+}
+
+.circuit-fx {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* Header */
@@ -88,14 +132,15 @@ body::before {
   top: 0;
   z-index: 20;
   border-bottom: 1px solid transparent;
-  transition: background-color 0.3s, border-color 0.3s;
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 
 body.scrolled .site-header {
-  background: rgba(2, 2, 3, 0.85);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  border-bottom-color: var(--border);
+  background: rgba(4, 8, 23, 0.78);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
+  border-bottom-color: rgba(76, 201, 255, 0.22);
+  box-shadow: 0 8px 30px -12px rgba(0, 0, 0, 0.7);
 }
 
 .site-header-inner {
@@ -128,13 +173,14 @@ body.scrolled .brand {
   width: 30px;
   height: 30px;
   border-radius: 6px;
+  mix-blend-mode: lighten;
 }
 
 .brand span {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.15rem;
-  letter-spacing: 0.08em;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--metal-light);
 }
@@ -146,26 +192,43 @@ body.scrolled .brand {
 
 .nav {
   display: flex;
-  gap: 24px;
+  gap: 26px;
 }
 
 .nav a {
+  position: relative;
   color: var(--metal);
   text-decoration: none;
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.05rem;
-  letter-spacing: 0.08em;
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  transition: color 0.2s;
+  transition: color 0.2s, text-shadow 0.2s;
 }
 
-.nav a:hover {
-  color: var(--accent);
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  box-shadow: 0 0 8px var(--accent);
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
 }
 
+.nav a:hover,
 .nav a[aria-current="page"] {
   color: var(--accent);
+  text-shadow: 0 0 12px var(--accent-glow);
+}
+
+.nav a:hover::after,
+.nav a[aria-current="page"]::after {
+  transform: scaleX(1);
 }
 
 /* Hero */
@@ -176,6 +239,7 @@ body.scrolled .brand {
   margin: 0 auto;
   padding: 0 16px 56px;
   text-align: center;
+  overflow-x: clip; /* the glow is wider than a phone screen */
 }
 
 .hero::before {
@@ -188,8 +252,10 @@ body.scrolled .brand {
   transform: translate(-50%, -50%);
   z-index: -1;
   pointer-events: none;
-  background: radial-gradient(ellipse at center, rgba(30, 143, 255, 0.2), rgba(30, 143, 255, 0.06) 40%, transparent 70%);
-  animation: glow-in 1.8s ease-out both;
+  background:
+    radial-gradient(ellipse at center, rgba(47, 107, 255, 0.28), rgba(76, 201, 255, 0.08) 40%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 70% 60%, rgba(124, 92, 255, 0.14), transparent 70%);
+  animation: glow-in 1.8s ease-out both, breathe 9s ease-in-out 1.8s infinite;
 }
 
 .hero--compact::before {
@@ -200,6 +266,11 @@ body.scrolled .brand {
 @keyframes glow-in {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
 
 .hero-logo {
@@ -213,6 +284,7 @@ body.scrolled .brand {
   -webkit-mask-composite: source-in;
   mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent), linear-gradient(transparent, #000 5%, #000 95%, transparent);
   mask-composite: intersect;
+  animation: rise 1s ease-out both;
 }
 
 .hero--compact {
@@ -227,21 +299,32 @@ body.scrolled .brand {
 /* Sections */
 
 .section {
+  position: relative;
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 56px 16px;
-  border-top: 1px solid var(--border);
+}
+
+/* A glowing line across the top of each section. */
+.section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 16px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(76, 201, 255, 0.45) 30%, rgba(124, 92, 255, 0.4) 70%, transparent);
 }
 
 .section h1,
 .section h2 {
   margin: 0 0 28px;
   font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  background: linear-gradient(180deg, var(--metal-light) 0%, var(--metal) 55%, var(--metal-dark) 100%);
+  background: linear-gradient(100deg, #ffffff 0%, #d6ecff 40%, #7fd6ff 75%, #8f7bff 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -251,12 +334,18 @@ body.scrolled .brand {
 .section h2::after {
   content: "";
   display: block;
-  width: 48px;
-  height: 3px;
-  margin-top: 8px;
-  background: var(--accent);
+  width: 56px;
+  height: 2px;
+  margin-top: 10px;
+  background: linear-gradient(90deg, var(--accent), var(--violet));
   box-shadow: 0 0 12px var(--accent-glow);
   border-radius: 2px;
+}
+
+/* Project pages: a dark band behind the text so the circuit doesn't run through it. */
+.section:has(.prose) {
+  background: linear-gradient(180deg, rgba(4, 8, 23, 0.74), rgba(4, 8, 23, 0.62));
+  border-radius: var(--radius);
 }
 
 /* Project cards */
@@ -268,27 +357,45 @@ body.scrolled .brand {
 }
 
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   padding: 24px;
-  background: linear-gradient(160deg, var(--surface-2), var(--surface));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.008)), var(--glass);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+
+/* Thin glowing highlight along the card's top edge. */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 24px;
+  right: 24px;
+  z-index: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(76, 201, 255, 0.7), rgba(124, 92, 255, 0.55), transparent);
+  pointer-events: none;
 }
 
 .card:hover {
-  border-color: rgba(63, 182, 255, 0.5);
-  box-shadow: 0 0 0 1px rgba(63, 182, 255, 0.15), 0 10px 30px -10px var(--accent-glow);
-  transform: translateY(-2px);
+  border-color: rgba(76, 201, 255, 0.4);
+  box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.7), 0 0 36px -10px rgba(76, 201, 255, 0.5);
+  transform: translateY(-3px);
 }
 
 .card h3 {
   margin: 0 0 8px;
   font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   color: var(--metal-light);
 }
 
@@ -311,7 +418,7 @@ body.scrolled .brand {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s ease;
 }
 
 .card:hover .card-media img {
@@ -331,7 +438,7 @@ body.scrolled .brand {
 }
 
 .card.reveal.is-visible {
-  animation: rise 0.6s ease-out both;
+  animation: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
   animation-delay: var(--delay, 0ms);
 }
 
@@ -355,48 +462,68 @@ body.scrolled .brand {
   font-weight: 500;
   letter-spacing: 0.04em;
   color: var(--accent);
-  background: rgba(63, 182, 255, 0.08);
-  border: 1px solid rgba(63, 182, 255, 0.25);
+  background: rgba(76, 201, 255, 0.08);
+  border: 1px solid rgba(76, 201, 255, 0.28);
   border-radius: 999px;
 }
 
 .tags li.tag--green {
   color: var(--green);
-  background: rgba(74, 222, 128, 0.08);
-  border-color: rgba(74, 222, 128, 0.3);
+  background: rgba(46, 230, 166, 0.08);
+  border-color: rgba(46, 230, 166, 0.32);
 }
 
 .tags li.tag--amber {
   color: var(--amber);
-  background: rgba(251, 191, 36, 0.08);
-  border-color: rgba(251, 191, 36, 0.3);
+  background: rgba(255, 200, 87, 0.08);
+  border-color: rgba(255, 200, 87, 0.32);
 }
 
 .tags li.tag--grey {
   color: var(--metal);
-  background: rgba(154, 164, 174, 0.08);
-  border-color: rgba(154, 164, 174, 0.3);
+  background: rgba(168, 183, 214, 0.08);
+  border-color: rgba(168, 183, 214, 0.3);
 }
 
 .button {
+  position: relative;
+  overflow: hidden;
   align-self: flex-start;
-  padding: 10px 20px;
+  padding: 10px 22px;
   font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
-  color: #04121d;
-  background: linear-gradient(180deg, var(--accent), var(--accent-strong));
-  border-radius: 8px;
-  box-shadow: 0 0 16px -2px var(--accent-glow);
-  transition: box-shadow 0.2s, filter 0.2s;
+  color: #031022;
+  background: linear-gradient(100deg, var(--accent-strong), var(--accent));
+  border: 1px solid rgba(140, 220, 255, 0.6);
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px rgba(76, 201, 255, 0.25), 0 8px 28px -8px rgba(47, 140, 255, 0.65);
+  transition: box-shadow 0.2s;
+}
+
+/* A sheen sweeps across on hover. */
+.button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 40%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
 }
 
 .button:hover {
-  filter: brightness(1.1);
-  box-shadow: 0 0 24px 0 var(--accent-glow);
+  box-shadow: 0 0 0 1px rgba(76, 201, 255, 0.5), 0 10px 36px -6px rgba(76, 201, 255, 0.75);
+}
+
+.button:hover::before {
+  left: 120%;
 }
 
 .button::after {
@@ -409,15 +536,15 @@ body.scrolled .brand {
 
 .button--secondary {
   color: var(--metal-light);
-  background: transparent;
-  border: 1px solid var(--border);
+  background: rgba(11, 19, 48, 0.5);
+  border: 1px solid rgba(76, 201, 255, 0.3);
   box-shadow: none;
   cursor: pointer;
 }
 
 .button--secondary:hover {
-  border-color: rgba(63, 182, 255, 0.5);
-  box-shadow: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 22px -6px var(--accent-glow);
 }
 
 /* Project pages (dmr-hotspot/, ...) */
@@ -453,8 +580,8 @@ body.scrolled .brand {
 .prose h4 {
   margin: 24px 0 8px;
   font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 600;
   color: var(--metal-light);
 }
 
@@ -588,8 +715,8 @@ body.scrolled .brand {
 .prose h3 {
   margin: 32px 0 10px;
   font-family: var(--font-display);
-  font-size: 1.35rem;
-  font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: 600;
   color: var(--metal-light);
 }
 
@@ -671,8 +798,8 @@ body.scrolled .brand {
   transform: translateX(-50%);
   display: flex;
   gap: 14px;
-  font-family: var(--font-display);
-  font-size: 0.72rem;
+  font-family: var(--font-body);
+  font-size: 0.62rem;
   color: #dce6f5;
 }
 
@@ -723,7 +850,7 @@ body.scrolled .brand {
 .oled-modes button {
   padding: 8px 14px;
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--metal-light);
@@ -789,8 +916,8 @@ body.scrolled .brand {
 .prose details.code summary {
   padding: 12px 16px;
   font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 0.95rem;
+  font-weight: 600;
   color: var(--metal-light);
   cursor: pointer;
 }
@@ -809,6 +936,7 @@ body.scrolled .brand {
 .code-bar button {
   padding: 5px 12px;
   font-family: var(--font-display);
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--metal-light);
   background: transparent;
@@ -833,7 +961,10 @@ body.scrolled .brand {
 .contact-card {
   max-width: 560px;
   padding: 28px 24px;
-  background: linear-gradient(160deg, var(--surface-2), var(--surface));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.008)), var(--glass);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border);
   border-radius: var(--radius);
 }
@@ -847,8 +978,8 @@ body.scrolled .brand {
   display: inline-block;
   margin: 4px 0 24px;
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 6vw, 2rem);
-  font-weight: 700;
+  font-size: clamp(1.25rem, 5vw, 1.7rem);
+  font-weight: 600;
   color: var(--metal-light);
   text-decoration: none;
   overflow-wrap: anywhere;
@@ -871,11 +1002,21 @@ body.scrolled .brand {
 /* Footer */
 
 .site-footer {
+  position: relative;
   padding: 32px 16px;
   text-align: center;
   color: var(--metal-dark);
   font-size: 0.875rem;
-  border-top: 1px solid var(--border);
+}
+
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(76, 201, 255, 0.4), rgba(124, 92, 255, 0.35), transparent);
 }
 
 .site-footer p {
@@ -883,6 +1024,20 @@ body.scrolled .brand {
 }
 
 @media (max-width: 600px) {
+  .nav {
+    gap: 16px;
+  }
+
+  .nav a {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* Room for the nav next to the brand mark: icon only. */
+  .brand span {
+    display: none;
+  }
+
   .gallery {
     grid-template-columns: 1fr 1fr;
     gap: 8px;
@@ -919,8 +1074,14 @@ body.scrolled .brand {
 
   .card.reveal.is-visible,
   .hero::before,
+  .hero-logo,
+  body::after,
   .screen g.show {
     animation: none;
+  }
+
+  .button::before {
+    display: none;
   }
 
   .card:hover .card-media img {
