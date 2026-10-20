@@ -18,7 +18,7 @@
     "image": "https://psyphin.co.za/dmr-hotspot/img/case-and-cooling-fan-1600.jpg",
     "inLanguage": "en-ZA",
     "datePublished": "2026-09-27",
-    "dateModified": "2026-10-14",
+    "dateModified": "2026-10-20",
     "author": {
       "@type": "Organization",
       "name": "PsyPhin",
@@ -89,14 +89,14 @@
            Frequencies: 433.300 MHz (hotspot RX) and 438.300 MHz (hotspot TX) only. -->
       <div class="prose">
         <p class="lead">A small home-built box that lets my handheld digital radio talk to radio amateurs around the world, using the internet to cover the distance.</p>
-        <p>On its own, a handheld radio reaches a few kilometres at best. A <strong>hotspot</strong> is a tiny personal gateway: the handheld talks to it over a short radio link, and the hotspot carries the conversation over the internet to <strong>BrandMeister</strong>, a network that links thousands of digital radios worldwide. Mine is built from a Raspberry Pi (a credit-card-sized computer) with a radio board on top, in a 3D-printed case with a cooling fan. It runs under my amateur radio callsign, <strong>ZR6KW</strong>.</p>
+        <p>On its own, a handheld radio reaches a few kilometres at best. A <strong>hotspot</strong> works like a tiny personal gateway. The handheld talks to it over a short radio link, and the hotspot carries the conversation over the internet to <strong>BrandMeister</strong>, a network that links thousands of digital radios worldwide. Mine is built from a Raspberry Pi (a credit-card-sized computer) with a radio board on top, in a 3D-printed case with a cooling fan. It runs under my amateur radio callsign, <strong>ZR6KW</strong>.</p>
 
         <h3>Where it's at</h3>
         <ul>
           <li><strong>Working day to day:</strong> it links my radio to the network and passes calls both ways.</li>
           <li><strong>Power problem fixed (it seems):</strong> the Pi was running short of power, which caused glitches. A proper 3 A-rated cable appears to have solved it.</li>
           <li><strong>Still an occasional freeze:</strong> now and then the radio board locks up until its software is restarted. The automatic watchdog that should do this by itself still needs fixing.</li>
-          <li><strong>Fine-tuning left:</strong> the receive side is calibrated; checking the transmit side properly needs a cheap software-defined radio (SDR) to measure it.</li>
+          <li><strong>Fine-tuning left:</strong> the receive side is calibrated. To check the transmit side properly I need a cheap software-defined radio (SDR) to measure it.</li>
         </ul>
 
         <figure>
@@ -133,7 +133,7 @@
         </div>
 
         <h3>Build your own: step by step</h3>
-        <p>A rough outline of how I set mine up. Use frequencies allowed by your own licence and local band plan; the ones below are mine.</p>
+        <p>A rough outline of how I set mine up. The frequencies below are mine, so use ones allowed by your own licence and local band plan.</p>
         <ol>
           <li><strong>Get licensed and registered.</strong> You need an amateur radio licence and callsign (ICASA in South Africa), a DMR ID from <a href="https://radioid.net">radioid.net</a>, and a BrandMeister SelfCare account, where you set a hotspot password.</li>
           <li><strong>Gather the parts.</strong> A Raspberry Pi 3B, an MMDVM_HS_Dual_Hat (the dual version allows full duplex), a microSD card, a 5 V / 3 A power supply with a <strong>3 A-rated Micro-USB cable</strong>, and a DMR handheld (mine is a Baofeng DM-32UV). A case with a fan is optional.</li>
@@ -235,7 +235,7 @@ ColorCode=1</code></pre>
           <li><strong>Save Offset</strong>, <strong>Stop</strong>, then set TX Admit back.</li>
         </ol>
         <p><strong>Result:</strong> BER 0.09% at RXOffset −75 Hz. DMR is comfortable up to about 1%.</p>
-        <p><strong>TX offset and deviation (open):</strong> the calibration tool uses the radio as the signal source, so it only measures RX. TXOffset was set to −75 on the assumption that both ADF7021s share the same TCXO and the two frequencies are close, and DMRTXLevel was trialled at 45. Neither is a measurement. Proper TX calibration needs an <strong>RTL-SDR</strong> (or a spectrum analyser) to check the actual transmitted frequency and deviation.</p>
+        <p><strong>TX offset and deviation (open):</strong> the calibration tool uses the radio as the signal source, so it only measures RX. TXOffset was set to −75 on the assumption that both ADF7021s share the same TCXO and the two frequencies are close, and DMRTXLevel was trialled at 45. Neither of these were actually measured. Proper TX calibration needs an <strong>RTL-SDR</strong> (or a spectrum analyser) to check the actual transmitted frequency and deviation.</p>
 
         <h4>Troubleshooting log</h4>
         <p><strong>Issue A: modem lock-up (intermittent, still open)</strong></p>
@@ -249,11 +249,11 @@ ColorCode=1</code></pre>
         <p><strong>Issue B: carrier but no DMR decode on the handheld (open)</strong></p>
         <ul>
           <li><strong>Symptom:</strong> the radio's RX LED and signal meter respond to the hotspot's 438.300 MHz transmission, but no audio or callsign is decoded, sometimes as intermittent drop-outs.</li>
-          <li><strong>Key point:</strong> carrier detect and the S-meter only prove RF is present, not that the modulation can be decoded.</li>
+          <li><strong>Note:</strong> carrier detect and the S-meter only show there is RF. They don't show the modulation can be decoded.</li>
           <li><strong>Tried:</strong> TXOffset −75 and DMRTXLevel 45, with no fix.</li>
           <li><strong>Next:</strong> measure TX frequency and deviation with an RTL-SDR, and correlate drop-outs with BER on the dashboard.</li>
         </ul>
-        <p><strong>Resolved:</strong> the SVC LED flashing red is the normal firmware heartbeat, not a fault. An earlier forum-based diagnosis was wrong.</p>
+        <p><strong>Resolved:</strong> the flashing red SVC LED is just the firmware's normal heartbeat. A forum post had me thinking it was a fault.</p>
 
         <h4>Power investigation</h4>
         <div class="table-wrap">
@@ -269,7 +269,7 @@ ColorCode=1</code></pre>
           </table>
         </div>
         <p><strong>Why it mattered:</strong> load spikes (at boot, and from the dual hat while transmitting) caused brief voltage sags at the Pi. These can glitch the UART to the STM32 and leave the modem wedged, which fits Issue A. Cheap USB cables typically have thin 28–30 AWG power wires that drop too much voltage.</p>
-        <p><strong>Reading <code>get_throttled</code>:</strong> bits 0–3 mean "happening now" (0x1 under-voltage, 0x2 frequency capped, 0x4 throttled, 0x8 soft temperature limit); bits 16–19 mean "has happened since boot". The flags only clear on reboot. Watch them live with <code>watch -n 1 vcgencmd get_throttled</code>.</p>
+        <p><strong>Reading <code>get_throttled</code>:</strong> bits 0–3 mean "happening now" (0x1 under-voltage, 0x2 frequency capped, 0x4 throttled, 0x8 soft temperature limit). Bits 16–19 mean "has happened since boot". The flags only clear on reboot. Watch them live with <code>watch -n 1 vcgencmd get_throttled</code>.</p>
         <p><strong>GPIO power injection (tried, not kept):</strong> feeding regulated 5 V straight into header pins 2/4 (5 V) and 6 (GND) avoids the Micro-USB connector and cable losses, but it also bypasses the Raspberry Pi's built-in input protection (its polyfuse). That risk wasn't worth keeping once a proper cable did the job, so the Pi is back on Micro-USB power.</p>
         <figure>
           <a href="img/gpio-power-injection.svg"><img class="diagram" src="img/gpio-power-injection.svg" alt="Wiring for GPIO power injection, which was tried and then removed: a regulated 5.1 V, 3 A supply's positive lead to header pins 2 and 4, negative lead to pin 6. It bypasses the Micro-USB input protection." width="720" height="380" loading="lazy"></a>
@@ -277,7 +277,7 @@ ColorCode=1</code></pre>
         </figure>
 
         <h4>Mobile version (12 V vehicle power)</h4>
-        <p>A mobile version of the Pi 3B and hat, powered from a vehicle's 12 V system, has also been explored.</p>
+        <p>I've also tried a mobile version of the Pi 3B and hat, powered from a vehicle's 12 V system.</p>
         <ul>
           <li><strong>Didn't work:</strong> LM2596 and XL4015 buck modules, and a homebrew LM317 regulator. They caused RF interference in the receiver or board resets.</li>
           <li><strong>Planned:</strong> vehicle 12 V → fuse → LC/ferrite input filter → Pololu D24V50F5 (or equivalent) synchronous 5 V buck → LC/ferrite output filter → Pi 3B and hat.</li>
@@ -295,10 +295,10 @@ systemctl status hciuart                # should be disabled (UART free for mode
 
         <h4>Lessons learned</h4>
         <ul>
-          <li>Carrier and S-meter response are not the same as a successful DMR decode. Verify the modulation.</li>
-          <li>Guessing DMRTXLevel and TXOffset isn't calibration. Measure with an SDR.</li>
-          <li>A clean <code>get_throttled</code> at one moment doesn't rule out power; the "since boot" bits and a live watch tell the real story.</li>
-          <li>The cable matters as much as the power supply. A proper 3 A-rated cable fixed what a 3.5 A supply couldn't.</li>
+          <li>Seeing a carrier and S-meter reading doesn't mean the DMR will decode. Check the modulation.</li>
+          <li>Guessing DMRTXLevel and TXOffset is not calibrating them. Measure with an SDR.</li>
+          <li>One clean <code>get_throttled</code> reading doesn't mean the power is fine. Check the "since boot" bits and watch it live.</li>
+          <li>The cable matters as much as the power supply. The 3.5 A supply didn't fix it, but a proper 3 A-rated cable did.</li>
           <li>Don't bypass the Pi's power protection when a better cable will do.</li>
           <li>Don't trust forum diagnoses of LED patterns without checking the firmware's actual behaviour.</li>
         </ul>
