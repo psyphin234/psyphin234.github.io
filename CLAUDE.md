@@ -16,6 +16,7 @@ dmr-hotspot/img/        Its photos (<name>-800.jpg + <name>-1600.jpg) and the tw
 sherp-crawler/index.html  Project page for RC SHERP Crawler -> psyphin.co.za/sherp-crawler/ (images in sherp-crawler/img/, -800.jpg only)
 battery-monitor/index.html  Project page for Caravan Battery Monitor -> psyphin.co.za/battery-monitor/ (images in battery-monitor/img/, -800.jpg only)
 rc-remote/index.html    Project page for ESP32 RC Remote -> psyphin.co.za/rc-remote/ (images in rc-remote/img/, -800.jpg only)
+which-radio/            UNLISTED preview of "Which Two-Way Radio?" -> psyphin.co.za/which-radio/ (since 2026-10-21, owner's request: direct link only). No card in projects.js, not in sitemap.xml, keeps <meta name="robots" content="noindex">. Self-contained (own css/js/img/logo.jpg); uses ../favicon* and ../js/circuit.js; GoatCounter path /which-radio/. Working copy and research live in E:\Claude_projects\Radio_Guide (see its CLAUDE.md): edit site/ there, then copy index.html, css/, js/ (not circuit.js), img/ and logo.jpg here, re-applying the ../ favicon/circuit paths, the "Preview" banner and the GoatCounter tag
 projects.js             THE project list (window.PROJECTS). Edit this to add/change projects.
 js/main.js              Shared script for all pages: project cards (#project-grid), project-page headings ([data-project]), email + copy buttons, footer year
 js/circuit.js           The animated glowing circuit board behind every page. IDENTICAL to fuel.psyphin.co.za's circuit.js (BFP_Website docs/ and frontend/): change one, copy it to all
