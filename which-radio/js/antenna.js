@@ -63,6 +63,12 @@
     return best;
   }
 
+  // the angle above the null where the 5/8 is ahead again (its weak upper lobe)
+  function crossoverHigh() {
+    for (let a = nullElevation(); a <= 90; a += 0.1) if (difference(a) > 0) return a;
+    return null;
+  }
+
   window.RADIO = window.RADIO || {};
-  window.RADIO.antenna = { quarter, fiveEighths, difference, crossover, nullElevation };
+  window.RADIO.antenna = { quarter, fiveEighths, difference, crossover, nullElevation, crossoverHigh };
 })();

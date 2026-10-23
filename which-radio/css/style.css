@@ -190,13 +190,17 @@ h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2; margin: 0; 
 }
 .law-note p { margin: 0; }
 
+/* each section has its own tone (set per id below) to tell them apart */
 .stage {
+  --tone: var(--accent);
   position: relative;
   margin: 24px 0 0;
   padding: 22px;
-  border: 1px solid var(--border);
+  border: 1px solid color-mix(in srgb, var(--tone) 30%, transparent);
   border-radius: 18px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.008)), var(--glass);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--tone) 13%, transparent), color-mix(in srgb, var(--tone) 3%, transparent) 55%),
+    var(--glass);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   backdrop-filter: blur(14px) saturate(140%);
   box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
@@ -207,7 +211,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2; margin: 0; 
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  --c: rgba(76, 201, 255, 0.75);
+  --c: color-mix(in srgb, var(--tone) 75%, transparent);
   background:
     linear-gradient(var(--c), var(--c)) top left / 14px 1px,
     linear-gradient(var(--c), var(--c)) top left / 1px 14px,
@@ -229,8 +233,8 @@ h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2; margin: 0; 
   font-size: 1.25rem;
   font-weight: 700;
   color: #fff;
-  border-bottom: 1px solid rgba(76, 201, 255, 0.35);
-  text-shadow: 0 0 18px rgba(76, 201, 255, 0.55);
+  border-bottom: 1px solid color-mix(in srgb, var(--tone) 45%, transparent);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--tone) 55%, transparent);
 }
 .part-label::before {
   content: "";
@@ -238,9 +242,19 @@ h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2; margin: 0; 
   width: 4px;
   height: 1.1em;
   border-radius: 2px;
-  background: var(--accent);
-  box-shadow: 0 0 10px var(--accent);
+  background: var(--tone);
+  box-shadow: 0 0 10px var(--tone);
 }
+#need { --tone: #4cc9ff; }
+#outside { --tone: #5b7cff; }
+#antenna { --tone: #a77bff; }
+#kinds { --tone: #2ee6a6; }
+#licence { --tone: #ffc857; }
+#illegal { --tone: #ff5d73; }
+#examples { --tone: #ff8fc4; }
+#approval { --tone: #3fd5d0; }
+#digital { --tone: #8fa0ff; }
+#sources { --tone: #a8b7d6; }
 .lede { margin: 0 0 14px; color: var(--text-muted); }
 
 /* ------------------------------------------------------------ chips (inputs are blue) */
@@ -746,3 +760,43 @@ tbody th { font-weight: 600; }
 #bubble .car .rack { fill: none; stroke: #8aa0d8; stroke-width: 2; }
 #bubble .car .snorkel { fill: none; stroke: #8aa0d8; stroke-width: 4; stroke-linecap: round; }
 #bubble .car .whip { stroke: #dfe8ff; stroke-width: 3; stroke-linecap: round; }
+
+/* ------------------------------------------------------------ antenna drawings, gain (2026-10-23) */
+.ant-pics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; max-width: 640px; margin: 4px 0 6px; }
+.ant-pic { margin: 0; padding: 10px 10px 12px; border: 1px solid var(--border); border-radius: 12px; background: #0a1438; }
+.ant-pic--q { border-top: 3px solid #4cc9ff; }
+.ant-pic--f { border-top: 3px solid #ffb35c; }
+.ant-pic svg { display: block; width: 100%; height: auto; font-family: var(--font-body); }
+.ant-pic figcaption { margin-top: 6px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.35; }
+.ant-pic figcaption strong { display: block; font-family: var(--font-display); font-size: 1.05rem; color: #fff; }
+.ant-pic .proof { fill: #2a3f7a; stroke: #9db4ec; stroke-width: 2; }
+.ant-pic .pmount { fill: #8aa0d8; }
+.ant-pic .pspring { fill: none; stroke: #c9d6f2; stroke-width: 2.5; stroke-linejoin: round; }
+.ant-pic .pcoil { fill: #1a1f2e; stroke: #c9d6f2; stroke-width: 2; }
+.ant-pic .pwhip { stroke: #dfe8ff; stroke-width: 3.5; stroke-linecap: round; }
+.ant-pic .ptip { fill: #dfe8ff; }
+.ant-pic--q .pdim { stroke: #4cc9ff; stroke-width: 1.6; }
+.ant-pic--f .pdim { stroke: #ffb35c; stroke-width: 1.6; }
+.ant-pic--q .parrow, .ant-pic--q .pdim-t { fill: #8fdcff; }
+.ant-pic--f .parrow, .ant-pic--f .pdim-t { fill: #ffcf96; }
+.ant-pic .pdim-t { font-size: 20px; }
+.ant-pic .pdim-t--n { font-size: 24px; font-weight: 700; }
+
+.gain-note { margin: 0 0 12px; padding: 12px 16px; border: 1px solid rgba(255, 200, 87, 0.45); border-left: 4px solid var(--warn); border-radius: 10px; background: rgba(255, 200, 87, 0.08); }
+.gain-note p { margin: 0; }
+#bubble .sector--f { fill: rgba(255, 179, 92, 0.17); }
+#bubble .sector--q { fill: rgba(76, 201, 255, 0.14); }
+#bubble .sector-edge { stroke: rgba(255, 255, 255, 0.35); stroke-width: 1.2; stroke-dasharray: 2 6; }
+#bubble .sector-deg { fill: #fff; font-size: 16px; font-weight: 700; }
+#bubble .btitle { fill: #fff; font-family: var(--font-display); font-size: 24px; font-weight: 700; letter-spacing: 0.12em; }
+#bubble .bsub { fill: #ffd98a; font-size: 17px; }
+.bubble-key .k-sf::before, .bubble-key .k-sq::before { border: 0; width: 16px; height: 12px; border-radius: 3px; }
+.bubble-key .k-sf::before { background: rgba(255, 179, 92, 0.45); }
+.bubble-key .k-sq::before { background: rgba(76, 201, 255, 0.45); }
+@media (max-width: 560px) {
+  #bubble .btitle { font-size: 38px; }
+  #bubble .bsub { font-size: 28px; }
+  #bubble .sector-deg { font-size: 28px; }
+  .ant-pic .pdim-t { font-size: 26px; }
+  .ant-pic .pdim-t--n { font-size: 30px; }
+}

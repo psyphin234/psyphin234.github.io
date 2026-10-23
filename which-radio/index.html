@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20261023c">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -70,8 +70,10 @@
 
     <!-- 4. antennas -->
     <section class="stage" id="antenna" aria-labelledby="antenna-title">
-      <h2 class="part-label" id="antenna-title">ZARA60 or ZARA130? Quarter-wave or 5/8</h2>
+      <h2 class="part-label" id="antenna-title">Antenna: ZARA60 or ZARA130? Quarter-wave or 5/8</h2>
       <p class="lede">The two common VHF vehicle antennas in South Africa are Webb Industries' ZARA60 (a quarter-wave) and ZARA130 (a 5/8-wave). The ZARA130 has more gain. That doesn't make it better everywhere.</p>
+      <div class="ant-pics" id="ant-pics"></div>
+      <p class="small">Drawings, not photos: about to scale, from Webb's cutting chart at 150 MHz.</p>
       <div class="table-wrap"><table class="zara" id="zara-table"></table></div>
       <h3 class="sub-label">Tuning: which channels each antenna covers</h3>
       <div class="scene-wrap">
@@ -79,12 +81,15 @@
       </div>
       <ul class="points" id="tuning-points"></ul>
       <div id="tuning-refs"></div>
-      <h3 class="sub-label">Where each antenna sends its signal</h3>
+      <h3 class="sub-label">Gain: where each antenna sends its signal</h3>
+      <div class="gain-note">
+        <p><strong>Gain isn't extra signal.</strong> Both antennas get the same power from the radio. Gain only says where that power goes. The ZARA130's 3 dB gain means twice the power toward the horizon, paid for with less power upward. Think of squeezing a balloon: flatter and longer, but no more air.</p>
+      </div>
       <div class="chips" id="antenna-scenario" role="radiogroup" aria-label="Terrain"></div>
       <div class="scene-wrap">
         <svg id="bubble" viewBox="0 0 900 400" role="img" aria-labelledby="bubble-desc"><desc id="bubble-desc">The radiation patterns of a quarter-wave and a 5/8-wave antenna</desc></svg>
       </div>
-      <p class="bubble-key"><span class="k-q">ZARA60 (quarter-wave): rounder, more signal up and down slopes</span><span class="k-f">ZARA130 (5/8-wave): furthest toward the horizon</span></p>
+      <p class="bubble-key"><span class="k-q">ZARA60 (quarter-wave): rounder, more signal up and down slopes</span><span class="k-f">ZARA130 (5/8-wave): furthest toward the horizon</span><span class="k-sf" id="key-sf"></span><span class="k-sq" id="key-sq"></span></p>
       <div class="meters" id="antenna-meters" aria-live="polite"></div>
       <ul class="points" id="antenna-points"></ul>
       <p class="small">The patterns are the textbook ideal (a thin whip on an endless metal ground), at the same power. On a real roof both tilt upward, but the trade-off stays the same.</p>
@@ -162,10 +167,10 @@
     </div>
   </footer>
 
-  <script src="js/data.js"></script>
-  <script src="js/model.js"></script>
-  <script src="js/antenna.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/data.js?v=20261023c"></script>
+  <script src="js/model.js?v=20261023c"></script>
+  <script src="js/antenna.js?v=20261023c"></script>
+  <script src="js/app.js?v=20261023c"></script>
   <script src="../js/circuit.js"></script>
   <!-- GoatCounter: cookie-free visitor stats at https://psyphin.goatcounter.com/ -->
   <script data-goatcounter="https://psyphin.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>

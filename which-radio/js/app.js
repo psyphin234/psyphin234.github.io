@@ -266,10 +266,43 @@
   let antScenario = "mountains";
   const BX = 300, BG = 340, BR = 300;
   const gMax = AN.fiveEighths.gain(0);
+  const LO = AN.crossover(), HI = AN.crossoverHigh();   // about 18° and 60°
   // drawn to scale in power (linear gain): 3 dB = twice as long
   const bRadius = (ant, deg) => BR * Math.max(0, ant.gain(deg)) / gMax;
 
+  /* The two antennas side by side, drawn to one scale (0.2 px per mm) from
+     Webb's cutting chart at about 150 MHz. Drawings, not photos. */
+  function antennaPic(name, kind, whipMm, base, cls) {
+    const S = 0.2, G = 372, X = 130;
+    const baseTop = G - 8 - (base === "coil" ? 30 : 20);
+    const top = baseTop - whipMm * S;
+    let parts = `<rect x="${X - 11}" y="${G - 8}" width="22" height="8" rx="2" class="pmount"/>`;
+    if (base === "coil") {
+      parts += `<rect x="${X - 8}" y="${baseTop}" width="16" height="30" rx="5" class="pcoil"/>`;
+    } else {
+      let d = `M${X} ${G - 8}`;
+      for (let i = 1; i <= 9; i++) d += ` L${X + (i % 2 ? 6 : -6)} ${G - 8 - i * 2}`;
+      parts += `<path d="${d} L${X} ${baseTop}" class="pspring"/>`;
+    }
+    parts += `<line x1="${X}" y1="${baseTop}" x2="${X}" y2="${top}" class="pwhip"/><circle cx="${X}" cy="${top}" r="3.5" class="ptip"/>`;
+    const dim = `<line x1="${X + 30}" y1="${baseTop}" x2="${X + 30}" y2="${top}" class="pdim" marker-start="url(#parr-${cls})" marker-end="url(#parr-${cls})"/>
+      <text x="${X + 42}" y="${(baseTop + top) / 2 - 4}" class="pdim-t">whip about</text>
+      <text x="${X + 42}" y="${(baseTop + top) / 2 + 20}" class="pdim-t pdim-t--n">${String(whipMm).replace(/\B(?=(\d{3})+$)/, ",")} mm</text>`;
+    return `<figure class="ant-pic ant-pic--${cls}">
+      <svg viewBox="0 0 300 400" role="img" aria-label="Drawing of the ${esc(name)}, ${esc(kind.toLowerCase())}: whip about ${whipMm} mm">
+        <defs><marker id="parr-${cls}" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" class="parrow"/></marker></defs>
+        <path d="M0 ${G} L300 ${G} L300 400 L0 400 Z" class="proof"/>
+        ${parts}${dim}
+      </svg>
+      <figcaption><strong>${esc(name)}</strong> <span>${esc(kind)}</span></figcaption>
+    </figure>`;
+  }
+
   function renderAntenna() {
+    const t = A.tuning;
+    $("#ant-pics").innerHTML =
+      antennaPic("ZARA60", "Quarter-wave whip with a spring", t.len60.low, "spring", "q") +
+      antennaPic("ZARA130", "Base-loaded 5/8-wave: a coil at the base", t.len130.low, "coil", "f");
     $("#zara-table").innerHTML = `<thead><tr><th scope="col"></th><th scope="col">ZARA60<br><span class="muted">quarter-wave</span></th><th scope="col">ZARA130<br><span class="muted">5/8-wave</span></th></tr></thead><tbody>${A.rows.map(([k, a, b]) =>
       `<tr><th scope="row">${esc(k)}</th><td>${esc(a)}</td><td>${esc(b)}</td></tr>`).join("")}</tbody>`;
     $("#tuning-points").innerHTML = A.tuning.text.map((p) => `<li>${esc(p)}</li>`).join("");
@@ -277,6 +310,8 @@
     drawTuning();
     $("#antenna-scenario").innerHTML = chips("antenna-scenario", A.scenarios.map((s) => [s.id, s.label, `${s.deg}° up`]), antScenario);
     $("#antenna-scenario").addEventListener("change", (e) => { antScenario = e.target.value; drawBubble(performance.now()); });
+    $("#key-sf").textContent = `Orange sky: the ZARA130 is stronger (horizon to ${Math.round(LO)}° up)`;
+    $("#key-sq").textContent = `Blue sky: the ZARA60 is stronger (${Math.round(LO)}° to ${Math.round(HI)}° up)`;
     $("#antenna-points").innerHTML = A.points.map((p) => `<li>${esc(p)}</li>`).join("");
     $("#antenna-refs").innerHTML = refs(A.sources);
   }
@@ -359,11 +394,25 @@
     const ground2 = a > 0
       ? `<path d="M${ox + 150} ${BG} L${(sx - 95).toFixed(1)} ${gy2.toFixed(1)} L900 ${gy2.toFixed(1)} L900 ${BG} Z" class="mountain"/>`
       : "";
-    const ratio = gq > gf ? `ZARA60: ${(gq / gf).toFixed(1)}× the power` : `ZARA130: ${(gf / gq).toFixed(1)}× the power`;
+    const times = (r) => (r >= 10 ? Math.round(r) : r.toFixed(1)) + "×";
+    const ratio = gq > gf ? `ZARA60: ${times(gq / gf)} the power` : `ZARA130: ${times(gf / gq)} the power`;
+    // the sky shaded by which antenna is stronger at each angle (right-hand side)
+    const polar = (deg, r) => [ox + r * Math.cos((deg * Math.PI) / 180), oy - r * Math.sin((deg * Math.PI) / 180)].map((v) => v.toFixed(1));
+    const sector = (a1, a2, cls) => `<path d="M${ox} ${oy} L${polar(a1, 900).join(" ")} A900 900 0 0 0 ${polar(a2, 900).join(" ")} Z" class="${cls}"/>`;
+    const edge = (deg, rText) => {
+      const [x2, y2] = polar(deg, 900), [tx, ty] = polar(deg, rText);
+      return `<line x1="${ox}" y1="${oy}" x2="${x2}" y2="${y2}" class="sector-edge"/><text x="${tx}" y="${ty}" dx="8" class="sector-deg">${Math.round(deg)}°</text>`;
+    };
     $("#bubble").innerHTML = `
-      <desc id="bubble-desc">${esc(sc.where)} Drawn to scale in power. The quarter-wave's pattern is rounder; the 5/8's is flatter and twice as long toward the horizon. Toward the other vehicle: ${ratio}.</desc>
+      <desc id="bubble-desc">${esc(sc.where)} Gain pattern, drawn to scale in power. Both antennas get the same power from the radio. The quarter-wave's pattern is rounder; the 5/8's is flatter and twice as long toward the horizon. The ZARA130 is stronger from the horizon to ${Math.round(LO)}° up, the ZARA60 from ${Math.round(LO)}° to ${Math.round(HI)}° up. Toward the other vehicle: ${ratio}.</desc>
       <defs><linearGradient id="bsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#071033"/><stop offset="1" stop-color="#0c1a45"/></linearGradient></defs>
       <rect width="900" height="400" fill="url(#bsky)"/>
+      ${sector(0, LO, "sector sector--f")}
+      ${sector(LO, HI, "sector sector--q")}
+      ${edge(LO, 470)}
+      ${edge(HI, 200)}
+      <text x="20" y="40" class="btitle">GAIN PATTERN</text>
+      <text x="20" y="66" class="bsub">same power, different shape</text>
       ${ground2}
       <rect x="0" y="${BG}" width="900" height="${400 - BG}" class="bground"/>
       <path d="${q}" class="fill-q"/>
@@ -375,7 +424,7 @@
       <line x1="${ox}" y1="${oy}" x2="${sx}" y2="${sy}" class="ray"/>
       <circle cx="${qx}" cy="${qy}" r="7" class="hit hit--q"/>
       <circle cx="${fx}" cy="${fy}" r="7" class="hit hit--f"/>
-      <text x="880" y="36" text-anchor="end" class="blabel blabel--ratio">Toward the other vehicle: ${ratio}</text>`;
+      <text x="880" y="380" text-anchor="end" class="blabel blabel--ratio">Toward the other vehicle: ${ratio}</text>`;
     const diff = AN.difference(a);
     const bar = (g) => Math.max(2, (g / gMax) * 100);
     const winner = diff > 0.5 ? "The ZARA130 is stronger here" : diff < -0.5 ? "The ZARA60 is stronger here" : "About the same here";

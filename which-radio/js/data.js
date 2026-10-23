@@ -274,7 +274,7 @@
   const ANTENNAS = {
     rows: [
       ["Type", "Quarter-wave whip with a spring", "Base-loaded 5/8-wave"],
-      ["Gain (relative to a quarter-wave)", "0 dB (unity)", "3 dB on Webb's spec sheet (2 dB on its overview page)"],
+      ["Gain toward the horizon (vs a quarter-wave)", "0 dB (unity)", "3 dB on Webb's spec sheet (2 dB on its overview page)"],
       ["Bandwidth (SWR 1.5:1 or better)", "0.5 to 9 MHz", "3 MHz"],
       ["Whip length (Webb's cutting chart)", "about 500 mm at 150 MHz, 480 mm at 160 MHz", "about 1,350 mm at 150 MHz, 1,250 mm at 160 MHz"],
       ["ORRA's channels", "Tuned midway between ORRA's channel groups, covers them all (its bandwidth is about their spread)", "Tuned for channels 1-4 (regular member communication); not right for channels 5-7"],
@@ -302,11 +302,12 @@
     scenarios: [
       { id: "flat", deg: 0, label: "Flat country", where: "The other vehicle is level with you, on the horizon." },
       { id: "hills", deg: 10, label: "Rolling hills", where: "The other vehicle is on a rise, about 10° up." },
-      { id: "mountains", deg: 25, label: "Mountains", where: "The other vehicle is up a steep pass, about 25° up." }
+      { id: "mountains", deg: 25, label: "Mountains", where: "The other vehicle is up a steep pass, about 25° up." },
+      { id: "switchback", deg: 35, label: "Switchback", where: "The other vehicle is on the bend just above you on a zig-zag pass, about 35° up." }
     ],
     points: [
       "Gain isn't power. Both antennas get the same power from the radio; a 5/8 squeezes it into a flatter shape, so it sends more toward the horizon and less upward.",
-      "So the ZARA60 has less gain, yet in the mountains it often does better: the other vehicle is above or below you, outside the 5/8's flat beam. Above about 18° the quarter-wave is stronger, and at about 37° the 5/8 is almost deaf.",
+      "So the ZARA60 has less gain, yet in the mountains it often does better: the other vehicle is above or below you, outside the 5/8's flat beam. From about 18° to 60° up the quarter-wave is stronger, and at about 37° the 5/8 is almost deaf. Below 18°, which includes most vehicles a few km away, the 5/8 is stronger.",
       "ORRA prefers the quarter-wave because its channels are spread wide, and calls it \"a good choice in hilly terrain\".",
       "Size isn't range: an antenna's length is set by its frequency and design (Webb's chart: a ZARA60 whip is about 500 mm at 150 MHz, a ZARA130's about 1,350 mm). Height and a clear path give range."
     ],
@@ -422,17 +423,17 @@
   const EXAMPLES = {
     intro: "Four handhelds on one table, and what the law says about each for 4x4 use. A club VHF licence lets you use your issuer's channels on a type-approved radio that an accredited dealer has programmed. It doesn't make any radio legal.",
     radios: [
-      { n: 1, x: 0.27, name: "Baofeng UV-32", verdict: "Not for club VHF", tone: "fail",
+      { n: 1, x: 0.27, name: "Baofeng UV-32", verdict: "Not legally covered under a VHF ORRA licence. Amateur licence only.", tone: "fail",
         text: "Baofeng lists it as transmitting on 136-174, 220-260 and 400-520 MHz at 10 W, programmable from the keypad. A licensed user may only use the frequencies they were given, programmed by an accredited dealer, and owning a radio that tunes continuously above 30 MHz is restricted except on the amateur bands. A club VHF licence doesn't make it legal: it's equipment for licensed radio amateurs.",
         sources: ["baofengUV32", "baofeng2022", "rfsr2015"] },
-      { n: 2, x: 0.49, name: "Baofeng UV-16", verdict: "Not for club VHF", tone: "fail",
-        text: "A dual-band keypad radio (136-174 and 400-520 MHz in listings) with a frequency mode, in the same style as the UV-5R that ICASA banned in 2022. The same rules apply: a club licence doesn't cover a radio you can tune to any frequency. We found no ICASA type approval for it.",
+      { n: 2, x: 0.49, name: "Baofeng UV-16", verdict: "Not legally covered under a VHF ORRA licence. Amateur licence only.", tone: "fail",
+        text: "A dual-band keypad radio (136-174 and 400-520 MHz in listings) with a frequency mode, in the same style as the UV-5R that ICASA banned in 2022. The same rules apply: a club licence doesn't cover a radio you can tune to any frequency, and owning one that tunes continuously above 30 MHz is restricted except on the amateur bands. We found no ICASA type approval for it.",
         sources: ["uv16", "baofeng2022", "rfsr2015"] },
       { n: 3, x: 0.67, name: "Vratvark 2.0 (RTS DV-3140UV)", verdict: "Legal with a club VHF licence", tone: "pass",
         text: "A VHF and UHF FM radio with ICASA type approval TA-2014/1255 (the label is shown below). It has no keypad for typing in frequencies: an accredited dealer programs its channels. With a club VHF licence and your issuer's channels programmed in, it's legal to use.",
         sources: ["photos", "baofeng2022"] },
-      { n: 4, x: 0.89, name: "Baofeng 888S (V6)", verdict: "Not for club VHF", tone: "fail",
-        text: "A UHF-only radio (400-470 MHz, 16 channels), so it can't reach club VHF channels at all, and a VHF licence doesn't cover it. Tested at about 2-3 W, it's also above the 0.5 W licence-free limit. A BF-88S/BF-888 appears on ICASA's 2018 type-approval list, but that doesn't make it licence-free or usable on club VHF.",
+      { n: 4, x: 0.89, name: "Baofeng 888S (V6)", verdict: "UHF only: won't work with club VHF, and isn't licence-free", tone: "fail",
+        text: "A UHF-only radio (400-470 MHz, 16 channels). Club VHF is 146-174 MHz, so it can't talk to a VHF convoy, and a VHF licence doesn't cover it. Programmed to the licence-free UHF channels, it still isn't legal: licence-free radios are limited to 0.5 W e.r.p., must be type-approved for licence-free use, and may not be altered. MyBroadband tested a BF-888S at about 2-3 W, four to six times the limit. A BF-88S/BF-888 appears on ICASA's 2018 type-approval list, but type approval isn't a licence, so at that power it would need one.",
         sources: ["mybroadband", "annexB2023", "ta2018"] }
     ]
   };
