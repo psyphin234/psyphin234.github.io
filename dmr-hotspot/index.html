@@ -18,7 +18,7 @@
     "image": "https://psyphin.co.za/dmr-hotspot/img/case-and-cooling-fan-1600.jpg",
     "inLanguage": "en-ZA",
     "datePublished": "2026-09-27",
-    "dateModified": "2026-10-20",
+    "dateModified": "2026-10-26",
     "author": {
       "@type": "Organization",
       "name": "PsyPhin",
@@ -94,8 +94,9 @@
         <h3>Where it's at</h3>
         <ul>
           <li><strong>Working day to day:</strong> it links my radio to the network and passes calls both ways.</li>
-          <li><strong>Power problem fixed (it seems):</strong> the Pi was running short of power, which caused glitches. A proper 3 A-rated cable appears to have solved it.</li>
-          <li><strong>Still an occasional freeze:</strong> now and then the radio board locks up until its software is restarted. The automatic watchdog that should do this by itself still needs fixing.</li>
+          <li><strong>Power problem found:</strong> the hotspot kept going "deaf" because the Pi wasn't getting enough voltage. Proper testing showed the culprit was the 3.5 A wall adapter, not the cable. Three different cables made no difference. A portable power station's USB port ran it with no dips at all, even while transmitting. A proper 5.1 V Raspberry Pi supply is the fix for mains power.</li>
+          <li><strong>Fan and temperature control:</strong> the case fan is now speed-controlled by the Pi, based on its temperature. The dashboard also shows a count of voltage dips next to the CPU temperature, so I can see at a glance whether a power source is any good.</li>
+          <li><strong>Still an occasional freeze:</strong> now and then the radio board locks up until its software is restarted. On a bad power source this happened all the time. The automatic watchdog that should do this by itself still needs fixing.</li>
           <li><strong>Fine-tuning left:</strong> the receive side is calibrated. To check the transmit side properly I need a cheap software-defined radio (SDR) to measure it.</li>
         </ul>
 
@@ -136,7 +137,7 @@
         <p>A rough outline of how I set mine up. The frequencies below are mine, so use ones allowed by your own licence and local band plan.</p>
         <ol>
           <li><strong>Get licensed and registered.</strong> You need an amateur radio licence and callsign (ICASA in South Africa), a DMR ID from <a href="https://radioid.net">radioid.net</a>, and a BrandMeister SelfCare account, where you set a hotspot password.</li>
-          <li><strong>Gather the parts.</strong> A Raspberry Pi 3B, an MMDVM_HS_Dual_Hat (the dual version allows full duplex), a microSD card, a 5 V / 3 A power supply with a <strong>3 A-rated Micro-USB cable</strong>, and a DMR handheld (mine is a Baofeng DM-32UV). A case with a fan is optional.</li>
+          <li><strong>Gather the parts.</strong> A Raspberry Pi 3B, an MMDVM_HS_Dual_Hat (the dual version allows full duplex), a microSD card, a <strong>proper 5.1 V Raspberry Pi power supply</strong> (a phone fast charger is not good enough, see Power testing below) with a short, thick Micro-USB lead, and a DMR handheld (mine is a Baofeng DM-32UV). A case with a fan is optional.</li>
           <li><strong>Assemble.</strong> Fit the hat onto the Pi's GPIO header and screw on both antennas. Always have antennas attached before the board can transmit.</li>
           <li><strong>Install WPSD.</strong> Download the WPSD image from <a href="https://wpsd.radio">wpsd.radio</a> and write it to the microSD card with Raspberry Pi Imager or balenaEtcher. Set up Wi-Fi (or plug in a network cable) as WPSD's instructions describe, then boot the Pi.</li>
           <li><strong>Open the dashboard.</strong> From a browser on the same network, open the hotspot's address (WPSD's instructions give it) and go to the configuration page.</li>
@@ -154,6 +155,7 @@
           <li><strong>Calibrate receive.</strong> Use WPSD's calibration tool to find the RX offset with the lowest error rate (details under Technical details).</li>
           <li><strong>Test.</strong> Make a call to BrandMeister's echo ("Parrot") service and check you hear yourself back, then watch calls come in on the dashboard.</li>
           <li><strong>Make it reliable.</strong> Check the Pi isn't short of power (<code>vcgencmd get_throttled</code> should show <code>0x0</code>) and turn on the WPSD Services Watchdog so a stuck modem restarts itself.</li>
+          <li><strong>Add fan control (optional).</strong> If your case has a fan, run it from a GPIO pin with temperature-based speed control (details under Cooling and temperature). Keep any add-ons in <code>/opt</code>, never in WPSD's own folders.</li>
         </ol>
 
         <h3>Technical details</h3>
@@ -169,7 +171,8 @@
               <tr><td>Reference oscillator</td><td>14.7456 MHz TCXO</td></tr>
               <tr><td>Pi to modem link</td><td>GPIO UART, <code>/dev/ttyAMA0</code> at 115200 baud</td></tr>
               <tr><td>Handheld radio</td><td>Baofeng DM-32UV</td></tr>
-              <tr><td>Power</td><td>5 V / 3.5 A wall supply with a 3 A-rated Micro-USB cable</td></tr>
+              <tr><td>Power</td><td>Micro-USB. Stable from an EcoFlow River 2 Pro USB-A port. Not stable from a 5 V / 3.5 A Quick Charge wall adapter (see Power testing)</td></tr>
+              <tr><td>Cooling</td><td>Case fan on GPIO18, PWM speed control from CPU temperature</td></tr>
               <tr><td>Network</td><td>BrandMeister, master <code>BM_6551_South_Africa</code></td></tr>
             </tbody>
           </table>
@@ -185,6 +188,7 @@
           <li><strong>WPSD</strong>, current Debian Trixie-based image (fresh reinstall)</li>
           <li>Set up during the reinstall: modem type, timezone <code>Africa/Johannesburg</code>, BrandMeister network, firewall and password hardening, persistent journald logging</li>
           <li>Pi 3B UART: Bluetooth must not hold the hardware UART. Check <code>dtoverlay=disable-bt</code> (or <code>pi3-disable-bt</code>) in <code>/boot/firmware/config.txt</code> and that <code>hciuart</code> is disabled. WPSD sets this by default, but it's worth confirming after updates.</li>
+          <li>PHP workers raised from 5 to 10 (<code>pm.max_children</code> in <code>/etc/php/8.4/fpm/pool.d/www.conf</code>). The dashboard refreshes a lot in the background and kept hitting the limit. Page loads dropped from about 3 s to under 2 s.</li>
         </ul>
 
         <h4>RF configuration</h4>
@@ -243,7 +247,8 @@ ColorCode=1</code></pre>
           <li><strong>Symptom:</strong> the dashboard freezes on <code>TX: DMR</code>, the radio shows "link timeout" on PTT, and network traffic on the dashboard doesn't reach the radio. It tends to happen around transmitting.</li>
           <li><strong>Diagnosis:</strong> the modem reports it is transmitting and never reports completion, so it is stuck at the STM32/firmware level.</li>
           <li><strong>Workaround:</strong> <code>sudo systemctl restart mmdvmhost</code> restores it every time.</li>
-          <li><strong>Power:</strong> fixing the under-voltage (below) looks to have cut the problem down, but lock-ups still happen now and then.</li>
+          <li><strong>Power:</strong> on a bad power source this happened all the time (see Power testing below). On a good source it is much rarer, but lock-ups still happen now and then.</li>
+          <li><strong>Watchdog trial:</strong> I tried a small power watchdog that logged every voltage dip and restarted MMDVMHost and DMRGateway once power had been steady for 5 seconds and the hotspot had been quiet for 10. It worked, with services back up and logged into BrandMeister about 33 seconds after each restart. I removed it once the cause was clear, because it only hid the power problem.</li>
           <li><strong>To do:</strong> fix the WPSD Services Watchdog so it restarts the modem automatically. A systemd timer that checks the modem and restarts it is a fallback.</li>
         </ul>
         <p><strong>Issue B: carrier but no DMR decode on the handheld (open)</strong></p>
@@ -251,30 +256,68 @@ ColorCode=1</code></pre>
           <li><strong>Symptom:</strong> the radio's RX LED and signal meter respond to the hotspot's 438.300 MHz transmission, but no audio or callsign is decoded, sometimes as intermittent drop-outs.</li>
           <li><strong>Note:</strong> carrier detect and the S-meter only show there is RF. They don't show the modulation can be decoded.</li>
           <li><strong>Tried:</strong> TXOffset −75 and DMRTXLevel 45, with no fix.</li>
-          <li><strong>Next:</strong> measure TX frequency and deviation with an RTL-SDR, and correlate drop-outs with BER on the dashboard.</li>
+          <li><strong>Found (9 Oct):</strong> during one of these "deaf" spells the software was working fine. MMDVMHost was still taking in network traffic with 0% packet loss and passing it to the board, and DMRGateway stayed logged in. At the same time the kernel logged 106 under-voltage warnings in under three hours. So the board was keying up but sending something the radio couldn't decode. A restart reloads the radio chips' settings (frequency, offsets, levels), which is why it brings the hotspot back. Power is the main cause.</li>
+          <li><strong>Next:</strong> measure TX frequency and deviation with an RTL-SDR, to rule out the TX settings as well.</li>
         </ul>
         <p><strong>Resolved:</strong> the flashing red SVC LED is just the firmware's normal heartbeat. A forum post had me thinking it was a fault.</p>
 
-        <h4>Power investigation</h4>
+        <h4>Power testing: what was stable and what wasn't</h4>
+        <p>Early on, <code>vcgencmd get_throttled</code> showed <code>0x50000</code> (under-voltage and throttling had happened since boot) and at times <code>0x50005</code> (happening right then). I first thought a better cable had fixed it. It hadn't. On 9 October I tested each power source properly: boot the Pi, let it settle, then sample the under-voltage flag once every 2 seconds for 3 minutes (90 samples), with the hotspot idle and then passing busy network traffic.</p>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Check</th><th>Result</th></tr></thead>
+            <thead><tr><th>Power source</th><th>Samples under-voltage</th><th>Result</th></tr></thead>
             <tbody>
-              <tr><td><code>vcgencmd get_throttled</code></td><td><code>0x50000</code>: under-voltage and throttling had occurred since boot</td></tr>
-              <tr><td>After swapping to another cable</td><td>Still <code>0x50000</code></td></tr>
-              <tr><td>Live check</td><td><code>0x50005</code>: under-voltage and throttling active at that moment</td></tr>
-              <tr><td>GPIO power injection</td><td>Tried, then removed (see below)</td></tr>
-              <tr><td>3 A-rated Micro-USB cable</td><td><strong>Appears to have solved the under-voltage</strong></td></tr>
+              <tr><td>EcoFlow River 2 Pro, USB-A port (tested 3 times)</td><td class="v">0 of 90, every time</td><td><span class="result result--ok">Stable</span> No dips while transmitting busy traffic. Only two short dips (about 6 s) during boot.</td></tr>
+              <tr><td>5 V / 3.5 A Quick Charge wall adapter</td><td class="v">15 of 90</td><td><span class="result result--bad">Not stable</span> 12 dips in the first 4 minutes, and they kept coming</td></tr>
+              <tr><td>Wall adapter with a third cable</td><td class="v">79 of 90</td><td><span class="result result--bad">Not stable</span> Low almost all the time, even with the hotspot idle</td></tr>
+              <tr><td>Desktop PC USB port</td><td class="v">61 of 90</td><td><span class="result result--bad">Not stable</span> Dips started within a second of the hotspot keying up</td></tr>
             </tbody>
           </table>
         </div>
-        <p><strong>Why it mattered:</strong> load spikes (at boot, and from the dual hat while transmitting) caused brief voltage sags at the Pi. These can glitch the UART to the STM32 and leave the modem wedged, which fits Issue A. Cheap USB cables typically have thin 28–30 AWG power wires that drop too much voltage.</p>
+        <p><strong>Things that made no difference:</strong></p>
+        <ul>
+          <li><strong>Swapping cables.</strong> Three different Micro-USB cables on two wall adapters all dipped, every 10 to 20 seconds, even with the hotspot idle.</li>
+          <li><strong>Unplugging and plugging back in.</strong> Dips came straight back after the reboot.</li>
+          <li><strong>Contact cleaner on the Micro-USB socket.</strong> The dips came back as soon as it went back on the wall adapter. Clean runs on the EcoFlow also rule out a worn socket or a bad input fuse on the Pi.</li>
+        </ul>
+        <p><strong>What it showed:</strong> an idle Pi 3B with the hat draws only about 0.4 to 0.5 A, so a 3.5 A rating means little. A Quick Charge phone adapter running in plain 5 V mode can sit at about 5.0 V or a little under, and the Pi 3B flags under-voltage below about 4.63 V. That leaves very little for the cable and connectors to lose. The EcoFlow's USB-A ports (5 V, 2.4 A each) regulate properly, so all three behave the same. A desktop USB port is only meant for 0.5 to 0.9 A, which is about what the Pi and hat draw while transmitting.</p>
+        <p><strong>Why it mattered:</strong> load spikes (at boot, and from the dual hat while transmitting) caused brief voltage sags at the Pi. These scramble the radio chips' settings (Issue B) and can glitch the UART to the STM32 and leave the modem wedged (Issue A). Cheap USB cables do make it worse, because their thin 28 to 30 AWG power wires drop more voltage, but here the adapter was the main fault.</p>
+        <p><strong>Still open: a dip about once an hour.</strong> On a better source the dips are rare but not gone. From 11 to 13 October there was one single dip at about the same minute past the hour (first about 22 minutes past, later about 42 minutes past), with the seconds creeping a little later each time. Not every hour had one. Nothing on the Pi runs at those times and the hotspot wasn't transmitting. The hotspot rode through each one without a service restart. A regular pattern like that points at the power source doing something on a timer, such as a charger or power bank.</p>
+        <p><strong>Cable tips, if you do need one:</strong> look at the printing on the cable. Something like <code>28AWG/1P + 24AWG/2C</code> means 24 AWG power wires, which is fine. If nothing is printed, assume thin 28 AWG. Keep it short, under 1 m (30 to 50 cm is ideal). Easiest of all is a 5.1 V supply with its own fixed lead, like the official Raspberry Pi 3 supply.</p>
         <p><strong>Reading <code>get_throttled</code>:</strong> bits 0–3 mean "happening now" (0x1 under-voltage, 0x2 frequency capped, 0x4 throttled, 0x8 soft temperature limit). Bits 16–19 mean "has happened since boot". The flags only clear on reboot. Watch them live with <code>watch -n 1 vcgencmd get_throttled</code>.</p>
-        <p><strong>GPIO power injection (tried, not kept):</strong> feeding regulated 5 V straight into header pins 2/4 (5 V) and 6 (GND) avoids the Micro-USB connector and cable losses, but it also bypasses the Raspberry Pi's built-in input protection (its polyfuse). That risk wasn't worth keeping once a proper cable did the job, so the Pi is back on Micro-USB power.</p>
+        <p><strong>GPIO power injection (tried, not kept):</strong> feeding regulated 5 V straight into header pins 2/4 (5 V) and 6 (GND) avoids the Micro-USB connector and cable losses, but it also bypasses the Raspberry Pi's built-in input protection (its polyfuse). That risk wasn't worth keeping, and the real fault turned out to be the adapter, so the Pi is back on Micro-USB power.</p>
         <figure>
           <a href="img/gpio-power-injection.svg"><img class="diagram" src="img/gpio-power-injection.svg" alt="Wiring for GPIO power injection, which was tried and then removed: a regulated 5.1 V, 3 A supply's positive lead to header pins 2 and 4, negative lead to pin 6. It bypasses the Micro-USB input protection." width="720" height="380" loading="lazy"></a>
           <figcaption>GPIO 5 V power injection: tried, then removed because it bypasses the Pi's protection</figcaption>
         </figure>
+
+        <h4>Cooling and temperature</h4>
+        <p>The 3D-printed case has a cooling fan, now driven by the Pi itself rather than running flat out all the time.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Setting</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Fan pin</td><td>GPIO18, software PWM at 100 Hz (Python with lgpio)</td></tr>
+              <tr><td>Turns on</td><td class="v">50 °C</td></tr>
+              <tr><td>Turns off</td><td>Below 45 °C (the 5 °C gap stops it flicking on and off)</td></tr>
+              <tr><td>Speed</td><td>30% at 50 °C, rising to 100% at 70 °C. Below about 30% many small fans stall.</td></tr>
+              <tr><td>Start-up</td><td>Full speed for 1 second to get the fan spinning from stopped</td></tr>
+              <tr><td>Fail-safe</td><td>If the controller stops or can't read the temperature, the fan is left fully on (tested)</td></tr>
+              <tr><td>Temperatures seen</td><td>About 49 to 60 °C in normal running, with the fan at around 30%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>It runs as a systemd service (<code>hotspot-fan.service</code>) from <code>/opt/hotspot-fan/</code>, and logs every speed change to its journal.</p>
+        <p><strong>Voltage Errors on the dashboard.</strong> Because this hotspot moves around and is fussy about what it's plugged into, I added a <strong>Voltage Errors</strong> card next to CPU Temp on the WPSD dashboard:</p>
+        <ul>
+          <li>Plain number when there have been no dips since boot</li>
+          <li><strong>Orange</strong> once there has been a dip since boot but the supply is fine right now</li>
+          <li><strong>Red, "LOW NOW"</strong> while the Pi is under-voltage at that moment</li>
+          <li>Hovering shows whether the supply is OK now and the time of the last dip</li>
+        </ul>
+        <p>A small service follows the kernel messages and records each "Undervoltage detected" event, because WPSD's own tasks keep clearing the system log. The count resets on reboot, and one or two dips during boot are normal. What matters is the number climbing while it runs.</p>
+        <p><strong>CPU Temp card fix.</strong> WPSD's dashboard CSS hides any <code>&lt;span&gt;</code> inside a card's tooltip link. The stock CPU Temp card colours its value with a span, so at 70 °C (orange) and 80 °C (red) the temperature went blank, just when you'd want to see it. Both cards now use <code>&lt;b&gt;</code> for the coloured value.</p>
+        <p><strong>WPSD wipes edited dashboard files.</strong> My first version patched WPSD's <code>includes/hw_info.php</code>. That was a mistake. Every 20 to 40 minutes WPSD runs a compliance check, and if any dashboard file has been changed it deletes and re-downloads <code>/var/www/dashboard</code>, <code>/usr/local/bin</code> and <code>/usr/local/sbin</code> and restarts the radio services. In one day that happened 21 times. Each time the dashboard gave brief 403 errors, and it deleted my original fan script, which lived in <code>/usr/local/bin</code>. The card is now added by a PHP-FPM <code>auto_prepend_file</code> (set in its own pool file under <code>/etc/php/8.4/fpm/pool.d/</code>) that adds it to the page as it's served, so no WPSD file is touched. Since then the checks finish in seconds with no reset.</p>
 
         <h4>Mobile version (12 V vehicle power)</h4>
         <p>I've also tried a mobile version of the Pi 3B and hat, powered from a vehicle's 12 V system.</p>
@@ -291,24 +334,31 @@ journalctl -u mmdvmhost -f              # live MMDVMHost journal only
 ls /var/log/pi-star/MMDVM-*.log         # MMDVMHost's own detailed log
 vcgencmd get_throttled                  # power / throttling flags
 watch -n 1 vcgencmd get_throttled       # catch under-voltage live
-systemctl status hciuart                # should be disabled (UART free for modem)</code></pre>
+sudo dmesg | grep -i voltage            # under-voltage events since boot
+journalctl -u hotspot-fan               # fan speed changes
+vcgencmd measure_temp                   # CPU temperature
+systemctl status hciuart               # should be disabled (UART free for modem)</code></pre>
 
         <h4>Lessons learned</h4>
         <ul>
           <li>Seeing a carrier and S-meter reading doesn't mean the DMR will decode. Check the modulation.</li>
           <li>Guessing DMRTXLevel and TXOffset is not calibrating them. Measure with an SDR.</li>
           <li>One clean <code>get_throttled</code> reading doesn't mean the power is fine. Check the "since boot" bits and watch it live.</li>
-          <li>The cable matters as much as the power supply. The 3.5 A supply didn't fix it, but a proper 3 A-rated cable did.</li>
-          <li>Don't bypass the Pi's power protection when a better cable will do.</li>
+          <li>An amp rating on the adapter doesn't mean it holds 5 V. A 3.5 A phone fast charger was the fault, and a power station's plain USB port was rock solid.</li>
+          <li>Change one thing at a time. Swapping the supply and cleaning the socket together told me nothing until I swapped back.</li>
+          <li>Measure each power source the same way (here, 90 samples over 3 minutes) so the results compare.</li>
+          <li>Don't bypass the Pi's power protection to work around a weak supply.</li>
+          <li>Never edit WPSD's own files. Its compliance check wipes them and takes your add-ons with it. Keep custom things in <code>/opt</code> and <code>/etc</code>.</li>
           <li>Don't trust forum diagnoses of LED patterns without checking the firmware's actual behaviour.</li>
         </ul>
 
         <h4>Next steps</h4>
         <ul>
+          <li>Get a proper 5.1 V Raspberry Pi supply for mains power, and test it the same way as the others</li>
+          <li>Track down the source of the once-an-hour voltage dip</li>
           <li>Fix the WPSD Services Watchdog so a stuck modem restarts itself</li>
-          <li>Track down the cause of the remaining intermittent lock-ups</li>
           <li>Get an RTL-SDR and calibrate TX frequency and deviation</li>
-          <li>Keep watching <code>get_throttled</code> to confirm it stays <code>0x0</code> under load</li>
+          <li>Keep an eye on the Voltage Errors card wherever the hotspot gets plugged in</li>
         </ul>
       </div>
     </section>
