@@ -4,7 +4,7 @@
 //                 towing sites); leave it out for a build project, shown under Projects
 //   title       - card heading
 //   description - one or two sentences
-//   url         - where the button links (the only place a project's URL lives). A full
+//   url         - where the button links (also add or change it in the plain links in index.html's footer). A full
 //                 https:// address opens in a new tab; a folder on this site ("dmr-hotspot/")
 //                 opens in place, and that folder's page shows the same title + tags.
 //                 Optional: leave it out and the card has no button (e.g. no public page yet).

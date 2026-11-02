@@ -1028,6 +1028,10 @@ body.scrolled .brand {
   margin: 0;
 }
 
+.site-footer p + p {
+  margin-top: 10px;
+}
+
 @media (max-width: 600px) {
   .nav {
     gap: 16px;
