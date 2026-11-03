@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /sar-gp-
 
 Sitemap: https://psyphin.co.za/sitemap.xml
