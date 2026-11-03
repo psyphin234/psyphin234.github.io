@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /GP-weather
 Disallow: /sar-gp-
 
 Sitemap: https://psyphin.co.za/sitemap.xml
