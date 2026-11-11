@@ -1097,3 +1097,8 @@ body.scrolled .brand {
     transform: none;
   }
 }
+
+/* "Back to home" button at the top of each project page */
+.back-link {
+  margin: 0 0 18px;
+}
