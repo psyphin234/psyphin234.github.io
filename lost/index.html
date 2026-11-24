@@ -66,12 +66,9 @@
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
     }
-    .lost-btn[hidden] { display: none; }
     .lost-btn:active { transform: scale(0.985); }
     .lost-btn--call { background: var(--accent); border-color: var(--accent); color: #04121f; box-shadow: 0 0 24px var(--accent-glow); }
     .lost-btn--wa { background: #1faa59; border-color: #1faa59; color: #fff; }
-    .lost-btn[disabled] { opacity: 0.55; cursor: default; transform: none; }
-    .lost-btn small { font-weight: 400; opacity: 0.85; }
 
     .lost-thanks {
       margin: 22px 0 0;
@@ -100,11 +97,10 @@
     <div class="lost-actions">
       <a class="lost-btn lost-btn--call" id="call" href="tel:+27718968495">Call 071 896 8495</a>
       <a class="lost-btn lost-btn--wa" id="wa" href="https://wa.me/27718968495?text=Hi%2C%20I%20found%20an%20item" rel="noopener">WhatsApp us</a>
-      <button class="lost-btn" id="found" type="button" hidden>I found this</button>
     </div>
 
     <p class="lost-thanks" id="thanks" role="status" aria-live="polite" hidden>
-      <strong>Thank you!</strong> We've been told. Please call or WhatsApp so we can arrange to collect it.
+      <strong>Thank you!</strong> We've been notified and will be in touch. If you can't get through, please try the other button.
     </p>
 
     <p class="lost-foot">psyphin.co.za/lost</p>
@@ -164,18 +160,18 @@
         document.getElementById("wa").href = "https://wa.me/" + PHONE_INTL + "?text=" + encodeURIComponent(msg);
       } catch (e) {}
 
-      // "I found this": button only appears when JS is running.
+      // Tapping Call or WhatsApp also notifies us (once per item per session) and
+      // shows a thank-you. The links are plain <a> tags, so they work even if this
+      // never runs. sendBeacon survives the navigation to WhatsApp / the dialler.
       var thanks = document.getElementById("thanks");
-      var btn = document.getElementById("found");
-      function showThanks() {
-        btn.disabled = true;
-        thanks.hidden = false;
-      }
-      btn.hidden = false;
-      if (seen("found:" + id)) showThanks();
-      btn.addEventListener("click", function () {
-        once("found:" + id, function () { send("found"); });
-        showThanks();
+      function showThanks() { thanks.hidden = false; }
+      var EVENTS = [["call", "call"], ["wa", "whatsapp"]];
+      EVENTS.forEach(function (pair) {
+        if (seen(pair[1] + ":" + id)) showThanks();   // e.g. coming back from WhatsApp / reload
+        document.getElementById(pair[0]).addEventListener("click", function () {
+          once(pair[1] + ":" + id, function () { send(pair[1]); });
+          showThanks();
+        });
       });
 
       // Scan event on load; wait if the browser is only pre-rendering the page.
