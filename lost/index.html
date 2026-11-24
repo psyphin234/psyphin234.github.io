@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Found something? · PsyPhin</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#040817">
+
+  <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600&family=Inter:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    /* Keep this page light: drop the shared stylesheet's fixed circuit/glow layers. */
+    body::before, body::after { display: none; }
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: radial-gradient(90% 55% at 80% 0%, rgba(47, 107, 255, 0.28), transparent 70%), var(--bg);
+    }
+
+    .lost {
+      max-width: 460px;
+      margin: 0 auto;
+      padding: 40px 20px 32px;
+    }
+    .lost-tag {
+      margin: 0 0 6px;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+    .lost h1 {
+      margin: 0 0 14px;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 2rem;
+      line-height: 1.2;
+    }
+    .lost-msg {
+      margin: 0 0 28px;
+      font-size: 1.15rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .lost-actions { display: grid; gap: 14px; }
+    .lost-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 64px;
+      padding: 14px 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font: 500 1.15rem/1.2 var(--font-body);
+      text-decoration: none;
+      color: var(--text);
+      background: var(--surface-2);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lost-btn[hidden] { display: none; }
+    .lost-btn:active { transform: scale(0.985); }
+    .lost-btn--call { background: var(--accent); border-color: var(--accent); color: #04121f; box-shadow: 0 0 24px var(--accent-glow); }
+    .lost-btn--wa { background: #1faa59; border-color: #1faa59; color: #fff; }
+    .lost-btn[disabled] { opacity: 0.55; cursor: default; transform: none; }
+    .lost-btn small { font-weight: 400; opacity: 0.85; }
+
+    .lost-thanks {
+      margin: 22px 0 0;
+      padding: 16px 18px;
+      border: 1px solid rgba(46, 230, 166, 0.4);
+      border-radius: var(--radius);
+      background: rgba(46, 230, 166, 0.08);
+      font-size: 1.05rem;
+    }
+    .lost-thanks[hidden] { display: none; }
+    .lost-thanks strong { color: var(--green); }
+
+    .lost-foot {
+      margin: 36px 0 0;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <main class="lost">
+    <p class="lost-tag" id="label-id" hidden></p>
+    <h1>This belongs to a child</h1>
+    <p class="lost-msg">Please call or WhatsApp and we'll collect it. Thank you for helping!</p>
+
+    <div class="lost-actions">
+      <a class="lost-btn lost-btn--call" id="call" href="tel:+27718968495">Call 071 896 8495</a>
+      <a class="lost-btn lost-btn--wa" id="wa" href="https://wa.me/27718968495?text=Hi%2C%20I%20found%20an%20item" rel="noopener">WhatsApp us</a>
+      <button class="lost-btn" id="found" type="button" hidden>I found this</button>
+    </div>
+
+    <p class="lost-thanks" id="thanks" role="status" aria-live="polite" hidden>
+      <strong>Thank you!</strong> We've been told. Please call or WhatsApp so we can arrange to collect it.
+    </p>
+
+    <p class="lost-foot">psyphin.co.za/lost</p>
+  </main>
+
+  <script>
+    // ============================================================
+    //  >>> HOME ASSISTANT WEBHOOK URL — set this once (see HA setup) <<<
+    //  Format: https://psyphin.duckdns.org:8123/api/webhook/<webhook_id>
+    //  Must be https (this page is https; browsers block http beacons).
+    //  Leave empty or put "REPLACE_ME" in it to switch event sending off.
+    // ============================================================
+    const WEBHOOK_URL = "https://psyphin.duckdns.org:8123/api/webhook/lost-aPJN7Is1Hjnwt4sYSqOqGOpBlmSdkfdZJpEwCLLXchI";
+
+    (function () {
+      "use strict";
+      var PHONE_INTL = "27718968495";
+      var ID_RE = /^[A-Za-z0-9-]{1,8}$/;
+
+      // Item ID from ?i=; anything missing or malformed becomes "unknown".
+      var raw = "";
+      try { raw = (new URLSearchParams(location.search).get("i") || "").trim(); } catch (e) {}
+      var known = ID_RE.test(raw);
+      var id = known ? raw : "unknown";
+
+      // Fire-and-forget. Never throws, never blocks, never affects the page.
+      function send(event) {
+        try {
+          if (!/^https:\/\//.test(WEBHOOK_URL) || WEBHOOK_URL.indexOf("REPLACE_ME") !== -1) return;
+          var body = new URLSearchParams({ i: id, e: event });
+          if (navigator.sendBeacon && navigator.sendBeacon(WEBHOOK_URL, body)) return;
+          fetch(WEBHOOK_URL, { method: "POST", mode: "no-cors", keepalive: true, body: body }).catch(function () {});
+        } catch (e) {}
+      }
+
+      // Once per item per browser session, so reloads don't spam.
+      function once(key, fn) {
+        try {
+          if (sessionStorage.getItem(key)) return false;
+          sessionStorage.setItem(key, "1");
+        } catch (e) { /* storage blocked: still send once for this load */ }
+        fn();
+        return true;
+      }
+      function seen(key) {
+        try { return !!sessionStorage.getItem(key); } catch (e) { return false; }
+      }
+
+      // Show the ID and personalise the WhatsApp message.
+      try {
+        if (known) {
+          var tag = document.getElementById("label-id");
+          tag.textContent = "Label " + id;
+          tag.hidden = false;
+        }
+        var msg = known ? "Hi, I found an item (ID " + id + ")" : "Hi, I found an item";
+        document.getElementById("wa").href = "https://wa.me/" + PHONE_INTL + "?text=" + encodeURIComponent(msg);
+      } catch (e) {}
+
+      // "I found this": button only appears when JS is running.
+      var thanks = document.getElementById("thanks");
+      var btn = document.getElementById("found");
+      function showThanks() {
+        btn.disabled = true;
+        thanks.hidden = false;
+      }
+      btn.hidden = false;
+      if (seen("found:" + id)) showThanks();
+      btn.addEventListener("click", function () {
+        once("found:" + id, function () { send("found"); });
+        showThanks();
+      });
+
+      // Scan event on load; wait if the browser is only pre-rendering the page.
+      function scan() { once("scan:" + id, function () { send("scan"); }); }
+      if (document.prerendering) {
+        document.addEventListener("prerenderingchange", scan, { once: true });
+      } else {
+        scan();
+      }
+    })();
+  </script>
+</body>
+</html>
